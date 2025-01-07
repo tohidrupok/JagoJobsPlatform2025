@@ -4,6 +4,10 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 from .forms import SeekerRegistrationForm, EmployerRegistrationForm, CustomLoginForm, ManagerRegistrationForm
 from .models import CustomUser
+#home
+
+def home(request):
+    return render(request, 'home.html') 
 
 # Registration views
 def register_seeker(request):
