@@ -11,7 +11,7 @@
         <ul>
             {% for manager in pending_managers %}
                 <li>
-                    {{ manager.first_name }} {{ manager.last_name }} 
+                    {{ manager.first_name }} {{ manager.last_name }} {{ manager.role }} 
                     <a href="{% url 'approve_manager' manager.id %}">Approve</a>
                 </li>
             {% endfor %}
