@@ -33,4 +33,75 @@ class CustomUser(AbstractUser):
     
     @property
     def is_manager(self):
-        return self.role == 'manager'
+        return self.role == 'manager' 
+
+
+class SeekerProfile(models.Model):
+    user = models.OneToOneField(
+        'CustomUser', on_delete=models.CASCADE, related_name='seeker_profile'
+    )
+    bio = models.TextField(blank=True, verbose_name="Biography")
+    resume = models.FileField(upload_to='resumes/', blank=True, verbose_name="Resume")
+    skills = models.TextField(blank=True, verbose_name="Skills")
+    
+    # Personal Info
+    name = models.CharField(max_length=255, blank=True, verbose_name="Full Name")  # Alexander Weir
+    professional_title = models.CharField(max_length=255, blank=True, verbose_name="Professional Title")  # Web Designer
+    
+    # Salary Information
+    current_salary = models.DecimalField(
+        max_digits=10, decimal_places=2, default=0, blank=True, verbose_name="Current Salary"
+    )
+    expected_salary = models.DecimalField(
+        max_digits=10, decimal_places=2, default=0, blank=True, verbose_name="Expected Salary"
+    )
+    
+    # Contact Information (Only keeping essential fields)
+    phone = models.CharField(
+        max_length=15, blank=True, verbose_name="Phone Number", help_text="Include country code (e.g., +1)"
+    )  # +1 123 456 7890
+    email_address = models.EmailField(blank=True, verbose_name="Email Address")  # info@example.com
+    
+    # Location Information (Combining country, city, postcode, and full address into a single field)
+    location = models.CharField(max_length=255, blank=True, verbose_name="Location")  # e.g., "London, UK, 112233"
+    
+    def __str__(self):
+        return f"{self.user.username}'s Profile"
+
+    class Meta:
+        verbose_name = "Seeker Profile"
+        verbose_name_plural = "Seeker Profiles"
+
+
+class EmployerProfile(models.Model):
+    user = models.OneToOneField(
+        'CustomUser', on_delete=models.CASCADE, related_name='employer_profile'
+    )
+    
+    company_name = models.CharField(max_length=255, verbose_name="Company Name")
+    
+    # Combined location fields into a single 'location' field
+    location = models.CharField(max_length=255, blank=True, verbose_name="Company Location")
+    
+    company_website = models.URLField(blank=True, verbose_name="Company Website")
+    company_description = models.TextField(blank=True, verbose_name="Company Description")
+    
+    # Contact Information
+    phone = models.CharField(max_length=15, blank=True, verbose_name="Phone Number", help_text="Include country code (e.g., +1)")
+    email = models.EmailField(blank=True, verbose_name="Company Email")
+    
+    # Social Media Links (still kept separate for clarity)
+    facebook_link = models.URLField(blank=True, verbose_name="Facebook Link")
+    twitter_link = models.URLField(blank=True, verbose_name="Twitter Link")
+    google_link = models.URLField(blank=True, verbose_name="Google Link")
+    linkedin_link = models.URLField(blank=True, verbose_name="LinkedIn Link")
+    
+    # Company Details
+    founded_date = models.DateField(null=True, blank=True, verbose_name="Founded Date")
+    
+    def __str__(self):
+        return self.company_name
+
+    class Meta:
+        verbose_name = "Employer Profile"
+        verbose_name_plural = "Employer Profiles"

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import CustomUser
+from .models import CustomUser, SeekerProfile, EmployerProfile
 
 @admin.register(CustomUser)
 class CustomUserAdmin(admin.ModelAdmin):
@@ -12,3 +12,5 @@ class CustomUserAdmin(admin.ModelAdmin):
 
     actions = [approve_employers]
 
+admin.site.register(SeekerProfile)
+admin.site.register(EmployerProfile)
