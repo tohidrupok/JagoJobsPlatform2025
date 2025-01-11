@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Details</title>
+</head>
+<body>
+    <h1>Resume for {{ resume.email }}</h1>
+
+    <h2>Personal Details</h2>
+    <p><strong>Date of Birth:</strong> {{ resume.date_of_birth }}</p>
+    <p><strong>Gender:</strong> {{ resume.gender }}</p>
+    <p><strong>Marital Status:</strong> {{ resume.marital_status }}</p>
+    <p><strong>Passport Number:</strong> {{ resume.passport_number }}</p>
+    <p><strong>Languages:</strong> {{ resume.languages }}</p>
+    <p><strong>Permanent Address:</strong> {{ resume.permanent_address }}</p>
+    <p><strong>Area Pin Code:</strong> {{ resume.area_pin_code }}</p>
+    <p><strong>Hometown:</strong> {{ resume.hometown }}</p>
+    <p><strong>Phone Number:</strong> {{ resume.phone_number }}</p>
+
+    <h2>Career Details</h2>
+    <p><strong>Desired Industry:</strong> {{ resume.desired_industry }}</p>
+    <p><strong>Desired Location:</strong> {{ resume.desired_location }}</p>
+    <p><strong>Functional Area:</strong> {{ resume.functional_area }}</p>
+    <p><strong>Job Type:</strong> {{ resume.job_type }}</p>
+    <p><strong>Expected Salary:</strong> {{ resume.expected_salary }}</p>
+    <p><strong>Availability to Join:</strong> {{ resume.availability_to_join }}</p>
+
+    <h2>Profile Summary</h2>
+    <p>{{ resume.profile_summary }}</p>
+
+    <h2>Online Profiles</h2>
+    <p><strong>LinkedIn:</strong> <a href="{{ resume.linkedin_profile }}">{{ resume.linkedin_profile }}</a></p>
+    <p><strong>GitHub:</strong> <a href="{{ resume.github_profile }}">{{ resume.github_profile }}</a></p>
+    <p><strong>Portfolio:</strong> <a href="{{ resume.portfolio_link }}">{{ resume.portfolio_link }}</a></p>
+
+    <h2>Educations</h2>
+    <ul>
+        {% for education in educations %}
+            <li>
+                <strong>{{ education.degree }}</strong> from {{ education.university }} ({{ education.graduation_year }})<br>
+                Field of Study: {{ education.field_of_study }}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <h2>Employment History</h2>
+    <ul>
+        {% for employment in employments %}
+            <li>
+                <strong>{{ employment.role }}</strong> at {{ employment.company_name }}<br>
+                From {{ employment.start_date }} to {{ employment.end_date|default:"Present" }}<br>
+                Responsibilities: {{ employment.responsibilities }}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <h2>Skills</h2>
+    <ul>
+        {% for skill in skills %}
+            <li>
+                <strong>{{ skill.skill_name }}</strong> (Version: {{ skill.version }}, Last Used: {{ skill.last_used_year }}, Experience: {{ skill.experience_years }} years)
+            </li>
+        {% endfor %}
+    </ul>
+
+    <h2>Projects</h2>
+    <ul>
+        {% for project in projects %}
+            <li>
+                <strong>{{ project.project_name }}</strong><br>
+                Role: {{ project.role_in_project }}<br>
+                From {{ project.start_date }} to {{ project.end_date|default:"Present" }}<br>
+                Description: {{ project.project_description }}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <h2>Certifications</h2>
+    <ul>
+        {% for certification in certifications %}
+            <li>
+                <strong>{{ certification.certification_name }}</strong> by {{ certification.issuing_organization }}<br>
+                Issued on {{ certification.issue_date }}
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

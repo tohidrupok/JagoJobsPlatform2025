@@ -41,7 +41,7 @@ class SeekerProfile(models.Model):
         'CustomUser', on_delete=models.CASCADE, related_name='seeker_profile'
     )
     bio = models.TextField(blank=True, verbose_name="Biography")
-    resume = models.FileField(upload_to='resumes/', blank=True, verbose_name="Resume")
+    resume = models.FileField(upload_to='media/resumes/', blank=True, verbose_name="Resume")
     skills = models.TextField(blank=True, verbose_name="Skills")
     
     # Personal Info
@@ -56,14 +56,13 @@ class SeekerProfile(models.Model):
         max_digits=10, decimal_places=2, default=0, blank=True, verbose_name="Expected Salary"
     )
     
-    # Contact Information (Only keeping essential fields)
+    # Contact Info
     phone = models.CharField(
         max_length=15, blank=True, verbose_name="Phone Number", help_text="Include country code (e.g., +1)"
-    )  # +1 123 456 7890
-    email_address = models.EmailField(blank=True, verbose_name="Email Address")  # info@example.com
-    
-    # Location Information (Combining country, city, postcode, and full address into a single field)
-    location = models.CharField(max_length=255, blank=True, verbose_name="Location")  # e.g., "London, UK, 112233"
+    )  
+    email_address = models.EmailField(blank=True, verbose_name="Email Address")  
+
+    location = models.CharField(max_length=255, blank=True, verbose_name="Location")  
     
     def __str__(self):
         return f"{self.user.username}'s Profile"
