@@ -53,7 +53,7 @@ class Resume(models.Model):
     portfolio_link = models.URLField(blank=True, null=True)
 
     def __str__(self):
-        return f"Resume for {self.email}"
+        return f"Resume for {self.email}{self.user}"
 
 class Education(models.Model):
     resume = models.ForeignKey(
