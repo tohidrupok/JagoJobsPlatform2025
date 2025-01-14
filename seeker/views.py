@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from .models import Resume
 
 def resume_detail(request, resume_id):
-    # Fetch the resume object
+
     resume = get_object_or_404(Resume, id=resume_id)
     
     # Fetch related data
@@ -11,8 +11,7 @@ def resume_detail(request, resume_id):
     skills = resume.skills.all()
     projects = resume.projects.all()
     certifications = resume.certifications.all()
-    
-    # Pass the data to the template
+
     context = {
         'resume': resume,
         'educations': educations,
@@ -24,7 +23,6 @@ def resume_detail(request, resume_id):
     return render(request, 'resume_detail.html', context)
 
 def my_resume(request):
-    # Fetch the currently logged-in user's resume
     resume = get_object_or_404(Resume, user=request.user)
     
     # Fetch related data
@@ -34,7 +32,6 @@ def my_resume(request):
     projects = resume.projects.all()
     certifications = resume.certifications.all()
     
-    # Pass the data to the template
     context = {
         'resume': resume,
         'educations': educations,

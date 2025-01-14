@@ -4,12 +4,10 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 from .forms import SeekerRegistrationForm, EmployerRegistrationForm, CustomLoginForm, ManagerRegistrationForm
 from .models import CustomUser
-#home
 
 def home(request):
     return render(request, 'home.html') 
 
-# Registration views
 def register_seeker(request):
     if request.method == 'POST':
         form = SeekerRegistrationForm(request.POST)
@@ -17,7 +15,7 @@ def register_seeker(request):
             user = form.save(commit=False)
             user.role = 'seeker'
             user.save()
-            login(request, user)  # Log the user in
+            login(request, user)  
             return redirect('seeker_dashboard')
     else:
         form = SeekerRegistrationForm()
@@ -29,7 +27,7 @@ def register_employer(request):
         if form.is_valid():
             user = form.save(commit=False)
             user.role = 'employer'
-            user.is_approved = False  # Employers require admin approval
+            user.is_approved = False  
             user.save()
             return render(request, 'registration/pending_approval.html')
     else:
@@ -42,7 +40,7 @@ def register_manager(request):
         if form.is_valid():
             user = form.save(commit=False)
             user.role = 'manager'
-            user.is_approved = False  # Requires admin approval
+            user.is_approved = False  
             user.save()
             return render(request, 'manager/pending_approval.html')
     else:
@@ -61,7 +59,6 @@ def custom_login(request):
                 login(request, user)
                 if user.is_manager and not user.is_approved:
                     return render(request, 'registration/pending_approval.html')
-                # Redirect to appropriate dashboard
                 if user.is_manager:
                     return redirect('manager_dashboard')
                 elif user.is_employer:
@@ -80,13 +77,13 @@ def custom_logout(request):
 # Dashboards
 @login_required
 def seeker_dashboard(request):
-    if not request.user.is_seeker:  # Use the property without parentheses
+    if not request.user.is_seeker:  
         return HttpResponseForbidden("Access restricted to job seekers.")
     return render(request, 'seeker/dashboard.html')
 
 @login_required
 def employer_dashboard(request):
-    if not request.user.is_employer:  # Use the property without parentheses
+    if not request.user.is_employer:  
         return HttpResponseForbidden("Access restricted to employers.")
     if not request.user.is_approved:
         return render(request, 'registration/pending_approval.html')
