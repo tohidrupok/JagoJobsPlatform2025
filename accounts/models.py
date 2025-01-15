@@ -45,8 +45,8 @@ class SeekerProfile(models.Model):
     skills = models.TextField(blank=True, verbose_name="Skills")
     
     # Personal Info
-    name = models.CharField(max_length=255, blank=True, verbose_name="Full Name")  # Alexander Weir
-    professional_title = models.CharField(max_length=255, blank=True, verbose_name="Professional Title")  # Web Designer
+    name = models.CharField(max_length=255, blank=True, verbose_name="Full Name")  
+    professional_title = models.CharField(max_length=255, blank=True, verbose_name="Professional Title")  
     
     # Salary Information
     current_salary = models.DecimalField(
@@ -58,7 +58,7 @@ class SeekerProfile(models.Model):
     
     # Contact Info
     phone = models.CharField(
-        max_length=15, blank=True, verbose_name="Phone Number", help_text="Include country code (e.g., +1)"
+        max_length=15, blank=True, verbose_name="Phone Number", help_text="Include country code (e.g., +88)"
     )  
     email_address = models.EmailField(blank=True, verbose_name="Email Address")  
 

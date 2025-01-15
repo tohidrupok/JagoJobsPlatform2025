@@ -129,3 +129,5 @@ class Certification(models.Model):
 #         return f"Meta info for {self.resume.email}"
 
         
+        
+# 

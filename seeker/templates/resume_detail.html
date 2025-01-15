@@ -18,10 +18,11 @@
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 </head>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 <body>
 
     <!-- Google Translate Dropdown -->
-    <div id="google_translate_element"></div>
+   
 
     <h1>Resume for {{ resume.email }}</h1>
 
@@ -58,8 +59,15 @@
             <li>
                 <strong>{{ education.degree }}</strong> from {{ education.university }} ({{ education.graduation_year }})<br>
                 Field of Study: {{ education.field_of_study }}
+                <a href="{% url 'edit_education' education.pk %}" style="margin-left: 10px;">
+                    <i class="fas fa-edit" title="Edit"></i>
+                </a>
             </li>
         {% endfor %}
+        <a href="{% url 'add_education' %}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Add Education
+        </a> 
+
     </ul>
 
     <h2>Employment History</h2>
@@ -69,8 +77,15 @@
                 <strong>{{ employment.role }}</strong> at {{ employment.company_name }}<br>
                 From {{ employment.start_date }} to {{ employment.end_date|default:"Present" }}<br>
                 Responsibilities: {{ employment.responsibilities }}
-            </li>
+           
+            <a href="{% url 'edit_employment' employment.pk %}" style="margin-left: 10px;">
+                <i class="fas fa-edit" title="Edit"></i>
+            </a>
+        </li>
         {% endfor %}
+        <a href="{% url 'add_employment' %}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Add Employment
+        </a>
     </ul>
 
     <h2>Skills</h2>
@@ -78,8 +93,16 @@
         {% for skill in skills %}
             <li>
                 <strong>{{ skill.skill_name }}</strong> (Version: {{ skill.version }}, Last Used: {{ skill.last_used_year }}, Experience: {{ skill.experience_years }} years)
-            </li>
+           
+            <a href="{% url 'edit_skill' skill.pk %}" style="margin-left: 10px;">
+                <i class="fas fa-edit" title="Edit"></i>
+            </a>
+        </li>
         {% endfor %}
+        <a href="{% url 'add_skill' %}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Add Skill
+        </a> 
+
     </ul>
 
     <h2>Projects</h2>
@@ -90,8 +113,15 @@
                 Role: {{ project.role_in_project }}<br>
                 From {{ project.start_date }} to {{ project.end_date|default:"Present" }}<br>
                 Description: {{ project.project_description }}
+                <a href="{% url 'edit_project' project.pk %}" style="margin-left: 10px;">
+                    <i class="fas fa-edit" title="Edit"></i>
+                </a>
             </li>
         {% endfor %}
+        <a href="{% url 'add_project' %}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Add Project
+        </a> 
+
     </ul>
 
     <h2>Certifications</h2>
@@ -100,10 +130,18 @@
             <li>
                 <strong>{{ certification.certification_name }}</strong> by {{ certification.issuing_organization }}<br>
                 Issued on {{ certification.issue_date }}
+                <a href="{% url 'edit_certification' certification.pk %}" style="margin-left: 10px;">
+                    <i class="fas fa-edit" title="Edit"></i>
+                </a>
             </li>
-        {% endfor %}
-    </ul>
+        {% endfor %} 
 
+        <a href="{% url 'add_certification' %}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Add Certification
+        </a> 
+        
+    </ul>
+    <div id="google_translate_element"></div>
 </body>
 </html>
 
