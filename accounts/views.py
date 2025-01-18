@@ -6,7 +6,7 @@ from .forms import SeekerRegistrationForm, EmployerRegistrationForm, CustomLogin
 from .models import CustomUser
 
 def home(request):
-    return render(request, 'home.html') 
+    return render(request, 'index.html') 
 
 def register_seeker(request):
     if request.method == 'POST':
