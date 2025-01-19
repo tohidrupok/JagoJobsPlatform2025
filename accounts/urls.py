@@ -18,5 +18,8 @@ urlpatterns = [
 
     path('employee/approve-managers/', views.approve_manager_list, name='approve_manager_list'),
     path('employee/approve-managers/<int:user_id>/', views.approve_manager, name='approve_manager'),
+       
+   
+    path('register/', views.register, name='register'),
     
 ]

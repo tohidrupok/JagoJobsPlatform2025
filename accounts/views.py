@@ -6,7 +6,38 @@ from .forms import SeekerRegistrationForm, EmployerRegistrationForm, CustomLogin
 from .models import CustomUser
 
 def home(request):
-    return render(request, 'index.html') 
+    return render(request, 'index.html')  
+
+
+def register(request):
+    seeker_form = SeekerRegistrationForm()
+    employer_form = EmployerRegistrationForm()
+
+    if request.method == 'POST':
+        if 'seeker_submit' in request.POST:
+            print("candidate")
+            seeker_form = SeekerRegistrationForm(request.POST)
+            if seeker_form.is_valid():
+                user = seeker_form.save(commit=False)
+                user.role = 'seeker'
+                user.save()
+                login(request, user)
+                return redirect('seeker_dashboard')
+        elif 'employer_submit' in request.POST:
+            employer_form = EmployerRegistrationForm(request.POST)
+            if employer_form.is_valid():
+                user = employer_form.save(commit=False)
+                user.role = 'employer'
+                user.is_approved = False
+                user.save()
+                return render(request, 'registration/pending_approval.html')
+
+    return render(request, 'base.html', {
+        'seeker_form': seeker_form,
+        'employer_form': employer_form
+    }) 
+    
+    
 
 def register_seeker(request):
     if request.method == 'POST':

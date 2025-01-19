@@ -27,7 +27,7 @@ class Resume(models.Model):
     permanent_address = models.TextField( blank=True)
     area_pin_code = models.CharField(max_length=10, blank=True)
     hometown = models.CharField(max_length=255, blank=True)   
-    email = models.EmailField(unique=True, blank=True, validators=[EmailValidator()])
+    email = models.EmailField()
     phone_number = models.CharField(max_length=15, blank=True)
 
     # Career Details
