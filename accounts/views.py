@@ -12,20 +12,26 @@ def home(request):
 def register(request):
     seeker_form = SeekerRegistrationForm()
     employer_form = EmployerRegistrationForm()
-
+    
     if request.method == 'POST':
+        
         if 'seeker_submit' in request.POST:
-            print("candidate")
+            
             seeker_form = SeekerRegistrationForm(request.POST)
             if seeker_form.is_valid():
+                print("seeker Form is valid") 
                 user = seeker_form.save(commit=False)
                 user.role = 'seeker'
                 user.save()
                 login(request, user)
                 return redirect('seeker_dashboard')
-        elif 'employer_submit' in request.POST:
+            else:
+                print("Form is not valid") 
+                
+        elif 'employer_submit' in request.POST:   
             employer_form = EmployerRegistrationForm(request.POST)
             if employer_form.is_valid():
+                
                 user = employer_form.save(commit=False)
                 user.role = 'employer'
                 user.is_approved = False
@@ -36,13 +42,14 @@ def register(request):
         'seeker_form': seeker_form,
         'employer_form': employer_form
     }) 
-    
-    
-
+  
+   
 def register_seeker(request):
+    
     if request.method == 'POST':
         form = SeekerRegistrationForm(request.POST)
         if form.is_valid():
+            print("Form is valid") 
             user = form.save(commit=False)
             user.role = 'seeker'
             user.save()
