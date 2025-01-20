@@ -26,6 +26,7 @@ def resume_detail(request, resume_id):
 
 
 def my_resume(request):
+    print("dukcha")
     resume = get_object_or_404(Resume, user=request.user)
     
     # Fetch related data
