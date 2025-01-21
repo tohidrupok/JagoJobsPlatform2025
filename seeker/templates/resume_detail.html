@@ -83,10 +83,10 @@
                         <div class="col-xl-9 col-lg-8 col-md-12 m-b30">
                             <div class="twm-right-section-panel site-bg-gray">
                                 
-                                    <!--Resume Headline-->
+                                    {% comment %} <!--Resume Headline-->
                                     <div class="panel panel-default mb-3">
                                         <div class="panel-heading wt-panel-heading p-a20 panel-heading-with-btn ">
-                                            <h4 class="panel-tittle m-a0">Resume Headline</h4>
+                                            <h4 class="panel-tittle m-a0">Resume Headline / Title</h4>
                                             <a data-bs-toggle="modal" href="#Resume_Headline" role="button" title="Edit" class="site-text-primary">
                                                 <span class="fa fa-edit"></span>
                                             </a>
@@ -131,7 +131,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> {% endcomment %}
 
                                     <!--Key Skills-->
                                     <div class="panel panel-default mb-3">
@@ -144,47 +144,86 @@
                                         <div class="panel-body wt-panel-body p-a20 ">
                                             <div class="tw-sidebar-tags-wrap">
                                                 <div class="tagcloud">
-                                                    <a href="javascript:void(0)">Finance</a>
-                                                    <a href="javascript:void(0)">Sales</a>
-                                                    <a href="javascript:void(0)">Part-time</a>                                            
-                                                    <a href="javascript:void(0)">Administration</a>
-                                                    <a href="javascript:void(0)">Retail</a>
-                                                    <a href="javascript:void(0)">Engineering</a>
-                                                    <a href="javascript:void(0)">Developer</a>
-                                                    <a href="javascript:void(0)">Work from home</a>
-                                                    <a href="javascript:void(0)">IT Consulting</a>
-                                                    <a href="javascript:void(0)">Manufacturing</a>
+                                                    {% for skill in skills %}
+                                                    <a href="javascript:void(0)">{{ skill.skill_name }}</a>
+                                                    {% endfor %} 
                                                 </div>
+
+
                                             </div>            
                                         </div>
                                         <!--Modal popup -->
                                         <div class="modal fade twm-saved-jobs-view" id="Key_Skills" tabindex="-1">
                                             <div class="modal-dialog modal-dialog-centered">
                                                 <div class="modal-content">
-                                                    <form>
-
+                                                    <form method="post" action="{% url 'add_skill' %}">
+                                                        {% csrf_token %}
                                                         <div class="modal-header">
                                                             <h2 class="modal-title">Key Skills</h2>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
-
+                                                    
                                                         <div class="modal-body">
-                                                            <p>It is the first thing recruiters notice in your profile. Write concisely what makes you unique and right person for the job you are looking for.</p>
+                                                            <p>It is the first thing recruiters notice in your profile. Write concisely what makes you unique and the right person for the job you are looking for.</p>
                                                             
+                                                            <!-- Skill Name Input -->
                                                             <div class="form-group">
-                                                                <input class="form-control"  type="text" value="Finance, Sales, Retail, Engineering">
+                                                                <label for="skill_name" class="form-label">Skill Name</label>
+                                                                <input 
+                                                                    type="text" 
+                                                                    id="skill_name" 
+                                                                    name="skill_name" 
+                                                                    class="form-control" 
+                                                                    placeholder="e.g., Python, JavaScript, Project Management" 
+                                                                    required>
                                                             </div>
-                                                            
+                                                    
+                                                            <!-- Version Input -->
+                                                            <div class="form-group">
+                                                                <label for="version" class="form-label">Version</label>
+                                                                <input 
+                                                                    type="text" 
+                                                                    id="version" 
+                                                                    name="version" 
+                                                                    class="form-control" 
+                                                                    placeholder="e.g., 3.9, ES6, 2021" 
+                                                                    required>
+                                                            </div>
+                                                    
+                                                            <!-- Last Used Year Input -->
+                                                            <div class="form-group">
+                                                                <label for="last_used_year" class="form-label">Last Used Year</label>
+                                                                <input 
+                                                                    type="number" 
+                                                                    id="last_used_year" 
+                                                                    name="last_used_year" 
+                                                                    class="form-control" 
+                                                                    placeholder="e.g., 2023" 
+                                                                    min="1900" max="2100" 
+                                                                    required>
+                                                            </div>
+                                                    
+                                                            <!-- Experience Years Input -->
+                                                            <div class="form-group">
+                                                                <label for="experience_years" class="form-label">Experience (in years)</label>
+                                                                <input 
+                                                                    type="number" 
+                                                                    id="experience_years" 
+                                                                    name="experience_years" 
+                                                                    class="form-control" 
+                                                                    placeholder="e.g., 2.5" 
+                                                                    step="0.1" 
+                                                                    min="0" 
+                                                                    required>
+                                                            </div>
                                                         </div>
-
+                                                    
                                                         <div class="modal-footer">
-                                                            
                                                             <button type="button" class="site-button" data-bs-dismiss="modal">Close</button>
-                                                            <button type="button" class="site-button">Save</button>
-                                                            
+                                                            <button type="submit" class="site-button">Save</button>
                                                         </div>
-
                                                     </form>
+                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -199,107 +238,125 @@
                                             </a>
                                         </div>
                                         <div class="panel-body wt-panel-body p-a20 ">
+
                                             <div class="twm-panel-inner">
-                                                <p><b>Senior UI / UX Designer and Developer</b></p>
-                                                <p>Google INC</p>
-                                                <p>Experience (6 Year)</p>
-                                                <p>Available to join in 1 Months</p>
-                                            </div>       
+                                                <ul>
+                                                    {% for employment in employments %}
+                                                        <li>
+                                                            <strong>{{ employment.role }}</strong> at {{ employment.company_name }}<br>
+                                                            From {{ employment.start_date }} to {{ employment.end_date|default:"Present" }}<br>
+                                                            Responsibilities: {{ employment.responsibilities }}
+                                                       
+                                                        <a href="{% url 'edit_employment' employment.pk %}" style="margin-left: 10px;">
+                                                            <i class="fas fa-edit" title="Edit"></i>
+                                                        </a>
+                                                    </li>
+                                                    {% endfor %}
+                                                   
+                                                </ul> 
+                                            </div>           
                                         </div>
 
                                         <!--Employment -->
                                         <div class="modal fade twm-saved-jobs-view" id="Employment" tabindex="-1">
                                             <div class="modal-dialog modal-dialog-centered">
                                                 <div class="modal-content">
-                                                    <form>
-
+                                                    <form method="post" action="{% url 'add_employment' %}">
+                                                        {% csrf_token %}
                                                         <div class="modal-header">
                                                             <h2 class="modal-title">Add Employment</h2>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
-
+                                                    
                                                         <div class="modal-body">
-                                                           
-                                                            <div class="row">
+                                                            <div class="row g-3"> <!-- Added g-3 for spacing between form groups -->
+                                                    
+                                                                <!-- Company Name Input -->
                                                                 <div class="col-xl-12 col-lg-12">
                                                                     <div class="form-group">
-                                                                        <label>Your Designation</label>
-                                                                        <div class="ls-inputicon-box"> 
-                                                                            <input class="form-control"  type="text" placeholder="Enter Your Designation">
-                                                                            <i class="fs-input-icon fa fa-address-card"></i>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-xl-12 col-lg-12">
-                                                                    <div class="form-group">
-                                                                        <label>Your Organization</label>
-                                                                        <div class="ls-inputicon-box"> 
-                                                                            <input class="form-control" type="text" placeholder="Enter Your Organization">
+                                                                        <label for="company_name" class="form-label">Your Organization</label>
+                                                                        <div class="ls-inputicon-box">
+                                                                            <input 
+                                                                                type="text" 
+                                                                                id="company_name" 
+                                                                                name="company_name" 
+                                                                                class="form-control" 
+                                                                                placeholder="e.g., Google, Microsoft" 
+                                                                                required>
                                                                             <i class="fs-input-icon fa fa-building"></i>
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                    
+                                                                <!-- Role Input -->
                                                                 <div class="col-xl-12 col-lg-12">
                                                                     <div class="form-group">
-                                                                        <label>Is this your current company?</label>
-                                                                        <div class="row twm-form-radio-inline">
-                                                                            
-                                                                            <div class="col-md-6">
-                                                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                                                                                <label class="form-check-label" for="flexRadioDefault1">
-                                                                                    Yes
-                                                                                </label>
-                                                                                </div>
-                                                                                <div class="col-md-6">
-                                                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="S_no" checked>
-                                                                                <label class="form-check-label" for="S_no">
-                                                                                    No
-                                                                                </label>
-                                                                                </div>
+                                                                        <label for="role" class="form-label">Your Designation</label>
+                                                                        <div class="ls-inputicon-box">
+                                                                            <input 
+                                                                                type="text" 
+                                                                                id="role" 
+                                                                                name="role" 
+                                                                                class="form-control" 
+                                                                                placeholder="e.g., Software Engineer, Project Manager" 
+                                                                                required>
+                                                                            <i class="fs-input-icon fa fa-address-card"></i>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-
-                                                                <!--Start Date-->
+                                                    
+                                                                <!-- Start Date Input -->
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
-                                                                        <label>Started Working From</label>
-                                                                        <div class="ls-inputicon-box"> 
-                                                                            <input class="form-control datepicker" data-provide="datepicker" name="company_since" type="text" placeholder="mm/dd/yyyy">
+                                                                        <label for="start_date" class="form-label">Started Working From</label>
+                                                                        <div class="ls-inputicon-box">
+                                                                            <input 
+                                                                                type="date" 
+                                                                                id="start_date" 
+                                                                                name="start_date" 
+                                                                                class="form-control" 
+                                                                                required>
                                                                             <i class="fs-input-icon far fa-calendar"></i>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-
-                                                                <!--End Date-->
+                                                    
+                                                                <!-- End Date Input -->
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
-                                                                        <label>Worked Till</label>
-                                                                        <div class="ls-inputicon-box"> 
-                                                                            <input class="form-control datepicker" data-provide="datepicker" name="company_since" type="text" placeholder="mm/dd/yyyy">
+                                                                        <label for="end_date" class="form-label">Worked Till</label>
+                                                                        <div class="ls-inputicon-box">
+                                                                            <input 
+                                                                                type="date" 
+                                                                                id="end_date" 
+                                                                                name="end_date" 
+                                                                                class="form-control">
                                                                             <i class="fs-input-icon far fa-calendar"></i>
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                    
+                                                                <!-- Responsibilities Input -->
                                                                 <div class="col-md-12">
                                                                     <div class="form-group mb-0">
-                                                                        <label>Describe your Job Profile</label>
-                                                                        <textarea class="form-control" rows="3" placeholder="Describe your Job"></textarea>
+                                                                        <label for="responsibilities" class="form-label">Describe your Job Profile</label>
+                                                                        <textarea 
+                                                                            id="responsibilities" 
+                                                                            name="responsibilities" 
+                                                                            class="form-control" 
+                                                                            rows="3" 
+                                                                            placeholder="Briefly describe your responsibilities" 
+                                                                            required></textarea>
                                                                     </div>
                                                                 </div>
-
+                                                    
                                                             </div>
-                                                            
-
                                                         </div>
-
+                                                    
                                                         <div class="modal-footer">
-                                                            
                                                             <button type="button" class="site-button" data-bs-dismiss="modal">Close</button>
-                                                            <button type="button" class="site-button">Save</button>
-                                                            
+                                                            <button type="submit" class="site-button">Save</button>
                                                         </div>
-
                                                     </form>
                                                 </div>
                                             </div>
@@ -320,7 +377,7 @@
                                                 <p>Mention your employment details including your current and previous company work experience</p>
                                                 
                                                 <div>
-                                                    <h2>Education</h2>
+                                                    
                                                     <ul>
                                                         {% for education in educations %}
                                                         <li style="margin-bottom: 15px; list-style: none;">
@@ -450,9 +507,9 @@
                                     <div class="panel panel-default mb-3">
                                         <div class="panel-heading wt-panel-heading p-a20 panel-heading-with-btn ">
                                             <h4 class="panel-tittle m-a0">IT Skills</h4>
-                                            <a href="{% url 'add_skill' %}" class="btn btn-primary">
+                                            <a data-bs-toggle="modal" href="#IT_skills" role="button" title="Edit" class="site-text-primary">
                                                 <span class="fa fa-edit"></span>
-                                            </a> 
+                                            </a>
                                         </div>
                                         <div class="panel-body wt-panel-body p-a20 ">
                                             <div class="twm-panel-inner">
@@ -470,10 +527,8 @@
                                                     </thead>
                                 
                                                     <tbody>
-                                                        <!--1--> {% for skill in skills %}
-            
-
-       
+                                                        <!--1-->
+                                                        {% for skill in skills %}
                                                         <tr>
                                                             <td>{{ skill.skill_name }}</td>
                                                             <td>{{ skill.version }}</td>
@@ -486,10 +541,10 @@
                                                            
                                                             </td>
                                                         </tr>
+                                                        {% endfor %}
                                                         
                                                         
-                                                    </tbody> 
-                                                    {% endfor %}
+                                                    </tbody>
                                                     </table>
                                                 </div>
                                             </div>       
@@ -499,90 +554,72 @@
                                         <div class="modal fade twm-saved-jobs-view" id="IT_skills" tabindex="-1">
                                             <div class="modal-dialog modal-dialog-centered">
                                                 <div class="modal-content">
-                                                    <form>
-
+                                                    <form method="post" action="{% url 'add_skill' %}">
+                                                        {% csrf_token %}
                                                         <div class="modal-header">
-                                                            <h2 class="modal-title">IT Skills</h2>
+                                                            <h2 class="modal-title">Key Skills</h2>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
-
+                                                    
                                                         <div class="modal-body">
-                                                           
-                                                            <div class="row">
-                                                                <div class="col-xl-12 col-lg-12">
-                                                                    <div class="form-group">
-                                                                        <label>IT Skills</label>
-                                                                        <div class="ls-inputicon-box"> 
-                                                                            <input class="form-control"  type="text" placeholder="Enter IT Skills">
-                                                                            <i class="fs-input-icon fa fa-address-card"></i>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="col-xl-6 col-lg-12 col-md-12">
-                                                                    <div class="form-group">
-                                                                        <label>Version</label>
-                                                                        <div class="ls-inputicon-box"> 
-                                                                            <input class="form-control"  type="text" placeholder="Enter Version">
-                                                                            <i class="fs-input-icon fa fa-info"></i>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="col-xl-6 col-lg-12 col-md-12">
-                                                                    <div class="form-group">
-                                                                        <label>Last Used</label>
-                                                                        <div class="ls-inputicon-box">  
-                                                                            <select class="wt-select-box selectpicker"  data-live-search="true" title=""  data-bv-field="size">
-                                                                                <option class="bs-title-option" value="">Select Category</option>
-                                                                                <option>2021</option>
-                                                                                <option>2020</option>
-                                                                            </select>
-                                                                            <i class="fs-input-icon fa fa-calendar"></i>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="col-xl-6 col-lg-12 col-md-12">
-                                                                    <div class="form-group">
-                                                                        <label>Experience year</label>
-                                                                        <div class="ls-inputicon-box">  
-                                                                            <select class="wt-select-box selectpicker"  data-live-search="true" title=""  data-bv-field="size">
-                                                                                <option class="bs-title-option" value="">Select Category</option>
-                                                                                <option>2021</option>
-                                                                                <option>2020</option>
-                                                                            </select>
-                                                                            <i class="fs-input-icon fa fa-user-edit"></i>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="col-xl-6 col-lg-12 col-md-12">
-                                                                    <div class="form-group">
-                                                                        <label>Month</label>
-                                                                        <div class="ls-inputicon-box">  
-                                                                            <select class="wt-select-box selectpicker"  data-live-search="true" title=""  data-bv-field="size">
-                                                                                <option class="bs-title-option" value="">Select Category</option>
-                                                                                <option>January</option>
-                                                                                <option>February</option>
-                                                                            </select>
-                                                                            <i class="fs-input-icon fa fa-user-edit"></i>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
+                                                            <p>It is the first thing recruiters notice in your profile. Write concisely what makes you unique and the right person for the job you are looking for.</p>
+                                                            
+                                                            <!-- Skill Name Input -->
+                                                            <div class="form-group">
+                                                                <label for="skill_name" class="form-label">Skill Name</label>
+                                                                <input 
+                                                                    type="text" 
+                                                                    id="skill_name" 
+                                                                    name="skill_name" 
+                                                                    class="form-control" 
+                                                                    placeholder="e.g., Python, JavaScript, Project Management" 
+                                                                    required>
                                                             </div>
-                                                           
-
+                                                    
+                                                            <!-- Version Input -->
+                                                            <div class="form-group">
+                                                                <label for="version" class="form-label">Version</label>
+                                                                <input 
+                                                                    type="text" 
+                                                                    id="version" 
+                                                                    name="version" 
+                                                                    class="form-control" 
+                                                                    placeholder="e.g., 3.9, ES6, 2021" 
+                                                                    required>
+                                                            </div>
+                                                    
+                                                            <!-- Last Used Year Input -->
+                                                            <div class="form-group">
+                                                                <label for="last_used_year" class="form-label">Last Used Year</label>
+                                                                <input 
+                                                                    type="number" 
+                                                                    id="last_used_year" 
+                                                                    name="last_used_year" 
+                                                                    class="form-control" 
+                                                                    placeholder="e.g., 2023" 
+                                                                    min="1900" max="2100" 
+                                                                    required>
+                                                            </div>
+                                                    
+                                                            <!-- Experience Years Input -->
+                                                            <div class="form-group">
+                                                                <label for="experience_years" class="form-label">Experience (in years)</label>
+                                                                <input 
+                                                                    type="number" 
+                                                                    id="experience_years" 
+                                                                    name="experience_years" 
+                                                                    class="form-control" 
+                                                                    placeholder="e.g., 2.5" 
+                                                                    step="0.1" 
+                                                                    min="0" 
+                                                                    required>
+                                                            </div>
                                                         </div>
-
+                                                    
                                                         <div class="modal-footer">
-                                                            
                                                             <button type="button" class="site-button" data-bs-dismiss="modal">Close</button>
-                                                            <button type="button" class="site-button">Save</button>
-                                                            
+                                                            <button type="submit" class="site-button">Save</button>
                                                         </div>
-
                                                     </form>
                                                 </div>
                                             </div>
@@ -734,70 +771,44 @@
                                                     <div class="col-md-6">
                                                         <div class="twm-s-detail-section">
                                                             <div class="twm-title">Industry</div>
-                                                            <span class="twm-s-info-discription">IT-Software/Software Services</span>
+                                                            <span class="twm-s-info-discription">{{ resume.desired_industry }}</span>
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-md-6">
-                                                        <div class="twm-s-detail-section">
-                                                            <div class="twm-title">Functional Area</div>
-                                                            <span class="twm-s-info-discription">Design / Creative / User Experience</span>
-                                                        </div>
-                                                    </div>
+                                                    
 
                                                     <div class="col-md-6">
                                                         <div class="twm-s-detail-section">
                                                             <div class="twm-title">Role</div>
-                                                            <span class="twm-s-info-discription">Web Designer</span>
+                                                            <span class="twm-s-info-discription">{{ resume.functional_area }}</span>
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-6">
                                                         <div class="twm-s-detail-section">
                                                             <div class="twm-title">Job Type</div>
-                                                            <span class="twm-s-info-discription">permanent</span>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-6">
-                                                        <div class="twm-s-detail-section">
-                                                            <div class="twm-title">Employment Type</div>
-                                                            <span class="twm-s-info-discription">Full Time</span>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-6">
-                                                        <div class="twm-s-detail-section">
-                                                            <div class="twm-title">Desired Shift</div>
-                                                            <span class="twm-s-info-discription">Add Desired Shift</span>
+                                                            <span class="twm-s-info-discription">{{ resume.job_type }}</span>
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-6">
                                                         <div class="twm-s-detail-section">
                                                             <div class="twm-title">Availability to Join</div>
-                                                            <span class="twm-s-info-discription">06 August</span>
+                                                            <span class="twm-s-info-discription">{{ resume.availability_to_join }}</span>
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-6">
                                                         <div class="twm-s-detail-section">
                                                             <div class="twm-title">Expected Salary</div>
-                                                            <span class="twm-s-info-discription">1 Lakhs</span>
+                                                            <span class="twm-s-info-discription">{{ resume.expected_salary }}</span>
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-6">
                                                         <div class="twm-s-detail-section">
                                                             <div class="twm-title">Desired Location</div>
-                                                            <span class="twm-s-info-discription">Add Desired Location</span>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-6">
-                                                        <div class="twm-s-detail-section">
-                                                            <div class="twm-title">Desired Industry</div>
-                                                            <span class="twm-s-info-discription">Add Desired Industry</span>
+                                                            <span class="twm-s-info-discription">{{ resume.desired_location }}</span>
                                                         </div>
                                                     </div>
 
@@ -1089,70 +1100,63 @@
                                                     <div class="col-md-6">
                                                         <div class="twm-s-detail-section">
                                                             <div class="twm-title">Date of Birth</div>
-                                                            <span class="twm-s-info-discription">31 July 1998</span>
+                                                            <span class="twm-s-info-discription">{{ resume.date_of_birth }}</span>
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-6">
                                                         <div class="twm-s-detail-section">
                                                             <div class="twm-title">Permanent Address</div>
-                                                            <span class="twm-s-info-discription">Add Permanent Address</span>
+                                                            <span class="twm-s-info-discription">{{ resume.permanent_address }}</span>
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-6">
                                                         <div class="twm-s-detail-section">
                                                             <div class="twm-title">Gender</div>
-                                                            <span class="twm-s-info-discription">Male</span>
+                                                            <span class="twm-s-info-discription">{{ resume.gender }}</span>
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-6">
                                                         <div class="twm-s-detail-section">
                                                             <div class="twm-title">Area Pin Code</div>
-                                                            <span class="twm-s-info-discription">302021</span>
+                                                            <span class="twm-s-info-discription">{{ resume.area_pin_code }}</span>
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-6">
                                                         <div class="twm-s-detail-section">
                                                             <div class="twm-title">Marital Status</div>
-                                                            <span class="twm-s-info-discription">Single / unmarried</span>
+                                                            <span class="twm-s-info-discription">{{ resume.marital_status }}</span>
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-6">
                                                         <div class="twm-s-detail-section">
                                                             <div class="twm-title">Hometown</div>
-                                                            <span class="twm-s-info-discription">USA</span>
+                                                            <span class="twm-s-info-discription">{{ resume.hometown }}</span>
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-6">
                                                         <div class="twm-s-detail-section">
                                                             <div class="twm-title">Passport Number</div>
-                                                            <span class="twm-s-info-discription">+123 456 7890</span>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-6">
-                                                        <div class="twm-s-detail-section">
-                                                            <div class="twm-title">Work permit of other country</div>
-                                                            <span class="twm-s-info-discription">UK</span>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-6">
-                                                        <div class="twm-s-detail-section">
-                                                            <div class="twm-title">Differently Abled</div>
-                                                            <span class="twm-s-info-discription">None</span>
+                                                            <span class="twm-s-info-discription">{{ resume.passport_number }}</span>
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-6">
                                                         <div class="twm-s-detail-section">
                                                             <div class="twm-title">Languages</div>
-                                                            <span class="twm-s-info-discription">English</span>
+                                                            <span class="twm-s-info-discription">{{ resume.languages }}</span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="twm-s-detail-section">
+                                                            <div class="twm-title">Phone Number</div>
+                                                            <span class="twm-s-info-discription">{{ resume.phone_number }}</span>
                                                         </div>
                                                     </div>
 
@@ -1861,7 +1865,7 @@
                                         </div>
                                         <div class="panel-body wt-panel-body p-a20 ">
                                             <div class="twm-panel-inner">
-                                                <p>Your Profile Summary should mention the highlights of your career and education, what your professional interests are, and what kind of a career you are looking for. Write a meaningful summary of more than 50 characters.</p>
+                                                <p>{{ resume.profile_summary }}</p>
                                             </div>             
                                         </div>
                                         <!--Modal Popup -->

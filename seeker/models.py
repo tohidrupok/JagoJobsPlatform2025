@@ -46,6 +46,7 @@ class Resume(models.Model):
 
     # Profile Summary
     profile_summary = models.TextField(blank=True, null=True)
+    
 
     # Links (Online Profiles)
     linkedin_profile = models.URLField(blank=True, null=True)

@@ -31,10 +31,10 @@ def my_resume(request):
     
     # Fetch related data
     educations = resume.educations.all().order_by('-id')
-    employments = resume.employments.all()
-    skills = resume.skills.all()
-    projects = resume.projects.all()
-    certifications = resume.certifications.all()
+    employments = resume.employments.all().order_by('-id')
+    skills = resume.skills.all().order_by('-id')
+    projects = resume.projects.all().order_by('-id')
+    certifications = resume.certifications.all().order_by('-id')
     
     context = {
         'resume': resume,
