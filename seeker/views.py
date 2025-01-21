@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Resume, Education, Employment, Skill, Project, Certification
 from .forms import ResumeForm, EducationForm, EmploymentForm, SkillForm, ProjectForm, CertificationForm
-
+from django.contrib import messages
 
 def resume_detail(request, resume_id):
 
@@ -30,7 +30,7 @@ def my_resume(request):
     resume = get_object_or_404(Resume, user=request.user)
     
     # Fetch related data
-    educations = resume.educations.all()
+    educations = resume.educations.all().order_by('-id')
     employments = resume.employments.all()
     skills = resume.skills.all()
     projects = resume.projects.all()
@@ -73,6 +73,16 @@ def edit_education(request, pk):
     else:
         form = EducationForm(instance=education)
     return render(request, 'edit.html', {'form': form})
+
+def delete_education(request, pk):
+    education = get_object_or_404(Education, pk=pk)
+
+    if request.method == 'POST':
+        education.delete()
+        return redirect('my_resume')  
+
+    return redirect('my_resume')
+
 
 def edit_employment(request, pk):
     employment = get_object_or_404(Employment, pk=pk)

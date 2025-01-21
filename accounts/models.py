@@ -6,7 +6,7 @@ class CustomUser(AbstractUser):
         ('seeker', 'Job Seeker'),
         ('employer', 'Employer'),
         ('manager', 'Manager'),
-        ('candidate', 'candidate'),
+        
     )
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='seeker')
     is_verified = models.BooleanField(default=False)
