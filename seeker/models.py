@@ -112,6 +112,7 @@ class Certification(models.Model):
     certification_name = models.CharField(max_length=255)
     issuing_organization = models.CharField(max_length=255)
     issue_date = models.DateField()
+    certification_name_link= models.URLField(max_length=200, blank=True, null=True)
 
     def __str__(self):
         return f"{self.certification_name} by {self.issuing_organization}"

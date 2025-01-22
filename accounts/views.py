@@ -110,7 +110,7 @@ def custom_login(request):
 @login_required
 def custom_logout(request):
     logout(request)
-    return redirect('custom_login')
+    return redirect('home')
 
 # Dashboards
 @login_required

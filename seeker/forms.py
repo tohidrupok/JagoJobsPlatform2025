@@ -35,4 +35,4 @@ class ProjectForm(forms.ModelForm):
 class CertificationForm(forms.ModelForm):
     class Meta:
         model = Certification
-        fields = ['certification_name', 'issuing_organization', 'issue_date']
+        fields = ['certification_name', 'issuing_organization', 'issue_date','certification_name_link']

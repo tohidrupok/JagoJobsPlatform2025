@@ -637,10 +637,23 @@
                                         </div>
                                         <div class="panel-body wt-panel-body p-a20 ">
                                             <div class="twm-panel-inner">
-                                                <p><b>Jobzilla</b></p>
-                                                <p>Google INC</p>
-                                                <p>January 2023 to Present</p>
-                                                <p>Jobjilla Template</p>
+                                                <ul>
+                                                    {% for project in projects %}
+                                                        <li>
+                                                            <strong>{{ project.project_name }}</strong><br>
+                                                            Role: {{ project.role_in_project }}<br>
+                                                            From {{ project.start_date }} to {{ project.end_date|default:"Present" }}<br>
+                                                            Description: {{ project.project_description }}
+                                                            <a href="{% url 'edit_project' project.pk %}" style="margin-left: 10px;">
+                                                                <i class="fas fa-edit" title="Edit"></i>
+                                                            </a>
+                                                        </li>
+                                                    {% endfor %}
+                                                    <a href="{% url 'add_project' %}" class="btn btn-primary">
+                                                        <i class="fas fa-plus"></i> Add Project
+                                                    </a> 
+                                            
+                                                </ul>
                                             </div>       
                                         </div>
 
@@ -648,108 +661,77 @@
                                         <div class="modal fade twm-saved-jobs-view" id="Pro_ject" tabindex="-1">
                                             <div class="modal-dialog modal-dialog-centered">
                                                 <div class="modal-content">
-                                                    <form>
-
+                                                    <form method="post" action="{% url 'add_project' %}">
+                                                        {% csrf_token %}
+                                                    
                                                         <div class="modal-header">
                                                             <h2 class="modal-title">Add Project</h2>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
-
+                                                    
                                                         <div class="modal-body">
-                                                           
                                                             <div class="row">
+                                                                <!-- Project Title -->
                                                                 <div class="col-xl-12 col-lg-12">
                                                                     <div class="form-group">
-                                                                        <label>Project Title</label>
+                                                                        <label for="id_project_name">Project Title</label>
                                                                         <div class="ls-inputicon-box"> 
-                                                                            <input class="form-control"  type="text" placeholder="Enter Project Title">
+                                                                            <input class="form-control" type="text" id="id_project_name" name="project_name" placeholder="Enter Project Title">
                                                                             <i class="fs-input-icon fa fa-address-card"></i>
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                    
+                                                                <!-- Project Description -->
                                                                 <div class="col-xl-12 col-lg-12">
                                                                     <div class="form-group">
-                                                                        <label>Education</label>
-                                                                        <div class="ls-inputicon-box">  
-                                                                            <select class="wt-select-box selectpicker"  data-live-search="true" title=""  data-bv-field="size">
-                                                                                <option class="bs-title-option" value="">Select Category</option>
-                                                                                <option>Graduation/Diploma</option>
-                                                                                <option>Masters/Post-Graduation</option>
-                                                                            </select>
-                                                                            <i class="fs-input-icon fa fa-user-graduate"></i>
-                                                                        </div>
+                                                                        <label for="id_project_description">Detail of Projects</label>
+                                                                        <textarea class="form-control" id="id_project_description" name="project_description" rows="3" placeholder="Describe your Job"></textarea>
                                                                     </div>
                                                                 </div>
+                                                    
+                                                                <!-- Role in Project -->
                                                                 <div class="col-xl-12 col-lg-12">
                                                                     <div class="form-group">
-                                                                        <label>Client</label>
+                                                                        <label for="id_role_in_project">Role in Project</label>
                                                                         <div class="ls-inputicon-box"> 
-                                                                            <input class="form-control" type="text" placeholder="Enter Client Name">
+                                                                            <input class="form-control" type="text" id="id_role_in_project" name="role_in_project" placeholder="Enter Role">
                                                                             <i class="fs-input-icon fa fa-user"></i>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-xl-12 col-lg-12">
-                                                                    <div class="form-group">
-                                                                        <label>Project Status</label>
-                                                                        <div class="row twm-form-radio-inline">
-                                                                            
-                                                                            <div class="col-md-6">
-                                                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="In_Progress">
-                                                                                <label class="form-check-label" for="In_Progress">
-                                                                                    In Progress
-                                                                                </label>
-                                                                                </div>
-                                                                                <div class="col-md-6">
-                                                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="Finished" checked>
-                                                                                <label class="form-check-label" for="Finished">
-                                                                                    Finished
-                                                                                </label>
-                                                                                </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <!--Start Date-->
+                             
+                                                    
+                                                                <!-- Start Date -->
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
-                                                                        <label>Started Working From</label>
+                                                                        <label for="id_start_date">Started Working From</label>
                                                                         <div class="ls-inputicon-box"> 
-                                                                            <input class="form-control datepicker" data-provide="datepicker" name="company_since" type="text" placeholder="mm/dd/yyyy">
+                                                                            <input class="form-control datepicker" id="id_start_date" name="start_date" type="text" placeholder="dd/mm/yyyy">
                                                                             <i class="fs-input-icon far fa-calendar"></i>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-
-                                                                <!--End Date-->
+                                                    
+                                                                <!-- End Date -->
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
-                                                                        <label>Worked Till</label>
+                                                                        <label for="id_end_date">Worked Till</label> 
                                                                         <div class="ls-inputicon-box"> 
-                                                                            <input class="form-control datepicker" data-provide="datepicker" name="company_since" type="text" placeholder="mm/dd/yyyy">
+                                                                            <input class="form-control datepicker" id="id_end_date" name="end_date" type="text" placeholder="dd/mm/yyyy">
                                                                             <i class="fs-input-icon far fa-calendar"></i>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-md-12">
-                                                                    <div class="form-group mb-0">
-                                                                        <label>Detail of Projects</label>
-                                                                        <textarea class="form-control" rows="3" placeholder="Describe your Job"></textarea>
-                                                                    </div>
-                                                                </div>
-
                                                             </div>
-
                                                         </div>
-
+                                                    
                                                         <div class="modal-footer">
-                                                            
                                                             <button type="button" class="site-button" data-bs-dismiss="modal">Close</button>
-                                                            <button type="button" class="site-button">Save</button>
-                                                            
+                                                            <button type="submit" class="site-button">Save</button>
                                                         </div>
-
                                                     </form>
+                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -1344,13 +1326,39 @@
                                             <div class="twm-panel-inner">
                                                 <div class="twm-list-wrap">
                                                     <div class="twm-list-inner d-flex justify-content-between">
-                                                        <b>Online Profile</b> 
+                                                        <b>Online Profiles</b>
                                                         <a data-bs-toggle="modal" href="#Online_Profile" role="button" title="Edit" class="site-text-primary">
-                                                         <span class="fa fa-edit"></span>
+                                                            <span class="fa fa-edit"></span>
                                                         </a>
                                                     </div>
-                                                    <p>Add link to Online profiles (e.g. Linkedin, Facebook etc.).</p>
+                                                    <p>Add links to Online profiles (e.g. LinkedIn, GitHub, Portfolio, etc.).</p>
+                                                    <ul class="online-profiles">
+                                                        {% if resume.linkedin_profile %}
+                                                        <li>
+                                                            <span class="fab fa-linkedin site-text-primary"></span>
+                                                            <strong> LinkedIn:</strong>
+                                                            <a href="{{ resume.linkedin_profile }}" target="_blank">{{ resume.linkedin_profile }}</a>
+                                                        </li>
+                                                        {% endif %}
+                                                        {% if resume.github_profile %}
+                                                        <li>
+                                                            <span class="fab fa-github site-text-primary"></span>
+                                                            <strong> GitHub:</strong>
+                                                            <a href="{{ resume.github_profile }}" target="_blank">{{ resume.github_profile }}</a>
+                                                        </li>
+                                                        {% endif %}
+                                                        {% if resume.portfolio_link %}
+                                                        <li>
+                                                            <span class="fa fa-globe site-text-primary"></span>
+                                                            <strong> Portfolio:</strong>
+                                                            <a href="{{ resume.portfolio_link }}" target="_blank">{{ resume.portfolio_link }}</a>
+                                                        </li>
+                                                        {% endif %}
+                                                    </ul>
                                                 </div>
+                                                
+                                                
+                                                
                                                 <!--Online Profile Modal -->
                                                 <div class="modal fade twm-saved-jobs-view" id="Online_Profile" tabindex="-1">
                                                     <div class="modal-dialog modal-dialog-centered">
@@ -1650,202 +1658,127 @@
 
                                                 <div class="twm-list-wrap">
                                                     <div class="twm-list-inner d-flex justify-content-between">
-                                                        <b>Certification</b> 
+                                                        <b>Certification</b>
                                                         <a data-bs-toggle="modal" href="#Certification_modal" role="button" title="Edit" class="site-text-primary">
-                                                         <span class="fa fa-edit"></span>
+                                                            <span class="fa fa-edit"></span>
                                                         </a>
                                                     </div>
                                                     <p>Add details of Certification you have filed.</p>
+                                                
+                                                    <ul class="certification-list">
+                                                        {% for certification in certifications %}
+                                                        <li class="certification-item">
+                                                            <strong>{{ certification.certification_name }}</strong> by {{ certification.issuing_organization }}<br>
+                                                            Issued on {{ certification.issue_date }}
+                                            
+                                                          
+                                                            {% if certification.certification_name_link %}
+                                                            <strong>  Certification Link:</strong> <a href="{{ certification.certification_name_link }}" target="_blank">View Certification</a>
+                                                            {% endif %}
+
+                                                            <a href="{% url 'edit_certification' certification.pk %}" style="margin-left: 10px;">
+                                                                <i class="fas fa-edit" title="Edit"></i>
+                                                            </a>
+                                            
+                                                        </li>
+                                                        {% endfor %} 
+                                                    </ul>
+                                                
                                                 </div>
+                                                
                                                 <!--Certification Modal -->
                                                 <div class="modal fade twm-saved-jobs-view" id="Certification_modal" tabindex="-1">
                                                     <div class="modal-dialog modal-dialog-centered">
                                                         <div class="modal-content">
-                                                            <form>
-
+                                                            <form method="post" action="{% url 'add_certification' %}">
+                                                                {% csrf_token %}
                                                                 <div class="modal-header">
                                                                     <h2 class="modal-title">Certification</h2>
                                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                 </div>
-
+                                                            
                                                                 <div class="modal-body">
-                                                                
                                                                     <div class="row">
+                                                                        <!-- Certification Name Input -->
                                                                         <div class="col-xl-12 col-lg-12">
                                                                             <div class="form-group">
-                                                                                <label>Certification Name</label>
+                                                                                <label for="certification_name">Certification Name</label>
                                                                                 <div class="ls-inputicon-box"> 
-                                                                                    <input class="form-control"  type="text" placeholder="Enter Certification Name">
+                                                                                    <input 
+                                                                                        type="text" 
+                                                                                        id="certification_name" 
+                                                                                        name="certification_name" 
+                                                                                        class="form-control" 
+                                                                                        placeholder="Enter Certification Name" 
+                                                                                        required>
                                                                                     <i class="fs-input-icon fa fa-address-card"></i>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
+                                                            
+                                                                        <!-- Issuing Organization Input -->
                                                                         <div class="col-xl-12 col-lg-12">
                                                                             <div class="form-group">
-                                                                                <label>Certification Body</label>
+                                                                                <label for="issuing_organization">Certification Body</label>
                                                                                 <div class="ls-inputicon-box"> 
-                                                                                    <input class="form-control"  type="text" placeholder="Enter Certification Body">
+                                                                                    <input 
+                                                                                        type="text" 
+                                                                                        id="issuing_organization" 
+                                                                                        name="issuing_organization" 
+                                                                                        class="form-control" 
+                                                                                        placeholder="Enter Certification Body" 
+                                                                                        required>
                                                                                     <i class="fs-input-icon fa fa-address-card"></i>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                        
+                                                            
+                                                                        <!-- Issue Date Input -->
                                                                         <div class="col-xl-12 col-lg-12">
-                                                                            <div class="form-group mb-0">
-                                                                                <label>Year Onlabel</label>
+                                                                            <div class="form-group">
+                                                                                <label for="issue_date">Year On Label</label>
                                                                                 <div class="ls-inputicon-box">  
-                                                                                    <select class="wt-select-box selectpicker"  data-live-search="true" title=""  data-bv-field="size">
-                                                                                        <option class="bs-title-option" value="">Year</option>
-                                                                                        <option>2021</option>
-                                                                                        <option>2020</option>
-                                                                                        <option>2019</option>
-                                                                                        <option>2018</option>
-                                                                                        <option>2017</option>
-                                                                                        <option>2016</option>
-                                                                                        <option>2015</option>
-                                                                                        <option>2014</option>
-                                                                                        <option>2013</option>
-                                                                                        <option>2012</option>
-                                                                                        <option>2011</option>
-                                                                                    </select>
+                                                                                    <input 
+                                                                                        type="date" 
+                                                                                        id="issue_date" 
+                                                                                        name="issue_date" 
+                                                                                        class="form-control" 
+                                                                                        required>
                                                                                     <i class="fs-input-icon fa fa-calendar-alt"></i>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-
+                                                            
+                                                                        <!-- Certification Link Input -->
+                                                                        <div class="col-xl-12 col-lg-12">
+                                                                            <div class="form-group">
+                                                                                <label for="certification_name_link">Certification URL</label>
+                                                                                <div class="ls-inputicon-box"> 
+                                                                                    <input 
+                                                                                        type="url" 
+                                                                                        id="certification_name_link" 
+                                                                                        name="certification_name_link" 
+                                                                                        class="form-control" 
+                                                                                        placeholder="Enter Certification URL (Optional)">
+                                                                                    <i class="fs-input-icon fa fa-link"></i>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
-
                                                                 </div>
-
+                                                            
                                                                 <div class="modal-footer">
-                                                                    
                                                                     <button type="button" class="site-button" data-bs-dismiss="modal">Close</button>
-                                                                    <button type="button" class="site-button">Save</button>
-                                                                    
+                                                                    <button type="submit" class="site-button">Save</button>
                                                                 </div>
-
                                                             </form>
+                                                            
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                <div class="twm-list-wrap">
-                                                    <div class="twm-list-inner d-flex justify-content-between">
-                                                        <b>Patent</b> 
-                                                        <a data-bs-toggle="modal" href="#Patent_modal" role="button" title="Edit" class="site-text-primary">
-                                                         <span class="fa fa-edit"></span>
-                                                        </a>
-                                                    </div>
-                                                    <p>Add details of Patents you have filed.</p>
-                                                </div>
-                                                <!--Patent Modal -->
-                                                <div class="modal fade twm-saved-jobs-view" id="Patent_modal" tabindex="-1">
-                                                    <div class="modal-dialog modal-dialog-centered">
-                                                        <div class="modal-content">
-                                                            <form>
-
-                                                                <div class="modal-header">
-                                                                    <h2 class="modal-title">Patent</h2>
-                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                </div>
-
-                                                                <div class="modal-body">
-                                                                
-                                                                    <div class="row">
-                                                                        <div class="col-xl-12 col-lg-12">
-                                                                            <div class="form-group">
-                                                                                <label>Title</label>
-                                                                                <div class="ls-inputicon-box"> 
-                                                                                    <input class="form-control"  type="text" placeholder="Enter Title">
-                                                                                    <i class="fs-input-icon fa fa-address-card"></i>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-xl-12 col-lg-12">
-                                                                            <div class="form-group">
-                                                                                <label>Url</label>
-                                                                                <div class="ls-inputicon-box"> 
-                                                                                    <input class="form-control"  type="text" placeholder="Enter Url ">
-                                                                                    <i class="fs-input-icon fa fa-globe-americas"></i>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div class="col-xl-12 col-lg-12">
-                                                                            <div class="form-group">
-                                                                                <label>Patent Office</label>
-                                                                                <div class="ls-inputicon-box"> 
-                                                                                    <input class="form-control"  type="text" placeholder="Enter Patent Office">
-                                                                                    <i class="fs-input-icon fa fa-building"></i>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        
-                                                                        <div class="col-xl-12 col-lg-12">
-                                                                            <div class="form-group">
-                                                                                <label>Application Number</label>
-                                                                                <div class="ls-inputicon-box"> 
-                                                                                    <input class="form-control"  type="text" placeholder="Enter Application Number">
-                                                                                    <i class="fs-input-icon fa fa-dice-d6"></i>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div class="col-xl-12 col-lg-12">
-                                                                            <div class="form-group">
-                                                                                <label>Status</label>
-                                                                                <div class="row twm-form-radio-inline">
-                                                                                    
-                                                                                    <div class="col-md-6">
-                                                                                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="Patent_Issued">
-                                                                                        <label class="form-check-label" for="Patent_Issued">
-                                                                                            Patent Issued
-                                                                                        </label>
-                                                                                        </div>
-                                                                                        <div class="col-md-6">
-                                                                                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="Patent_pending" checked>
-                                                                                        <label class="form-check-label" for="Patent_pending">
-                                                                                            Patent pending
-                                                                                        </label>
-                                                                                        </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <!--Start Date-->
-                                                                        <div class="col-md-12">
-                                                                            <div class="form-group">
-                                                                                <label>Published On</label>
-                                                                                <div class="ls-inputicon-box"> 
-                                                                                    <input class="form-control datepicker" data-provide="datepicker" name="company_since" type="text" placeholder="mm/dd/yyyy">
-                                                                                    <i class="fs-input-icon far fa-calendar"></i>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div class="col-md-12">
-                                                                            <div class="form-group mb-0">
-                                                                                <label>Description</label>
-                                                                                <textarea class="form-control" rows="3" placeholder="Type Description"></textarea>
-                                                                            </div>
-                                                                        </div>
-                                                                        
-
-                                                                    </div>
-
-                                                                </div>
-
-                                                                <div class="modal-footer">
-                                                                    
-                                                                    <button type="button" class="site-button" data-bs-dismiss="modal">Close</button>
-                                                                    <button type="button" class="site-button">Save</button>
-                                                                    
-                                                                </div>
-
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                
+                                                
                                                 
 
                                             </div>       
