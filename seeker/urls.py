@@ -22,8 +22,11 @@ urlpatterns = [
     path('add/employment/', views.add_employment, name='add_employment'),
     path('add/skill/', views.add_skill, name='add_skill'),
     path('add/project/', views.add_project, name='add_project'),
-    path('add/certification/', views.add_certification, name='add_certification'),
+    path('add/certification/', views.add_certification, name='add_certification'), 
     
+    
+    
+    path('details/', views.seeker_details, name='seeker-details'),
     
     
 ]

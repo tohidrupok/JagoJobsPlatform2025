@@ -199,6 +199,11 @@ def add_certification(request):
             return redirect('my_resume')
     else:
         form = CertificationForm()
-    return render(request, 'edit.html', {'form': form}) 
+    return render(request, 'edit.html', {'form': form})  
+
+
+def seeker_details(request):
+    
+    return render(request, 'seeker-detail.html') 
 
 
