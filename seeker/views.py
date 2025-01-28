@@ -207,3 +207,8 @@ def seeker_details(request):
     return render(request, 'seeker-detail.html') 
 
 
+def seeker_profile(request):
+    
+    return render(request, 'profile.html') 
+
+

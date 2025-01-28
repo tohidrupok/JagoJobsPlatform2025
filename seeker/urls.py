@@ -27,6 +27,7 @@ urlpatterns = [
     
     
     path('details/', views.seeker_details, name='seeker-details'),
+    path('profile/', views.seeker_profile, name='seeker-profile'),
     
     
 ]
