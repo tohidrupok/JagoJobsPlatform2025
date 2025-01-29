@@ -16,26 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('accounts.urls')),
     path('seeker/', include('seeker.urls')),
-]
+] + static(settings.MEDIA_URL , document_root = settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) 
 
-# from django.contrib import admin
-# from django.urls import path, include
-# from . import views
-# from django.conf.urls.static import static
-# from django.conf import settings
 
-# urlpatterns = [
-#     path('admin/', admin.site.urls),
-#     path('', include('vlogs.urls') ),
-#     path('', include('store.urls') ),
-#     path('', include('service.urls') ),
-#     path('', include('job.urls') ),
-# ] + static(settings.MEDIA_URL , document_root = settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) 
- 
- 
- 

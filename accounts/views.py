@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
-from .forms import SeekerRegistrationForm, EmployerRegistrationForm, CustomLoginForm, ManagerRegistrationForm
-from .models import CustomUser
+from .forms import SeekerRegistrationForm, EmployerRegistrationForm, CustomLoginForm, ManagerRegistrationForm, SeekerProfileForm, EmployerProfileForm
+from .models import CustomUser, EmployerProfile, SeekerProfile
 
 def home(request):
     return render(request, 'index.html')  
@@ -171,3 +171,41 @@ def approve_manager(request, user_id):
         return redirect('approve_manager_list')
 
     return render(request, 'manager/approve_manager.html', {'manager': manager}) 
+
+@login_required
+def view_profile(request):
+    """View profile based on the user's role."""
+    if request.user.is_employer:
+        profile = get_object_or_404(EmployerProfile, user=request.user)
+        template = 'view_profile.html'
+    elif request.user.is_seeker:
+        profile = get_object_or_404(SeekerProfile, user=request.user)
+        template = 'view_profile.html'
+    else:
+        return redirect('home')
+    
+    return render(request, template, {'profile': profile})
+
+@login_required
+def edit_profile(request):
+    """Edit profile based on the user's role."""
+    if request.user.is_employer:
+        profile = get_object_or_404(EmployerProfile, user=request.user)
+        form_class = EmployerProfileForm
+        template = 'edit_profile.html'
+    elif request.user.is_seeker:
+        profile = get_object_or_404(SeekerProfile, user=request.user)
+        form_class = SeekerProfileForm
+        template = 'edit_profile.html'
+    else:
+        return redirect('home')
+    
+    if request.method == 'POST':
+        form = form_class(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('view_profile')
+    else:
+        form = form_class(instance=profile)
+    
+    return render(request, template, {'form': form}) 

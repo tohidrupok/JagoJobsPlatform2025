@@ -45,7 +45,7 @@ class SeekerProfile(models.Model):
     resume = models.FileField(upload_to='media/resumes/', blank=True, verbose_name="Resume")
     skills = models.TextField(blank=True, verbose_name="Skills")
     
-    # Personal Info
+    # Personal Info 
     name = models.CharField(max_length=255, blank=True, verbose_name="Full Name")  
     professional_title = models.CharField(max_length=255, blank=True, verbose_name="Professional Title")  
     

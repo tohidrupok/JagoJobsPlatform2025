@@ -129,5 +129,3 @@ class Certification(models.Model):
 
 #     def __str__(self):
 #         return f"Meta info for {self.resume.email}"
-
-
