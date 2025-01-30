@@ -28,7 +28,7 @@ urlpatterns = [
     
     path('details/', views.seeker_details, name='seeker-details'),
     path('profile/', views.seeker_profile, name='seeker-profile'),
-    
+    path('profile/edit/', views.edit_profile, name='edit_profile'),
     
 ]
 

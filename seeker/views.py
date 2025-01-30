@@ -1,8 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Resume, Education, Employment, Skill, Project, Certification
-from .forms import ResumeForm, EducationForm, EmploymentForm, SkillForm, ProjectForm, CertificationForm
+from .forms import ResumeForm, EducationForm, EmploymentForm, SkillForm, ProjectForm, CertificationForm, SeekerProfileForm
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required 
+from accounts.models import SeekerProfile
 
+
+@login_required
 def resume_detail(request, resume_id):
 
     resume = get_object_or_404(Resume, id=resume_id)
@@ -25,6 +29,7 @@ def resume_detail(request, resume_id):
     return render(request, 'resume_detail.html', context) 
 
 
+@login_required
 def my_resume(request):
     print("dukcha")
     resume = get_object_or_404(Resume, user=request.user)
@@ -46,12 +51,13 @@ def my_resume(request):
     }
     return render(request, 'resume_detail.html', context) 
 
+@login_required
 def all_resumes(request):
     resumes = Resume.objects.all()
     return render(request, 'all_resume.html', {'resumes': resumes}) 
 
 
-
+@login_required
 def edit_resume(request):
     resume = get_object_or_404(Resume, user=request.user)
     if request.method == 'POST':
@@ -63,6 +69,7 @@ def edit_resume(request):
         form = ResumeForm(instance=resume)
     return render(request, 'edit.html', {'form': form})
 
+@login_required
 def edit_education(request, pk):
     education = get_object_or_404(Education, pk=pk)
     if request.method == 'POST':
@@ -74,6 +81,7 @@ def edit_education(request, pk):
         form = EducationForm(instance=education)
     return render(request, 'edit.html', {'form': form})
 
+@login_required
 def delete_education(request, pk):
     education = get_object_or_404(Education, pk=pk)
 
@@ -83,7 +91,7 @@ def delete_education(request, pk):
 
     return redirect('my_resume')
 
-
+@login_required
 def edit_employment(request, pk):
     employment = get_object_or_404(Employment, pk=pk)
     if request.method == 'POST':
@@ -95,6 +103,7 @@ def edit_employment(request, pk):
         form = EmploymentForm(instance=employment)
     return render(request, 'edit.html', {'form': form})
 
+@login_required
 def edit_skill(request, pk):
     skill = get_object_or_404(Skill, pk=pk)
     if request.method == 'POST':
@@ -106,6 +115,7 @@ def edit_skill(request, pk):
         form = SkillForm(instance=skill)
     return render(request, 'edit.html', {'form': form})
 
+@login_required
 def edit_project(request, pk):
     project = get_object_or_404(Project, pk=pk)
     if request.method == 'POST':
@@ -117,6 +127,7 @@ def edit_project(request, pk):
         form = ProjectForm(instance=project)
     return render(request, 'edit.html', {'form': form})
 
+@login_required
 def edit_certification(request, pk):
     certification = get_object_or_404(Certification, pk=pk)
     if request.method == 'POST':
@@ -129,7 +140,7 @@ def edit_certification(request, pk):
     return render(request, 'edit.html', {'form': form})
 
 #ADD New Object
-
+@login_required
 def add_education(request):
     resume = Resume.objects.get(user=request.user)  
     if request.method == 'POST':
@@ -143,7 +154,7 @@ def add_education(request):
         form = EducationForm()
     return render(request, 'edit.html', {'form': form}) 
 
-
+@login_required
 def add_employment(request):
     resume = Resume.objects.get(user=request.user)
     if request.method == 'POST':
@@ -157,7 +168,7 @@ def add_employment(request):
         form = EmploymentForm()
     return render(request, 'edit.html', {'form': form}) 
 
-
+@login_required
 def add_skill(request):
     resume = Resume.objects.get(user=request.user)
     if request.method == 'POST':
@@ -172,7 +183,7 @@ def add_skill(request):
     return render(request, 'edit.html', {'form': form}) 
 
 
-
+@login_required
 def add_project(request):
     resume = Resume.objects.get(user=request.user)
     if request.method == 'POST':
@@ -187,7 +198,7 @@ def add_project(request):
     return render(request, 'edit.html', {'form': form}) 
 
 
-
+@login_required
 def add_certification(request):
     resume = Resume.objects.get(user=request.user)
     if request.method == 'POST':
@@ -202,13 +213,55 @@ def add_certification(request):
     return render(request, 'edit.html', {'form': form})  
 
 
+@login_required
 def seeker_details(request):
     
-    return render(request, 'seeker-detail.html') 
+    if request.user.is_seeker:
+        profile = get_object_or_404(SeekerProfile, user=request.user)
+        template = 'seeker-detail.html'
+    else:
+        return redirect('home')
+    
+    return render(request, template, {'profile': profile}) 
+
 
 
 def seeker_profile(request):
     
     return render(request, 'profile.html') 
 
+@login_required
+def edit_profile(request):
+    """Edit profile based on the user's role."""
+    # if request.user.is_employer:
+    #     profile = get_object_or_404(EmployerProfile, user=request.user)
+    #     form_class = EmployerProfileForm
+    #     template = 'edit_profile.html'
+    if request.user.is_seeker:
+        profile = get_object_or_404(SeekerProfile, user=request.user)
+        form_class = SeekerProfileForm
+        template = 'edit_profile.html'
+    else:
+        return redirect('home')
+    
+    if request.method == 'POST':
+        form = form_class(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('view_profile')
+    else:
+        form = form_class(instance=profile)
+    
+    return render(request, template, {'form': form}) 
 
+
+
+# def view_profile(request):
+#     """View profile based on the user's role."""
+#     if request.user.is_seeker:
+#         profile = get_object_or_404(SeekerProfile, user=request.user)
+#         template = 'seeker-detail.html'
+#     else:
+#         return redirect('home')
+    
+#     return render(request, template, {'profile': profile})

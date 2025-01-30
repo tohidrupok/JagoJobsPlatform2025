@@ -1,5 +1,6 @@
 from django import forms
 from .models import Resume, Education, Employment, Skill, Project, Certification
+from accounts.models import SeekerProfile
 
 class ResumeForm(forms.ModelForm):
     class Meta:
@@ -36,3 +37,12 @@ class CertificationForm(forms.ModelForm):
     class Meta:
         model = Certification
         fields = ['certification_name', 'issuing_organization', 'issue_date','certification_name_link']
+
+
+class SeekerProfileForm(forms.ModelForm):
+    class Meta:
+        model = SeekerProfile
+        fields = [
+            'bio', 'resume', 'skills', 'name', 'professional_title',
+            'current_salary', 'expected_salary', 'phone', 'email_address', 'location'
+        ]

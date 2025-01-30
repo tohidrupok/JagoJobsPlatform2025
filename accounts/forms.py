@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import CustomUser, EmployerProfile, SeekerProfile
+from .models import CustomUser, EmployerProfile
 
 
 class SeekerRegistrationForm(UserCreationForm):
@@ -34,10 +34,3 @@ class EmployerProfileForm(forms.ModelForm):
             'founded_date': forms.DateInput(attrs={'type': 'date'}),
         }
 
-class SeekerProfileForm(forms.ModelForm):
-    class Meta:
-        model = SeekerProfile
-        fields = [
-            'bio', 'resume', 'skills', 'name', 'professional_title',
-            'current_salary', 'expected_salary', 'phone', 'email_address', 'location'
-        ]

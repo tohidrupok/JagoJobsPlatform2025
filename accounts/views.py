@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
-from .forms import SeekerRegistrationForm, EmployerRegistrationForm, CustomLoginForm, ManagerRegistrationForm, SeekerProfileForm, EmployerProfileForm
+from .forms import SeekerRegistrationForm, EmployerRegistrationForm, CustomLoginForm, ManagerRegistrationForm, EmployerProfileForm
 from .models import CustomUser, EmployerProfile, SeekerProfile
 
 def home(request):
@@ -193,10 +193,10 @@ def edit_profile(request):
         profile = get_object_or_404(EmployerProfile, user=request.user)
         form_class = EmployerProfileForm
         template = 'edit_profile.html'
-    elif request.user.is_seeker:
-        profile = get_object_or_404(SeekerProfile, user=request.user)
-        form_class = SeekerProfileForm
-        template = 'edit_profile.html'
+    # elif request.user.is_seeker:
+    #     profile = get_object_or_404(SeekerProfile, user=request.user)
+    #     form_class = SeekerProfileForm
+    #     template = 'edit_profile.html'
     else:
         return redirect('home')
     
