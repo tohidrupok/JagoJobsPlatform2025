@@ -31,7 +31,7 @@ def resume_detail(request, resume_id):
 
 @login_required
 def my_resume(request):
-    print("dukcha")
+    
     resume = get_object_or_404(Resume, user=request.user)
     
     # Fetch related data
@@ -233,10 +233,7 @@ def seeker_profile(request):
 @login_required
 def edit_profile(request):
     """Edit profile based on the user's role."""
-    # if request.user.is_employer:
-    #     profile = get_object_or_404(EmployerProfile, user=request.user)
-    #     form_class = EmployerProfileForm
-    #     template = 'edit_profile.html'
+
     if request.user.is_seeker:
         profile = get_object_or_404(SeekerProfile, user=request.user)
         form_class = SeekerProfileForm
