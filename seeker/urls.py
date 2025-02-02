@@ -24,10 +24,9 @@ urlpatterns = [
     path('add/project/', views.add_project, name='add_project'),
     path('add/certification/', views.add_certification, name='add_certification'), 
     
+
     
-    
-    path('details/', views.seeker_details, name='seeker-details'),
-    path('profile/', views.seeker_profile, name='seeker-profile'),
+    path('profile/view/', views.view_profile, name='view_profile'),
     path('profile/edit/', views.edit_profile, name='edit_profile'),
     
 ]

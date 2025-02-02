@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import EmailValidator
 from accounts.models import CustomUser
+from datetime import date
 
 
 class Resume(models.Model):
@@ -82,6 +83,11 @@ class Employment(models.Model):
 
     def __str__(self):
         return f"{self.role} at {self.company_name}"
+    
+    def duration(self):
+        end = self.end_date if self.end_date else date.today()
+        delta = end - self.start_date
+        return delta.days // 365
 
 
 class Skill(models.Model):

@@ -213,22 +213,42 @@ def add_certification(request):
     return render(request, 'edit.html', {'form': form})  
 
 
+
+
+
+
 @login_required
-def seeker_details(request):
+def view_profile(request):
+    """View profile based on the user's role."""
     
     if request.user.is_seeker:
         profile = get_object_or_404(SeekerProfile, user=request.user)
+        resume = get_object_or_404(Resume, user=request.user)
+    
+        # Fetch related data
+        educations = resume.educations.all().order_by('-id')
+        employments = resume.employments.all().order_by('-id')
+        skills = resume.skills.all().order_by('-id')
+        projects = resume.projects.all().order_by('-id')
+        certifications = resume.certifications.all().order_by('-id')
+        
+        
         template = 'seeker-detail.html'
     else:
         return redirect('home')
     
-    return render(request, template, {'profile': profile}) 
-
-
-
-def seeker_profile(request):
+    context = {
+            'profile': profile,
+            'resume': resume,
+            'educations': educations,
+            'employments': employments,
+            'skills': skills,
+            'projects': projects,
+            'certifications': certifications,
+        }
     
-    return render(request, 'profile.html') 
+    return render(request, template, context)
+
 
 @login_required
 def edit_profile(request):

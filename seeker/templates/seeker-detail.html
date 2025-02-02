@@ -18,10 +18,10 @@
                             </div>
                             <div class="twm-mid-content">
                                 
-                                <h4 class="twm-job-title">Wanda Montgomery </h4>
+                                <h4 class="twm-job-title">{{ profile.name }}</h4> 
                                 
-                                <p>Senior UI / UX Designer and Developer at Google INC</p>
-                                <p class="twm-candidate-address"><i class="feather-map-pin"></i>United States</p>
+                                <p>{{ profile.professional_title }}</p>
+                                <p class="twm-candidate-address"><i class="feather-map-pin"></i>{{ profile.location }}</p>
                                 
                             </div>
                         </div>
@@ -33,7 +33,7 @@
                         </div>
                         <div class="twm-candi-self-bottom">
                             <a href="contact.html" class="site-button">Contact Us</a>
-                            <a href="files/pdf-sample.pdf" class="site-button secondry">Download CV</a>
+                            <a href="{{ profile.resume.url }}" class="site-button secondry">Download CV</a>
                         </div>
                     </div>
                 </div>
@@ -50,7 +50,7 @@
                                 
                                 <div class="twm-candidate-profile-pic">
                                     
-                                    <img src="images/user-avtar/pic4.jpg" alt="">
+                                    <img src="{% static 'images/candidates/demo.jpeg' %}" alt="#">
                                     <div class="upload-btn-wrapper">
                                         
                                         <div id="upload-image-grid"></div>
@@ -61,9 +61,9 @@
                                 </div>
                                 <div class="twm-mid-content text-center">
                                     <a href="candidate-detail.html" class="twm-job-title">
-                                        <h4>Randall Henderson </h4>
+                                        <h4>{{ profile.name }}</h4>
                                     </a>
-                                    <p>IT Contractor</p>
+                                    <p>{{ profile.professional_title }}</p>
                                 </div>
                                
                                 <div class="twm-nav-list-1">
@@ -89,12 +89,8 @@
                             <div class="twm-right-section-panel site-bg-gray">
                                 <h4 class="twm-s-title m-t0">About Me</h4>
 
-                                    <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? </p>
-
-                                    <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi.</p>
-
-                                     
-
+                                    <p>{{ profile.bio }}</p>
+                                  
                                 <div class="twm-s-info-wrap mb-5">
                                     <h4 class="section-head-small mb-4">Profile Info</h4> 
                                     <div class="twm-s-info-4">
@@ -103,43 +99,43 @@
                                             <div class="col-md-6">
                                                 <div class="twm-s-info-inner">
                                                     <i class="fas fa-money-bill-wave"></i>
-                                                    <span class="twm-title">Offered Salary</span>
-                                                    <div class="twm-s-info-discription">$20 / Day</div>
+                                                    <span class="twm-title">Current Salary</span>
+                                                    <div class="twm-s-info-discription">{{ profile.current_salary }}BDT</div>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="twm-s-info-inner">
                                                     <i class="fas fa-clock"></i>
-                                                    <span class="twm-title">Experience</span>
-                                                    <div class="twm-s-info-discription">6 Year</div>
+                                                    <span class="twm-title">Availability to Join</span>
+                                                    <div class="twm-s-info-discription">{{ resume.availability_to_join }}</div>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="twm-s-info-inner">
                                                     <i class="fas fa-venus-mars"></i>
                                                     <span class="twm-title">Gender</span>
-                                                    <div class="twm-s-info-discription">Male</div>
+                                                    <div class="twm-s-info-discription">{{ resume.gender }}</div>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="twm-s-info-inner">
                                                     <i class="fas fa-mobile-alt"></i>
                                                     <span class="twm-title">Phone</span>
-                                                    <div class="twm-s-info-discription">+291  560 56456</div>
+                                                    <div class="twm-s-info-discription">{{ profile.phone }}</div>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="twm-s-info-inner">
                                                     <i class="fas fa-at"></i>
                                                     <span class="twm-title">Email</span>
-                                                    <div class="twm-s-info-discription">thewebmaxdemo@gmail.com</div>
+                                                    <div class="twm-s-info-discription">{{ profile.email_address }}</div>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="twm-s-info-inner">
                                                     <i class="fas fa-book-reader"></i>
-                                                    <span class="twm-title">Qualification</span>
-                                                    <div class="twm-s-info-discription">MCA</div>
+                                                    <span class="twm-title">Date of Birth</span>
+                                                    <div class="twm-s-info-discription">{{ resume.date_of_birth }}</div>
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
@@ -147,7 +143,7 @@
                                                     
                                                     <i class="fas fa-map-marker-alt"></i>
                                                     <span class="twm-title">Address</span>
-                                                    <div class="twm-s-info-discription">1363-1385 Sunset Blvd Angeles, CA 90026 ,USA</div>
+                                                    <div class="twm-s-info-discription">{{ profile.location }}</div>
                                                 </div>
                                             </div>
 
@@ -159,280 +155,233 @@
 
                                     <div class="tw-sidebar-tags-wrap">
                                         <div class="tagcloud">
-                                            <a href="javascript:void(0)">Finance</a>
-                                            <a href="javascript:void(0)">Sales</a>
-                                            <a href="javascript:void(0)">Part-time</a>                                            
-                                            <a href="javascript:void(0)">Administration</a>
-                                            <a href="javascript:void(0)">Retail</a>
-                                            <a href="javascript:void(0)">Engineering</a>
-                                            <a href="javascript:void(0)">Developer</a>
-                                            <a href="javascript:void(0)">Work from home</a>
-                                            <a href="javascript:void(0)">IT Consulting</a>
-                                            <a href="javascript:void(0)">Manufacturing</a>
+                                            {% for skill in skills %}
+                                                    <a href="javascript:void(0)">{{ skill.skill_name }}</a>
+                                            {% endfor %} 
+                                            
                                         </div>
                                     </div>
 
                                     <h4 class="twm-s-title">Work Experience</h4>
                                     <div class="twm-timing-list-wrap">
-
-                                        <div class="twm-timing-list">
-                                            <div class="twm-time-list-date">2012 to 2016</div>
-                                            <div class="twm-time-list-title">Bluetech, Inc</div>
-                                            <div class="twm-time-list-position">Senior PHP Developer</div>
-                                            <div class="twm-time-list-discription">
-                                                <p>One of the main areas that I work on with my clients is shedding these non-supportive beliefs and 
-                                                    replacing them with beliefs that will help them to accomplish their desires.</p>
+                                        {% for employment in employments %}
+                                            <div class="twm-timing-list">
+                                                <div class="twm-time-list-date">
+                                                    {{ employment.start_date.year }} to 
+                                                    {% if employment.end_date %}
+                                                        {{ employment.end_date.year }}
+                                                    {% else %}
+                                                        Present
+                                                    {% endif %}
+                                                </div>
+                                                <div class="twm-time-list-title">{{ employment.company_name }}</div>
+                                                <div class="twm-time-list-position">{{ employment.role }}</div>
+                                                <div class="twm-time-list-discription">
+                                                    <p>{{ employment.responsibilities }}</p>
+                                                </div>
                                             </div>
-                                        </div>
+                                        {% endfor %} 
 
-                                        <div class="twm-timing-list">
-                                            <div class="twm-time-list-date">2016 to 2020</div>
-                                            <div class="twm-time-list-title">Amazon, Inc</div>
-                                            <div class="twm-time-list-position">IT & Development</div>
-                                            <div class="twm-time-list-discription">
-                                                <p>One of the main areas that I work on with my clients is shedding these non-supportive beliefs and 
-                                                    replacing them with beliefs that will help them to accomplish their desires.</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="twm-timing-list">
-                                            <div class="twm-time-list-date">2020 to 2023</div>
-                                            <div class="twm-time-list-title">BGoogle, Inc</div>
-                                            <div class="twm-time-list-position">Senior UI / UX Designer and Developer </div>
-                                            <div class="twm-time-list-discription">
-                                                <p>One of the main areas that I work on with my clients is shedding these non-supportive beliefs and 
-                                                    replacing them with beliefs that will help them to accomplish their desires.</p>
-                                            </div>
-                                        </div>
-
+                                      
                                     </div>
 
                                     <h4 class="twm-s-title">Education & Training</h4>
                                     <div class="twm-timing-list-wrap">
-
-                                        <div class="twm-timing-list">
-                                            <div class="twm-time-list-date">2004 to 2006</div>
-                                            <div class="twm-time-list-title">BCA - Bachelor of Computer Applications</div>
-                                            <div class="twm-time-list-position">International University</div>
-                                            <div class="twm-time-list-discription">
-                                                <p>One of the main areas that I work on with my clients is shedding these non-supportive beliefs and 
-                                                    replacing them with beliefs that will help them to accomplish their desires.</p>
+                                        {% for education in educations %}
+                                            <div class="twm-timing-list">
+                                                <div class="twm-time-list-date"> Passing Year {{ education.graduation_year }} </div>
+                                                <div class="twm-time-list-title">{{ education.degree }}</div>
+                                                <div class="twm-time-list-position">{{ education.university }}</div>
+                                                <div class="twm-time-list-discription">
+                                                    <p>
+                                                        {% if education.field_of_study %}
+                                                            Specialized in {{ education.field_of_study }}.
+                                                        {% else %}
+                                                            Completed {{ education.degree }} successfully.
+                                                        {% endif %}
+                                                    </p>
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <div class="twm-timing-list">
-                                            <div class="twm-time-list-date">2006 to 2008</div>
-                                            <div class="twm-time-list-title">MCA - Master of Computer Application</div>
-                                            <div class="twm-time-list-position">Middle East Technical University</div>
-                                            <div class="twm-time-list-discription">
-                                                <p>One of the main areas that I work on with my clients is shedding these non-supportive beliefs and 
-                                                    replacing them with beliefs that will help them to accomplish their desires.</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="twm-timing-list">
-                                            <div class="twm-time-list-date">2008 to 2011</div>
-                                            <div class="twm-time-list-title">Design Communication Visual</div>
-                                            <div class="twm-time-list-position">Design at Massachusetts Institute of Technology & Marketing</div>
-                                            <div class="twm-time-list-discription">
-                                                <p>One of the main areas that I work on with my clients is shedding these non-supportive beliefs and 
-                                                    replacing them with beliefs that will help them to accomplish their desires.</p>
-                                            </div>
-                                        </div>
+                                        {% endfor %} 
 
                                     </div> 
 
-
-                                <form>
+                               
                                     
                                     <!--Basic Information-->
                                     <div class="panel panel-default">
                                         <div class="panel-heading wt-panel-heading p-a20">
                                             <h4 class="panel-tittle m-a0">Basic Informations</h4>
                                         </div>
-                                        <div class="panel-body wt-panel-body p-a20 m-b30 ">
-                                            
+                                        <div class="panel-body wt-panel-body p-a20 m-b30">
                                             <div class="row">
-                                                                
-                                                    <div class="col-xl-6 col-lg-6 col-md-12">
-                                                        <div class="form-group">
-                                                            <label>Your Name</label>
-                                                            <div class="ls-inputicon-box"> 
-                                                                <input class="form-control" name="company_name" type="text" placeholder="Devid Smith">
-                                                                <i class="fs-input-icon fa fa-user "></i>
-                                                            </div>
+                                                <!-- Name -->
+                                                <div class="col-xl-6 col-lg-6 col-md-12">
+                                                    <div class="form-group">
+                                                        <label>Your Name</label>
+                                                        <div class="ls-inputicon-box">
+                                                            <input class="form-control" name="company_name" type="text" value="{{ profile.name }}" readonly>
+                                                            <i class="fs-input-icon fa fa-user"></i>
                                                         </div>
                                                     </div>
-                                                    
-                                                    <div class="col-xl-6 col-lg-6 col-md-12">
-                                                        <div class="form-group">
-                                                            <label>Phone</label>
-                                                            <div class="ls-inputicon-box"> 
-                                                                <input class="form-control" name="company_phone" type="text" placeholder="(251) 1234-456-7890">
-                                                                <i class="fs-input-icon fa fa-phone-alt"></i>
-                                                            </div>
+                                                </div>
+                                    
+                                                <!-- Phone -->
+                                                <div class="col-xl-6 col-lg-6 col-md-12">
+                                                    <div class="form-group">
+                                                        <label>Phone</label>
+                                                        <div class="ls-inputicon-box">
+                                                            <input class="form-control" name="company_phone" type="text" value="{{ profile.phone }}" readonly>
+                                                            <i class="fs-input-icon fa fa-phone-alt"></i>
                                                         </div>
                                                     </div>
-                
-                                                    <div class="col-xl-6 col-lg-6 col-md-12">
-                                                        <div class="form-group">
-                                                            <label>Email Address</label>
-                                                            <div class="ls-inputicon-box"> 
-                                                                <input class="form-control" name="company_Email" type="email" placeholder="Devid@example.com">
-                                                                <i class="fs-input-icon fas fa-at"></i>
-                                                            </div>
+                                                </div>
+                                    
+                                                <!-- Email Address -->
+                                                <div class="col-xl-6 col-lg-6 col-md-12">
+                                                    <div class="form-group">
+                                                        <label>Email Address</label>
+                                                        <div class="ls-inputicon-box">
+                                                            <input class="form-control" name="company_Email" type="email" value="{{ profile.email_address }}" readonly>
+                                                            <i class="fs-input-icon fas fa-at"></i>
                                                         </div>
                                                     </div>
-                
-                                                    <div class="col-xl-6 col-lg-6 col-md-12">
-                                                        <div class="form-group">
-                                                            <label>Website</label>
-                                                            <div class="ls-inputicon-box"> 
-                                                                <input class="form-control" name="company_website" type="text" placeholder="https://devsmith.net">
-                                                                <i class="fs-input-icon fa fa-globe-americas"></i>
-                                                            </div>
+                                                </div>
+                                    
+                                                <!-- Website (Optional) -->
+                                                <div class="col-xl-6 col-lg-6 col-md-12">
+                                                    <div class="form-group">
+                                                        <label>Marital Status</label>
+                                                        <div class="ls-inputicon-box">
+                                                            <input class="form-control" name="company_website" type="text" value="{{resume.marital_status }}" readonly>
+                                                            <i class="fs-input-icon fa fa-globe-americas"></i>
                                                         </div>
                                                     </div>
-                
-                
-                                                    <div class="col-xl-6 col-lg-6 col-md-12">
-                                                        <div class="form-group">
-                                                            <label>Qualification</label>
-                                                            <div class="ls-inputicon-box"> 
-                                                                <input class="form-control" name="company_since" type="text" placeholder="BTech">
-                                                                <i class="fs-input-icon fa fa-user-graduate"></i>
-                                                            </div>
+                                                </div>
+                                    
+                                                <!-- Qualification -->
+                                                <div class="col-xl-6 col-lg-6 col-md-12">
+                                                    <div class="form-group">
+                                                        <label>Qualification</label>
+                                                        <div class="ls-inputicon-box">
+                                                            <input class="form-control" name="company_since" type="text" value="{{ resume.educations.last.degree }}" readonly>
+                                                            <i class="fs-input-icon fa fa-user-graduate"></i>
                                                         </div>
                                                     </div>
-                
-                                                    <div class="col-xl-6 col-lg-6 col-md-12">
-                                                        <div class="form-group">
-                                                            <label>Language</label>
-                                                            <div class="ls-inputicon-box"> 
-                                                                <input class="form-control" name="company_since" type="text" placeholder="e.x English, Spanish">
-                                                                <i class="fs-input-icon fa fa-language"></i>
-                                                            </div>
+                                                </div>
+                                    
+                                                <!-- Language -->
+                                                <div class="col-xl-6 col-lg-6 col-md-12">
+                                                    <div class="form-group">
+                                                        <label>Language</label>
+                                                        <div class="ls-inputicon-box">
+                                                            <input class="form-control" name="company_since" type="text" value="{{ resume.languages }}" readonly>
+                                                            <i class="fs-input-icon fa fa-language"></i>
                                                         </div>
                                                     </div>
-                
-                                                    <div class="col-xl-6 col-lg-6 col-md-12">
-                                                        <div class="form-group city-outer-bx has-feedback">
-                                                            <label>Job Category</label>
-                                                            <div class="ls-inputicon-box">  
-                                                                <input class="form-control" name="company_since" type="text" placeholder="IT & Software">
-                                                                <i class="fs-input-icon fa fa-border-all"></i>
-                                                            </div>
-                                                            
+                                                </div>
+                                    
+                                                <!-- Job Category -->
+                                                <div class="col-xl-6 col-lg-6 col-md-12">
+                                                    <div class="form-group city-outer-bx has-feedback">
+                                                        <label>Job Category</label>
+                                                        <div class="ls-inputicon-box">
+                                                            <input class="form-control" name="company_since" type="text" value="IT & Software" readonly>
+                                                            <i class="fs-input-icon fa fa-border-all"></i>
                                                         </div>
                                                     </div>
-                
-                                                    <div class="col-xl-6 col-lg-6 col-md-12">
-                                                        <div class="form-group city-outer-bx has-feedback">
-                                                            <label>Experience</label>
-                                                            <div class="ls-inputicon-box">  
-                                                                <input class="form-control" name="company_since" type="text" placeholder="05 Years">
-                                                                <i class="fs-input-icon fa fa-user-edit"></i>
-                                                            </div>
-                                                            
+                                                </div>
+                                    
+                                                <!-- Experience -->
+                                                <div class="col-xl-6 col-lg-6 col-md-12">
+                                                    <div class="form-group city-outer-bx has-feedback">
+                                                        <label>Experience</label>
+                                                        <div class="ls-inputicon-box">
+                                                            <input class="form-control" name="company_since" type="text" value="05 Years" readonly>
+                                                            <i class="fs-input-icon fa fa-user-edit"></i>
                                                         </div>
                                                     </div>
-                
-                                                    <div class="col-xl-4 col-lg-6 col-md-12">
-                                                        <div class="form-group city-outer-bx has-feedback">
-                                                            <label>Current Salary</label>
-                                                            <div class="ls-inputicon-box">  
-                                                                <input class="form-control" name="company_since" type="text" placeholder="65K">
-                                                                <i class="fs-input-icon fa fa-dollar-sign"></i>
-                                                            </div>
+                                                </div>
+                                    
+                                                <!-- Current Salary -->
+                                                <div class="col-xl-4 col-lg-6 col-md-12">
+                                                    <div class="form-group city-outer-bx has-feedback">
+                                                        <label>Current Salary</label>
+                                                        <div class="ls-inputicon-box">
+                                                            <input class="form-control" name="company_since" type="text" value="${{ profile.current_salary }}" readonly>
+                                                            <i class="fs-input-icon fa fa-dollar-sign"></i>
                                                         </div>
                                                     </div>
-                
-                                                    <div class="col-xl-4 col-lg-6 col-md-12">
-                                                        <div class="form-group city-outer-bx has-feedback">
-                                                            <label>Expected Salary</label>
-                                                            <div class="ls-inputicon-box">  
-                                                                <input class="form-control" name="company_since" type="text" placeholder="75K">
-                                                                <i class="fs-input-icon fa fa-dollar-sign"></i>
-                                                            </div>
-                                                            
+                                                </div>
+                                    
+                                                <!-- Expected Salary -->
+                                                <div class="col-xl-4 col-lg-6 col-md-12">
+                                                    <div class="form-group city-outer-bx has-feedback">
+                                                        <label>Expected Salary</label>
+                                                        <div class="ls-inputicon-box">
+                                                            <input class="form-control" name="company_since" type="text" value="${{ profile.expected_salary }}" readonly>
+                                                            <i class="fs-input-icon fa fa-dollar-sign"></i>
                                                         </div>
                                                     </div>
-                
-                                                    <div class="col-xl-4 col-lg-12 col-md-12">
-                                                        <div class="form-group city-outer-bx has-feedback">
-                                                            <label>Age</label>
-                                                            <div class="ls-inputicon-box">  
-                                                                <input class="form-control" name="company_since" type="text" placeholder="35 Years">
-                                                                <i class="fs-input-icon fa fa-child"></i>
-                                                            </div>
-                                                            
+                                                </div>
+                                    
+                                                <!-- Age -->
+                                                <div class="col-xl-4 col-lg-12 col-md-12">
+                                                    <div class="form-group city-outer-bx has-feedback">
+                                                        <label>Age</label>
+                                                        <div class="ls-inputicon-box">
+                                                            <input class="form-control" name="company_since" type="text" placeholder="35 Years" readonly>
+                                                            <i class="fs-input-icon fa fa-child"></i>
                                                         </div>
                                                     </div>
-                
-
-                                                    <div class="col-xl-4 col-lg-6 col-md-12">
-                                                        <div class="form-group city-outer-bx has-feedback">
-                                                            <label>Country</label>
-                                                            <div class="ls-inputicon-box">  
-                                                                <input class="form-control" name="company_since" type="text" placeholder="USA">
-                                                                <i class="fs-input-icon fa fa-globe-americas"></i>
-                                                            </div>
-                                                            
+                                                </div>
+                                    
+                                                <!-- Country -->
+                                                <div class="col-xl-4 col-lg-6 col-md-12">
+                                                    <div class="form-group city-outer-bx has-feedback">
+                                                        <label>Country</label>
+                                                        <div class="ls-inputicon-box">
+                                                            <input class="form-control" name="company_since" type="text" value="USA" readonly>
+                                                            <i class="fs-input-icon fa fa-globe-americas"></i>
                                                         </div>
                                                     </div>
-
-                                                    <div class="col-xl-4 col-lg-6 col-md-12">
-                                                        <div class="form-group city-outer-bx has-feedback">
-                                                            <label>City</label>
-                                                            <div class="ls-inputicon-box">  
-                                                                <input class="form-control" name="company_since" type="text" placeholder="Texas">
-                                                                <i class="fs-input-icon fa fa-globe-americas"></i>
-                                                            </div>
-                                                            
+                                                </div>
+                                    
+                                                <!-- City -->
+                                                <div class="col-xl-4 col-lg-6 col-md-12">
+                                                    <div class="form-group city-outer-bx has-feedback">
+                                                        <label>City</label>
+                                                        <div class="ls-inputicon-box">
+                                                            <input class="form-control" name="company_since" type="text" value="{{ profile.location }}" readonly>
+                                                            <i class="fs-input-icon fa fa-globe-americas"></i>
                                                         </div>
                                                     </div>
-
-                                                    <div class="col-xl-4 col-lg-12 col-md-12">
-                                                        <div class="form-group city-outer-bx has-feedback">
-                                                            <label>Postcode</label>
-                                                            <div class="ls-inputicon-box">  
-                                                                <input class="form-control" name="company_since" type="text" placeholder="75462">
-                                                                <i class="fs-input-icon fas fa-map-pin"></i>
-                                                            </div>
-                                                            
+                                                </div>
+                                    
+                                                <!-- Postcode -->
+                                                <div class="col-xl-4 col-lg-12 col-md-12">
+                                                    <div class="form-group city-outer-bx has-feedback">
+                                                        <label>Postcode</label>
+                                                        <div class="ls-inputicon-box">
+                                                            <input class="form-control" name="company_since" type="text" placeholder="75462" readonly>
+                                                            <i class="fs-input-icon fas fa-map-pin"></i>
                                                         </div>
                                                     </div>
-
-                                                    <div class="col-xl-12 col-lg-12 col-md-12">
-                                                        <div class="form-group city-outer-bx has-feedback">
-                                                            <label>Full Address</label>
-                                                            <div class="ls-inputicon-box">  
-                                                                <input class="form-control" name="company_since" type="text" placeholder="1363-1385 Sunset Blvd Angeles, CA 90026 ,USA">
-                                                                <i class="fs-input-icon fas fa-map-marker-alt"></i>
-                                                            </div>
-                                                            
+                                                </div>
+                                    
+                                                <!-- Full Address -->
+                                                <div class="col-xl-12 col-lg-12 col-md-12">
+                                                    <div class="form-group city-outer-bx has-feedback">
+                                                        <label>Full Address</label>
+                                                        <div class="ls-inputicon-box">
+                                                            <input class="form-control" name="company_since" type="text" value="{{ profile.location }}" readonly>
+                                                            <i class="fs-input-icon fas fa-map-marker-alt"></i>
                                                         </div>
                                                     </div>
-
-
-                 
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <label>Description</label>
-                                                            <textarea class="form-control" rows="3">Greetings! when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.</textarea>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                                                                                
-                                                    <div class="col-lg-12 col-md-12">                                   
-                                                        <div class="text-left">
-                                                            <button type="submit" class="site-button">Save Changes</button>
-                                                        </div>
-                                                    </div> 
-                                                                                        
-                                                
+                                                </div>
+                                    
                                             </div>
-                                                    
                                         </div>
                                     </div>
                 
@@ -441,102 +390,54 @@
                                         <div class="panel-heading wt-panel-heading p-a20">
                                             <h4 class="panel-tittle m-a0">Social Network</h4>
                                         </div>
-                                        <div class="panel-body wt-panel-body p-a20 m-b30 ">
-                                            
+                                        <div class="panel-body wt-panel-body p-a20 m-b30">
                                             <div class="row">
-                                                    
+                                                <!-- LinkedIn -->
+                                                {% if resume.linkedin_profile %}
                                                     <div class="col-xl-4 col-lg-6 col-md-12">
                                                         <div class="form-group">
-                                                            <label>Facebook</label>
-                                                            <div class="ls-inputicon-box"> 
-                                                                <input class="form-control wt-form-control" name="company_name" type="text" placeholder="https://www.facebook.com/">
-                                                                <i class="fs-input-icon fab fa-facebook-f"></i>
+                                                            <label>LinkedIn</label>
+                                                            <div class="ls-inputicon-box">
+                                                                <a class="form-control wt-form-control" href="{{ resume.linkedin_profile }}" target="_blank" style="display: block; text-decoration: none; color: inherit;">
+                                                                    <i class="fs-input-icon fab fa-linkedin-in"></i>
+                                                                </a>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    
-                                                    <div class="col-xl-4 col-lg-6 col-md-12">    
+                                                {% endif %}
+                                    
+                                                <!-- GitHub -->
+                                                {% if resume.github_profile %}
+                                                    <div class="col-xl-4 col-lg-6 col-md-12">
                                                         <div class="form-group">
-                                                            <label>Twitter</label>
-                                                            <div class="ls-inputicon-box"> 
-                                                                <input class="form-control wt-form-control" name="company_name" type="text" placeholder="https://twitter.com/">
-                                                                <i class="fs-input-icon fab fa-twitter"></i>
+                                                            <label>GitHub</label>
+                                                            <div class="ls-inputicon-box">
+                                                                <a class="form-control wt-form-control" href="{{ resume.github_profile }}" target="_blank" style="display: block; text-decoration: none; color: inherit;">
+                                                                    <i class="fs-input-icon fab fa-github"></i>
+                                                                </a>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    
-                                                    <div class="col-xl-4 col-lg-6 col-md-12">    
+                                                {% endif %}
+                                    
+                                                <!-- Portfolio -->
+                                                {% if resume.portfolio_link %}
+                                                    <div class="col-xl-4 col-lg-6 col-md-12">
                                                         <div class="form-group">
-                                                            <label>linkedin</label>
-                                                            <div class="ls-inputicon-box"> 
-                                                                <input class="form-control wt-form-control" name="company_name" type="text" placeholder="https://in.linkedin.com/">
-                                                                <i class="fs-input-icon fab fa-linkedin-in"></i>
+                                                            <label>Portfolio</label>
+                                                            <div class="ls-inputicon-box">
+                                                                <a class="form-control wt-form-control" href="{{ resume.portfolio_link }}" target="_blank" style="display: block; text-decoration: none; color: inherit;">
+                                                                    <i class="fs-input-icon fas fa-briefcase"></i>
+                                                                </a>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    
-                                                    <div class="col-xl-4 col-lg-6 col-md-12">     
-                                                        <div class="form-group">
-                                                            <label>Whatsapp</label>
-                                                            <div class="ls-inputicon-box"> 
-                                                                <input class="form-control wt-form-control" name="company_name" type="text" placeholder="https://www.whatsapp.com/">
-                                                                <i class="fs-input-icon fab fa-whatsapp"></i>
-                                                            </div>
-                                                        </div>
-                                                    </div> 
-                                                    
-                                                    <div class="col-xl-4 col-lg-6 col-md-12">                               
-                                                        <div class="form-group">
-                                                            <label>Instagram</label>
-                                                            <div class="ls-inputicon-box"> 
-                                                                <input class="form-control wt-form-control" name="company_name" type="text" placeholder="https://www.instagram.com/">
-                                                                <i class="fs-input-icon fab fa-instagram"></i>
-                                                            </div>
-                                                        </div>
-                                                    </div>    
-                                                        
-                                                    <div class="col-xl-4 col-lg-6 col-md-12">    
-                                                        <div class="form-group">
-                                                            <label>Pinterest</label>
-                                                            <div class="ls-inputicon-box"> 
-                                                                <input class="form-control wt-form-control" name="company_name" type="text" placeholder="https://in.pinterest.com/">
-                                                                <i class="fs-input-icon fab fa-pinterest-p"></i>
-                                                            </div>
-                                                        </div>                 
-                                                    </div>
-                                                    
-                                                    <div class="col-xl-4 col-lg-6 col-md-12">    
-                                                        <div class="form-group">
-                                                            <label>Tumblr</label>
-                                                            <div class="ls-inputicon-box"> 
-                                                                <input class="form-control wt-form-control" name="company_name" type="text" placeholder="https://www.tumblr.com/">
-                                                                <i class="fs-input-icon fab fa-tumblr"></i>
-                                                            </div>
-                                                        </div>                                                                                          
-                                                    </div>
-                                                    
-                                                    <div class="col-xl-4 col-lg-6 col-md-12">    
-                                                        <div class="form-group">
-                                                            <label>Youtube</label>
-                                                            <div class="ls-inputicon-box"> 
-                                                                <input class="form-control wt-form-control" name="company_name" type="text" placeholder="https://www.youtube.com/">
-                                                                <i class="fs-input-icon fab fa-youtube"></i>
-                                                            </div>
-                                                        </div>                  
-                                                    </div> 
-                                                                                                                
-                                                <div class="col-lg-12 col-md-12">                                   
-                                                        <div class="text-left">
-                                                            <button type="submit" class="site-button">Save Changes</button>
-                                                        </div>
-                                                    </div> 
-                                                                                        
-                                                
+                                                {% endif %}
+                                              
                                             </div>
-                                                    
                                         </div>
                                     </div>
-                                </form>
+                                
                             </div>
                         </div>
 
