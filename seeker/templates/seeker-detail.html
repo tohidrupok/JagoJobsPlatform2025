@@ -340,9 +340,9 @@
                                                 <!-- Country -->
                                                 <div class="col-xl-4 col-lg-6 col-md-12">
                                                     <div class="form-group city-outer-bx has-feedback">
-                                                        <label>Country</label>
+                                                        <label>Passport Nnumber</label>
                                                         <div class="ls-inputicon-box">
-                                                            <input class="form-control" name="company_since" type="text" value="USA" readonly>
+                                                            <input class="form-control" name="company_since" type="text" value="{{ resume.passport_number }}"readonly>
                                                             <i class="fs-input-icon fa fa-globe-americas"></i>
                                                         </div>
                                                     </div>
@@ -353,18 +353,18 @@
                                                     <div class="form-group city-outer-bx has-feedback">
                                                         <label>City</label>
                                                         <div class="ls-inputicon-box">
-                                                            <input class="form-control" name="company_since" type="text" value="{{ profile.location }}" readonly>
+                                                            <input class="form-control" name="company_since" type="text" value="{{ resume.hometown }}" readonly>
                                                             <i class="fs-input-icon fa fa-globe-americas"></i>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> 
                                     
                                                 <!-- Postcode -->
                                                 <div class="col-xl-4 col-lg-12 col-md-12">
                                                     <div class="form-group city-outer-bx has-feedback">
                                                         <label>Postcode</label>
                                                         <div class="ls-inputicon-box">
-                                                            <input class="form-control" name="company_since" type="text" placeholder="75462" readonly>
+                                                            <input class="form-control" name="company_since" type="text" value="{{ resume.area_pin_code }}" readonly>
                                                             <i class="fs-input-icon fas fa-map-pin"></i>
                                                         </div>
                                                     </div>
