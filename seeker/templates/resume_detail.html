@@ -178,17 +178,7 @@
                                                                     required>
                                                             </div>
                                                     
-                                                            <!-- Version Input -->
-                                                            <div class="form-group">
-                                                                <label for="version" class="form-label">Version</label>
-                                                                <input 
-                                                                    type="text" 
-                                                                    id="version" 
-                                                                    name="version" 
-                                                                    class="form-control" 
-                                                                    placeholder="e.g., 3.9, ES6, 2021" 
-                                                                    required>
-                                                            </div>
+                                                           
                                                     
                                                             <!-- Last Used Year Input -->
                                                             <div class="form-group">
@@ -519,7 +509,7 @@
                                                     <thead>
                                                         <tr>
                                                             <th>Skills</th>
-                                                            <th>Version</th>
+                                                            
                                                             <th>Last Used</th>
                                                             <th>Experience</th>
                                                             <th>Action</th>
@@ -531,7 +521,7 @@
                                                         {% for skill in skills %}
                                                         <tr>
                                                             <td>{{ skill.skill_name }}</td>
-                                                            <td>{{ skill.version }}</td>
+                                                            
                                                             <td>{{ skill.last_used_year }}</td>
                                                             <td>{{ skill.experience_years }}</td>
                                                             <td>
@@ -576,17 +566,7 @@
                                                                     required>
                                                             </div>
                                                     
-                                                            <!-- Version Input -->
-                                                            <div class="form-group">
-                                                                <label for="version" class="form-label">Version</label>
-                                                                <input 
-                                                                    type="text" 
-                                                                    id="version" 
-                                                                    name="version" 
-                                                                    class="form-control" 
-                                                                    placeholder="e.g., 3.9, ES6, 2021" 
-                                                                    required>
-                                                            </div>
+                                                           
                                                     
                                                             <!-- Last Used Year Input -->
                                                             <div class="form-group">
@@ -1950,7 +1930,7 @@
     <ul>
         {% for skill in skills %}
             <li>
-                <strong>{{ skill.skill_name }}</strong> (Version: {{ skill.version }}, Last Used: {{ skill.last_used_year }}, Experience: {{ skill.experience_years }} years)
+                <strong>{{ skill.skill_name }}</strong> (Last Used: {{ skill.last_used_year }}, Experience: {{ skill.experience_years }} years)
            
             <a href="{% url 'edit_skill' skill.pk %}" style="margin-left: 10px;">
                 <i class="fas fa-edit" title="Edit"></i>

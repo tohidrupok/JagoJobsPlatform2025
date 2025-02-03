@@ -93,7 +93,7 @@ class Employment(models.Model):
 class Skill(models.Model):
     resume = models.ForeignKey(Resume, related_name='skills', on_delete=models.CASCADE)
     skill_name = models.CharField(max_length=100)
-    version = models.CharField(max_length=50)
+    
     last_used_year = models.IntegerField()
     experience_years = models.FloatField()
 
@@ -124,14 +124,3 @@ class Certification(models.Model):
         return f"{self.certification_name} by {self.issuing_organization}"
 
 
-# class ResumeMeta(models.Model):
-#     resume = models.OneToOneField(Resume, related_name='meta', on_delete=models.CASCADE)
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
-
-#     class Meta:
-#         verbose_name = "Resume Meta"
-#         verbose_name_plural = "Resumes Meta"
-
-#     def __str__(self):
-#         return f"Meta info for {self.resume.email}"

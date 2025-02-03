@@ -26,7 +26,7 @@ class EmploymentForm(forms.ModelForm):
 class SkillForm(forms.ModelForm):
     class Meta:
         model = Skill
-        fields = ['skill_name', 'version', 'last_used_year', 'experience_years']
+        fields = ['skill_name', 'last_used_year', 'experience_years']
 
 class ProjectForm(forms.ModelForm):
     class Meta:
