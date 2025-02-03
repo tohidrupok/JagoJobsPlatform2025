@@ -99,8 +99,10 @@ class EmployerProfile(models.Model):
     # Company Details
     founded_date = models.DateField(null=True, blank=True, verbose_name="Founded Date")
     
+    
+    
     def __str__(self):
-        return self.company_name
+        return f"{self.user.username}'s Profile"
 
     class Meta:
         verbose_name = "Employer Profile"
