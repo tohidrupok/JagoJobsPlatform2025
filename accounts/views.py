@@ -119,13 +119,7 @@ def seeker_dashboard(request):
         return HttpResponseForbidden("Access restricted to job seekers.")
     return render(request, 'seeker/dashboard.html')
 
-@login_required
-def employer_dashboard(request):
-    if not request.user.is_employer:  
-        return HttpResponseForbidden("Access restricted to employers.")
-    if not request.user.is_approved:
-        return render(request, 'registration/pending_approval.html')
-    return render(request, 'employer/dashboard.html')
+
 
 @login_required
 def manager_dashboard(request):
