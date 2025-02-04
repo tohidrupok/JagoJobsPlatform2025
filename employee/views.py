@@ -5,7 +5,6 @@ from accounts.models import EmployerProfile
 from .forms import EmployerProfileForm
 
 
-
 # Create your views here.
 @login_required
 def employer_dashboard(request):
@@ -24,8 +23,7 @@ def employer_profile(request):
         return render(request, 'registration/pending_approval.html') 
     
     profile = get_object_or_404(EmployerProfile, user=request.user)
-    print(profile)
-    return render(request, 'employer-profile.html', {'profile': profile})  
+    return render(request, 'employer-detail-v2.html', {'profile': profile})    
 
 
 @login_required
@@ -44,4 +42,4 @@ def edit_employer_profile(request):
     else:
         form = EmployerProfileForm(instance=profile)
     
-    return render(request, 'employer-profile.html', {'form': form})
+    return render(request, 'employer-profile.html', {'form': form, 'profile': profile})
