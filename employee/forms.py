@@ -16,8 +16,11 @@ class EmployerProfileForm(forms.ModelForm):
             "google_link",
             "linkedin_link",
             "founded_date",
+            "logo",
         ]
         widgets = {
             # Use a date picker for the founded date field
             'founded_date': forms.DateInput(attrs={'type': 'date'}),
-        }
+        } 
+        
+    logo = forms.ImageField(required=False, widget=forms.ClearableFileInput(attrs={'class': 'form-control'}))

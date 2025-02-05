@@ -64,6 +64,7 @@ class SeekerProfile(models.Model):
     email_address = models.EmailField(blank=True, verbose_name="Email Address")  
 
     location = models.CharField(max_length=255, blank=True, verbose_name="Location")  
+    image = models.ImageField(upload_to='media/seeker_logos/', blank=True, null=True, verbose_name="seeker image")
     
     def __str__(self):
         return f"{self.user.username}'s Profile"
@@ -98,6 +99,7 @@ class EmployerProfile(models.Model):
     
     # Company Details
     founded_date = models.DateField(null=True, blank=True, verbose_name="Founded Date")
+    logo = models.ImageField(upload_to='media/company_logos/', blank=True, null=True, verbose_name="Company Logo")
     
     
     

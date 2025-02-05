@@ -44,17 +44,53 @@
 
                         <div class="side-bar-st-1">
                             
-                            <div class="twm-candidate-profile-pic">
-                                
-                                <img src="images/jobs-company/pic1.jpg" alt="">
-                                <div class="upload-btn-wrapper">
-                                    
-                                    <div id="upload-image-grid"></div>
-                                    <button class="site-button button-sm">Upload Photo</button>
-                                    <input type="file" name="myfile" id="file-uploader" accept=".jpg, .jpeg, .png">
+                            <div class="twm-candidate-profile-pic text-center">
+                                {% if profile.logo %}
+                                    <img src="{{ profile.logo.url }}" alt="Company Logo" id="logo-preview" class="img-fluid rounded shadow-sm" style="max-height: 150px;">
+                                {% else %}
+                                    <img src="https://via.placeholder.com/150?text=No+Logo" alt="No Logo" id="logo-preview" class="img-fluid rounded shadow-sm" style="max-height: 150px;">
+                                {% endif %}
+                            
+                                <div class="upload-btn-wrapper mt-3">
+                                    <button class="site-button button-sm" onclick="document.getElementById('file-uploader').click(); return false;">
+                                        Upload Photo
+                                    </button>
+                                    <input type="file" name="logo" id="file-uploader" accept=".jpg, .jpeg, .png" style="display: none;">
                                 </div>
-                                
                             </div>
+                            
+                            <script>
+                                document.getElementById("file-uploader").addEventListener("change", function(event) {
+                                    var file = event.target.files[0];
+                                    if (file) {
+                                        var reader = new FileReader();
+                                        reader.onload = function(){
+                                            document.getElementById("logo-preview").src = reader.result;
+                                        };
+                                        reader.readAsDataURL(file);
+                                
+                                        // Upload the file automatically using AJAX
+                                        var formData = new FormData();
+                                        formData.append("logo", file);
+                                        formData.append("csrfmiddlewaretoken", "{{ csrf_token }}"); // CSRF token
+                                
+                                        fetch("{% url 'employer_profile_edit' %}", {  // Using the same view
+                                            method: "POST",
+                                            body: formData
+                                        })
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            if (data.success) {
+                                                document.getElementById("logo-preview").src = data.logo_url;  // Update preview
+                                            } else {
+                                                alert("Failed to upload logo. Please try again.");
+                                            }
+                                        })
+                                        .catch(error => console.error("Error uploading logo:", error));
+                                    }
+                                });
+                            </script>
+                            
 
                             <div class="twm-mid-content text-center">
                                 <a href="candidate-detail.html" class="twm-job-title">
@@ -86,9 +122,9 @@
                         <!--Filter Short By-->
                         <div class="col-xl-9 col-lg-8 col-md-12 m-b30">
                             <div class="twm-right-section-panel site-bg-gray p-4 shadow-sm rounded">
-                                <form method="POST" action="">
+                                <form method="POST" action="" enctype="multipart/form-data">
                                     {% csrf_token %}
-                        
+                                    
                                     <div class="panel panel-default mb-4">
                                         <div class="panel-heading wt-panel-heading p-3 bg-primary text-white rounded-top">
                                             <h4 class="panel-title m-0">Company Profile</h4>
@@ -137,13 +173,25 @@
                                                         {{ form.company_description }}
                                                     </div>
                                                 </div>
+                                
+                                                <!-- Logo Upload Section -->
+                                                {% comment %} <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="fw-bold">Company Logo</label>
+                                                        <div class="input-group">
+                                                            <span class="input-group-text"><i class="fa fa-image"></i></span>
+                                                            {{ form.logo }}
+                                                        </div>
+                                                    </div>
+                                                </div> {% endcomment %}
+                                
                                                 <div class="col-12 text-end">
                                                     <button type="submit" class="btn btn-primary">Save Changes</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                        
+                                
                                     <div class="panel panel-default">
                                         <div class="panel-heading wt-panel-heading p-3 bg-primary text-white rounded-top">
                                             <h4 class="panel-title m-0">Social Network</h4>
@@ -184,6 +232,7 @@
                                         </div>
                                     </div>
                                 </form>
+                                
                             </div>
                         </div>
                     </div>
