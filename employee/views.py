@@ -6,14 +6,16 @@ from .forms import EmployerProfileForm
 from django.http import JsonResponse, HttpResponseForbidden
 
 
-# Create your views here.
+# Create your views here.    
 @login_required
 def employer_dashboard(request):
     if not request.user.is_employer:  
         return HttpResponseForbidden("Access restricted to employers.")
     if not request.user.is_approved:
         return render(request, 'registration/pending_approval.html')
-    return render(request, 'employer-profile.html')   
+    
+    profile = get_object_or_404(EmployerProfile, user=request.user) 
+    return render(request, 'dashboard.html', {'profile': profile})   
 
 
 @login_required
