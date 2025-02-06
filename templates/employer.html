@@ -225,7 +225,7 @@
                                                 <ul>
                                                     <li><a href="{% url 'employer_dashboard' %}"><i class="fa fa-home"></i>Dashboard</a></li>
                                                     <li><a href="dash-messages.html"><i class="fa fa-envelope"></i> Messages</a></li>
-                                                    <li><a href="dash-my-profile.html"><i class="fa fa-user"></i> Profile</a></li>
+                                                    <li><a href="{% url 'core_employer_profile_edit' %}"><i class="fa fa-user"></i> Profile</a></li>
                                                     <li><a href="{% url 'custom_logout' %}"><i class="fa fa-share-square"></i> Logout</a></li>
                                                 </ul>
                                                     
@@ -256,13 +256,14 @@
             </div>
             
             <div class="admin-nav scrollbar-macosx">
-                <ul>
-                    <li class="active">
-                        <a href="dashboard.html"><i class="fa fa-home"></i><span class="admin-nav-text">Dashboard</span></a>
+                <ul> 
+                    {% comment %} class="active" {% endcomment %}
+                    <li >
+                        <a href="{% url 'employer_dashboard' %}"><i class="fa fa-home"></i><span class="admin-nav-text">Dashboard</span></a>
                     </li>
 
                     <li>
-                        <a href="dash-company-profile.html"><i class="fa fa-user-tie"></i><span class="admin-nav-text">Company Profile</span></a>
+                        <a href="{% url 'core_employer_profile_edit' %}"><i class="fa fa-user-tie"></i><span class="admin-nav-text">Company Profile</span></a>
                     </li>
 
                     <li>
