@@ -15,7 +15,7 @@ def employer_dashboard(request):
         return render(request, 'registration/pending_approval.html')
     
     profile = get_object_or_404(EmployerProfile, user=request.user) 
-    return render(request, 'dashboard.html', {'profile': profile})   
+    return render(request, 'core/dashboard.html', {'profile': profile})   
 
 
 @login_required
