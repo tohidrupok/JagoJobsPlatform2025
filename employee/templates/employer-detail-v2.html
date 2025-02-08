@@ -76,20 +76,22 @@
                                         <div class="twm-s-info-3">
                                             <ul>
 
-                                                <li>
+                                                {% comment %} <li>
                                                     <div class="twm-s-info-inner">
                                                         <i class="fas fa-money-bill-wave"></i>
                                                         <span class="twm-title">Offered Salary</span>
                                                         <div class="twm-s-info-discription">$20 / Day</div>
                                                     </div>
-                                                </li>
+                                                </li> {% endcomment %}
+                                                {% if total_experience is not None %}
                                                 <li>
                                                     <div class="twm-s-info-inner">
                                                         <i class="fas fa-clock"></i>
                                                         <span class="twm-title">Experience</span>
-                                                        <div class="twm-s-info-discription">6 Year</div>
+                                                        <div class="twm-s-info-discription">{{ total_experience }} years</div>
                                                     </div>
                                                 </li>
+                                                
                                                 <li>
                                                     <div class="twm-s-info-inner">
                                                         <i class="fas fa-venus-mars"></i>
@@ -97,6 +99,7 @@
                                                         <div class="twm-s-info-discription">{{ profile.founded_date }}</div>
                                                     </div>
                                                 </li>
+                                                {% endif %}
                                                 <li>
                                                     <div class="twm-s-info-inner">
                                                         <i class="fas fa-mobile-alt"></i>
