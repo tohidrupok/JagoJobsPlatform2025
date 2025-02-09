@@ -9,7 +9,7 @@
 
             	<div class="wt-admin-right-page-header clearfix">
                     <h2>Company Profile!</h2>
-                    <div class="breadcrumbs"><a href="#">Home</a><a href="#">Dasboard</a><span>Company Profile!</span></div>
+                    <div class="breadcrumbs"><a href="{% url 'home' %}">Home</a><a href="{% url 'employer_dashboard' %}">Dasboard</a><span>Company Profile!</span></div>
                 </div>
 
                 <!--Logo and Cover image-->
@@ -73,12 +73,12 @@
                                 </div> 
                             </div>
 
-                            <div class="col-lg-12 col-md-12">
+                            {% comment %} <div class="col-lg-12 col-md-12">
                                 <div class="dashboard-cover-pic">
                                     <form action="upload.php" class="dropzone"></form>
                                     <p><b>Background Banner Image :- </b> Max file size is 1MB, Minimum dimension: 770 x 310 And Suitable files are .jpg & .png</p> 
                                 </div>                                    
-                            </div>
+                            </div> {% endcomment %}
 
                         </div>
                                     
