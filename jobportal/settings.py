@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'accounts',
     'seeker',
     'employee',
+    'jobboard',
 ]
 
 MIDDLEWARE = [

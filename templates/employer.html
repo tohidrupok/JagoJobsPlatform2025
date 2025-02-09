@@ -308,9 +308,12 @@
                         <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#delete-dash-profile"><i class="fa fa-trash-alt"></i><span class="admin-nav-text">Delete Profile</span></a>
                     </li>  
                                        
+                    
                     <li>
-                        <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#logout-dash-profile"><i class="fa fa-share-square"></i><span class="admin-nav-text">Logout</span></a>
-                    </li>                    
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#logout-dash-profile">
+                            <i class="fa fa-share-square"></i><span class="admin-nav-text">Logout</span>
+                        </a>
+                    </li>                   
                     
                 </ul>
             </div>   
@@ -338,7 +341,7 @@
         </div>
 
 
-        <!--Logout Profile Popup-->
+        {% comment %} <!--Logout Profile Popup-->
         <div class="modal fade twm-model-popup" id="logout-dash-profile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog">
             <div class="modal-content">
@@ -354,7 +357,26 @@
                 </div>
             </div>
             </div>
-        </div>
+        </div>  {% endcomment %}
+
+        <!-- Logout Profile Popup -->
+        <div class="modal fade twm-model-popup" id="logout-dash-profile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h4 class="modal-title">Do you want to Logout your profile?</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="site-button" data-bs-dismiss="modal">No</button>
+                        <a href="{% url 'custom_logout' %}" class="site-button outline-primary">Yes</a>
+                    </div>
+                </div>
+            </div>
+        </div> 
+
           
 
 	</div>
