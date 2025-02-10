@@ -1,0 +1,210 @@
+{% extends 'employer.html' %}
+{% load static %}
+
+{% block body %}
+<div id="content">
+    <div class="content-admin-main">
+        <div class="wt-admin-right-page-header clearfix">
+            <h2>Post a Job</h2>
+            <div class="breadcrumbs"><a href="#">Home</a><a href="#">Dashboard</a><span>Job Submission Form</span></div>
+        </div>
+
+        <!-- Job Details Panel -->
+        <div class="panel panel-default">
+            <div class="panel-heading wt-panel-heading p-a20">
+                <h4 class="panel-tittle m-a0"><i class="fa fa-suitcase"></i> Job Details</h4>
+            </div>
+            <div class="panel-body wt-panel-body p-a20 m-b30">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <!-- Job Title -->
+                        <div class="col-xl-4 col-lg-6 col-md-12">
+                            <div class="form-group">
+                                <label>Job Title</label>
+                                <div class="ls-inputicon-box"> 
+                                    {{ form.title }}
+                                    <i class="fs-input-icon fa fa-address-card"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Job Category -->
+                        <div class="col-xl-4 col-lg-6 col-md-12">
+                            <div class="form-group">
+                                <label>Job Category</label>
+                                <div class="ls-inputicon-box">
+                                    {{ form.job_category }}
+                                    <i class="fs-input-icon fa fa-border-all"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Company Industry Type -->
+                        <div class="col-xl-4 col-lg-6 col-md-12">
+                            <div class="form-group">
+                                <label>Company Industry Type</label>
+                                <div class="ls-inputicon-box">
+                                    {{ form.company_industry_type }}
+                                    <i class="fs-input-icon fa fa-building"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Number of Vacancies -->
+                        <div class="col-xl-4 col-lg-6 col-md-12">
+                            <div class="form-group">
+                                <label>No. of Vacancies</label>
+                                <div class="ls-inputicon-box">
+                                    {{ form.no_of_vacancy }}
+                                    <i class="fs-input-icon fa fa-users"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Application Deadline -->
+                        <div class="col-xl-4 col-lg-6 col-md-12">
+                            <div class="form-group">
+                                <label>Application Deadline</label>
+                                <div class="ls-inputicon-box">
+                                    {{ form.application_deadline }}
+                                    <i class="fs-input-icon fa fa-calendar"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Age Range -->
+                        <div class="col-xl-4 col-lg-6 col-md-12">
+                            <div class="form-group">
+                                <label>Age Range</label>
+                                <div class="ls-inputicon-box">
+                                    {{ form.age_range }}
+                                    <i class="fs-input-icon fa fa-user"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Gender -->
+                        <div class="col-xl-4 col-lg-6 col-md-12">
+                            <div class="form-group">
+                                <label>Gender</label>
+                                <div class="ls-inputicon-box">
+                                    {{ form.gender }}
+                                    <i class="fs-input-icon fa fa-venus-mars"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Contact Person -->
+                        <div class="col-xl-4 col-lg-6 col-md-12">
+                            <div class="form-group">
+                                <label>Contact Person</label>
+                                <div class="ls-inputicon-box">
+                                    {{ form.contact_person }}
+                                    <i class="fs-input-icon fa fa-phone"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Experience Required -->
+                        <div class="col-xl-4 col-lg-6 col-md-12">
+                            <div class="form-group">
+                                <label>Experience Required</label>
+                                <div class="ls-inputicon-box">
+                                    {{ form.experience_required }}
+                                    <i class="fs-input-icon fa fa-briefcase"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CV Receive Method -->
+                        <div class="col-xl-4 col-lg-6 col-md-12">
+                            <div class="form-group">
+                                <label>CV Receive Method</label>
+                                <div class="ls-inputicon-box">
+                                    {{ form.cv_receive_method }}
+                                    <i class="fs-input-icon fa fa-file"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Job Type -->
+                        <div class="col-xl-4 col-lg-6 col-md-12">
+                            <div class="form-group">
+                                <label>Job Type</label>
+                                <div class="ls-inputicon-box">
+                                    {{ form.job_type }}
+                                    <i class="fs-input-icon fa fa-briefcase"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Job Level -->
+                        <div class="col-xl-4 col-lg-6 col-md-12">
+                            <div class="form-group">
+                                <label>Job Level</label>
+                                <div class="ls-inputicon-box">
+                                    {{ form.job_level }}
+                                    <i class="fs-input-icon fa fa-level-up-alt"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Job Description -->
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Job Description</label>
+                                {{ form.job_description }}
+                            </div>
+                        </div>
+
+                        <!-- Job Responsibilities -->
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Job Responsibilities</label>
+                                {{ form.job_responsibilities }}
+                            </div>
+                        </div>
+
+                        <!-- Job Requirements -->
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Job Requirements</label>
+                                {{ form.job_requirements }}
+                            </div>
+                        </div>
+                        <!-- Job Requirements -->
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Education </label>
+                                {{ form.educational_qualification }}
+                            </div>
+                        </div>
+
+                        <!-- Job Location -->
+                        <div class="col-xl-4 col-lg-6 col-md-12">
+                            <div class="form-group">
+                                <label>Job Location</label>
+                                <div class="ls-inputicon-box">
+                                    {{ form.job_location }}
+                                    <i class="fs-input-icon fa fa-map-marker-alt"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Submit Buttons -->
+                        <div class="col-lg-12 col-md-12">
+                            <div class="text-left">
+                                <button type="submit" class="site-button m-r5">Publish Job</button>
+                                <button type="submit" class="site-button outline-primary">Save Draft</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

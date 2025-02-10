@@ -1,0 +1,21 @@
+
+<h2>Apply for {{ job.title }}</h2>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <label>Current Resume:</label>
+    {% if form.initial.resume %}
+        <p><a href="{{ form.initial.resume.url }}" target="_blank">View Resume</a></p>
+    {% else %}
+        <p>No resume uploaded yet.</p>
+    {% endif %}
+    
+    <label>Upload New Resume (Optional):</label>
+    {{ form.resume }}
+
+    <button type="submit">Apply</button>
+</form>
+
+<a href="{% url 'job_detail' job.id %}">Back to Job</a>
+

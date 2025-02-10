@@ -1,5 +1,6 @@
 from django import forms
 from accounts.models import EmployerProfile
+from jobboard.models import JobPost
 
 class EmployerProfileForm(forms.ModelForm):
     class Meta:
@@ -24,3 +25,19 @@ class EmployerProfileForm(forms.ModelForm):
         } 
         
     logo = forms.ImageField(required=False, widget=forms.ClearableFileInput(attrs={'class': 'form-control'}))
+
+
+class JobPostForm(forms.ModelForm):
+    class Meta:
+        model = JobPost
+        exclude = ['employee']  
+
+    def __init__(self, *args, **kwargs):
+        super(JobPostForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs.update({
+                'class': 'form-control', 
+                'placeholder': f'Enter {field.label}'
+            }) 
+            
+            

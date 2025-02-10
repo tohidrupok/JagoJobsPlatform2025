@@ -1,0 +1,13 @@
+
+
+
+<h2>Job Listings</h2>
+<ul>
+    {% for job in jobs %}
+    <li>
+        <a href="{% url 'job_detail' job.id %}">{{ job.title }}</a> - {{ job.location }}
+    </li>
+    {% endfor %}
+</ul>
+<a href="{% url 'create_job' %}">Post a Job</a>
+

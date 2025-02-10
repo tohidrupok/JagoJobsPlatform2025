@@ -1,0 +1,24 @@
+
+<h2>{{ job.title }}</h2>
+<p><strong>Company Industry Type:</strong> {{ job.company_industry_type }}</p>
+<p><strong>Location:</strong> {{ job.job_location }}</p>
+<p><strong>Vacancies:</strong> {{ job.no_of_vacancy }}</p>
+<p><strong>Application Deadline:</strong> {{ job.application_deadline }}</p>
+
+<h3>Job Description</h3>
+<p>{{ job.job_description }}</p>
+
+<h3>Responsibilities</h3>
+<p>{{ job.job_responsibilities }}</p>
+
+<h3>Requirements</h3>
+<p>{{ job.job_requirements }}</p>
+
+<!-- Apply button appears if the seeker is logged in -->
+{% if user.is_authenticated %}
+<a href="{% url 'apply_job' job.id %}">Apply for this Job</a>
+{% else %}
+    <p>You must be logged in to apply for this job.</p>
+{% endif %}
+
+

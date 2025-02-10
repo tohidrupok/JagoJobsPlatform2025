@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 from accounts.models import EmployerProfile
-from .forms import EmployerProfileForm
+from .forms import EmployerProfileForm, JobPostForm
 from django.http import JsonResponse, HttpResponseForbidden
 from django.utils import timezone
 
@@ -87,3 +87,24 @@ def employer_profile(request):
     return render(request, 'core/dash-company-profile.html', {'form': form, 'profile': profile}) 
 
 
+from django.contrib import messages 
+
+@login_required
+def create_job(request):
+    employer = get_object_or_404(EmployerProfile, user=request.user)  # Get the employer profile
+
+    if request.method == "POST":
+        form = JobPostForm(request.POST)
+        if form.is_valid():
+            job = form.save(commit=False)  # Do not save yet
+            job.employee = employer  # Assign the employer
+            job.save()  # Now save the job
+            messages.success(request, "Job posted successfully!")
+            return redirect('job_list')  # Redirect after success
+        else:
+            messages.error(request, "Please correct the errors below.")  # Show error message
+
+    else:
+        form = JobPostForm()
+
+    return render(request, 'job/create_job.html', {'form': form, 'profile': employer}) 
