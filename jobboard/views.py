@@ -17,7 +17,7 @@ def create_job(request):
         form = JobPostForm(request.POST)
         if form.is_valid():
             job = form.save(commit=False)
-            job.poster = request.user  # Assuming the user posting the job is the employer
+            job.poster = request.user  
             job.save()
             return redirect('job_list')
     else:

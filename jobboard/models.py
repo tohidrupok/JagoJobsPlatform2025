@@ -3,10 +3,17 @@ from accounts.models import EmployerProfile, SeekerProfile
 
 
 #Job Post
+class JobCategory(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+    description = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.name 
+    
 class JobPost(models.Model):
     employee = models.ForeignKey(EmployerProfile, on_delete=models.CASCADE, related_name='job_posts')
     title = models.CharField(max_length=255)
-    job_category = models.CharField(max_length=255)
+    job_category = models.ForeignKey(JobCategory, on_delete=models.SET_NULL, null=True, related_name='job_posts_category')
     company_industry_type = models.CharField(max_length=255)
     no_of_vacancy = models.PositiveIntegerField()
     application_deadline = models.DateField()

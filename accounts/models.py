@@ -99,7 +99,7 @@ class EmployerProfile(models.Model):
     
     # Company Details
     founded_date = models.DateField(null=True, blank=True, verbose_name="Founded Date")
-    logo = models.ImageField(upload_to='media/company_logos/', blank=True, null=True, verbose_name="Company Logo")
+    logo = models.ImageField(upload_to='media/company_logos/', blank=True, null=True, verbose_name="Company Logo", default='media/default/default_logo.png')
     
     
     
