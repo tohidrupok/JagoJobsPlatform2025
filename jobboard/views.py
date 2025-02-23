@@ -4,8 +4,9 @@ from .forms import JobApplicationForm, JobPostForm
 from django.contrib.auth.decorators import login_required
 
 def job_list(request):
-    jobs = JobPost.objects.all()
-    return render(request, 'jobs/job_list.html', {'jobs': jobs}) 
+    jobs = JobPost.objects.all().order_by('-created_at')
+    total_jobs = jobs.count() 
+    return render(request, 'jobs/job_list.html', {'jobs': jobs, 'total_jobs': total_jobs}) 
 
 def job_detail(request, job_id):
     job = get_object_or_404(JobPost, id=job_id)
