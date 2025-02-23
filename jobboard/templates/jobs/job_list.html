@@ -50,11 +50,11 @@
 
                                         <div class="form-group mb-4">
                                             <h4 class="section-head-small mb-4">Category</h4>
-                                            <select class="wt-select-bar-large selectpicker"  data-live-search="true" data-bv-field="size">
+                                            <select class="wt-select-bar-large selectpicker" data-live-search="true" data-bv-field="size">
                                                 <option selected>All Category</option>
-                                                <option>Web Designer</option>
-                                                <option>Developer</option>
-                                                <option>Acountant</option>
+                                                {% for cat in category %}
+                                                    <option value="{{ cat.id }}">{{ cat.name }}</option>
+                                                {% endfor %}
                                             </select>
                                         </div>
 
@@ -245,27 +245,28 @@
                             <!--Filter Short By-->
                             <div class="product-filter-wrap d-flex justify-content-between align-items-center m-b30">
                                 <span class="woocommerce-result-count-left">Showing {{ total_jobs }} jobs</span>
-                               
+                            
                                 <form class="woocommerce-ordering twm-filter-select" method="get">
-                                    <span class="woocommerce-result-count">Short By</span>
-                                    <select class="wt-select-bar-2 selectpicker"  data-live-search="true" data-bv-field="size">
-                                        <option>Most Recent</option>
-                                        <option>Freelance</option>
-                                        <option>Full Time</option>
-                                        <option>Internship</option>
-                                        <option>Part Time</option>
-                                        <option>Temporary</option>
+                                    <!-- Sorting -->
+                                    <span class="woocommerce-result-count">Sort By</span>
+                                    <select class="wt-select-bar-2 selectpicker" name="sort_by" data-live-search="true" data-bv-field="size" onchange="this.form.submit()">
+                                        <option value="most_recent" {% if sort_by == "most_recent" %}selected{% endif %}>Most Recent</option>
+                                        <option value="full_time" {% if sort_by == "full_time" %}selected{% endif %}>Full Time</option>
+                                        <option value="internship" {% if sort_by == "internship" %}selected{% endif %}>Internship</option>
+                                        <option value="part_time" {% if sort_by == "part_time" %}selected{% endif %}>Part Time</option>                                       
+                                        <option value="contractual" {% if sort_by == "contractual" %}selected{% endif %}>Contractual</option>
                                     </select>
-                                    <select class="wt-select-bar-2 selectpicker"  data-live-search="true" data-bv-field="size">
-                                        <option>Show 10</option>
-                                        <option>Show 20</option>
-                                        <option>Show 30</option>
-                                        <option>Show 40</option>
-                                        <option>Show 50</option>
-                                        <option>Show 60</option>
+                            
+                                    <!-- Show Count -->
+                                    <select class="wt-select-bar-2 selectpicker" name="show_count" data-live-search="true" data-bv-field="size" onchange="this.form.submit()">
+                                        <option value="10" {% if show_count == 10 %}selected{% endif %}>Show 10</option>
+                                        <option value="20" {% if show_count == 20 %}selected{% endif %}>Show 20</option>
+                                        <option value="30" {% if show_count == 30 %}selected{% endif %}>Show 30</option>
+                                        <option value="40" {% if show_count == 40 %}selected{% endif %}>Show 40</option>
+                                        <option value="50" {% if show_count == 50 %}selected{% endif %}>Show 50</option>
+                                        <option value="60" {% if show_count == 60 %}selected{% endif %}>Show 60</option>
                                     </select>
                                 </form>
-
                             </div>
 
                             <div class="row"> 
@@ -300,20 +301,43 @@
                                 {% endfor %}
                                 
                             </div>
-
                             <div class="pagination-outer">
                                 <div class="pagination-style1">
                                     <ul class="clearfix">
-                                        <li class="prev"><a href="javascript:;"><span> <i class="fa fa-angle-left"></i> </span></a></li>
-                                        <li><a href="javascript:;">1</a></li>
-                                        <li class="active"><a href="javascript:;">2</a></li>
-                                        <li><a href="javascript:;">3</a></li>
-                                        <li><a class="javascript:;" href="javascript:;"><i class="fa fa-ellipsis-h"></i></a></li>
-                                        <li><a href="javascript:;">5</a></li>
-                                        <li class="next"><a href="javascript:;"><span> <i class="fa fa-angle-right"></i> </span></a></li>
+                                        <!-- Previous Page -->
+                                        {% if jobs.has_previous %}
+                                            <li class="prev">
+                                                <a href="?page={{ jobs.previous_page_number }}"><span><i class="fa fa-angle-left"></i></span></a>
+                                            </li>
+                                        {% else %}
+                                            <li class="prev disabled"><a href="javascript:void(0);"><span><i class="fa fa-angle-left"></i></span></a></li>
+                                        {% endif %}
+                            
+                                        <!-- Page Numbers -->
+                                        {% for num in jobs.paginator.page_range %}
+                                            {% if jobs.number == num %}
+                                                <li class="active"><a href="javascript:void(0);">{{ num }}</a></li>
+                                            {% elif num > jobs.number|add:"-3" and num < jobs.number|add:"3" %}
+                                                <li><a href="?page={{ num }}">{{ num }}</a></li>
+                                            {% elif num == 1 or num == jobs.paginator.num_pages %}
+                                                <li><a href="?page={{ num }}">{{ num }}</a></li>
+                                            {% elif num == jobs.number|add:"-3" or num == jobs.number|add:"3" %}
+                                                <li><a href="javascript:void(0);"><i class="fa fa-ellipsis-h"></i></a></li>
+                                            {% endif %}
+                                        {% endfor %}
+                            
+                                        <!-- Next Page -->
+                                        {% if jobs.has_next %}
+                                            <li class="next">
+                                                <a href="?page={{ jobs.next_page_number }}"><span><i class="fa fa-angle-right"></i></span></a>
+                                            </li>
+                                        {% else %}
+                                            <li class="next disabled"><a href="javascript:void(0);"><span><i class="fa fa-angle-right"></i></span></a></li>
+                                        {% endif %}
                                     </ul>
                                 </div>
                             </div>
+                            
 
                         </div>
 

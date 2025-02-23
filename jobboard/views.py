@@ -1,12 +1,57 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import JobPost, JobApplication
+from .models import JobPost, JobApplication, JobCategory
 from .forms import JobApplicationForm, JobPostForm
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+
 
 def job_list(request):
-    jobs = JobPost.objects.all().order_by('-created_at')
-    total_jobs = jobs.count() 
-    return render(request, 'jobs/job_list.html', {'jobs': jobs, 'total_jobs': total_jobs}) 
+  
+    sort_by = request.GET.get('sort_by', 'most_recent')
+    show_count = request.GET.get('show_count', 10)  
+
+    
+    try:
+        show_count = int(show_count)
+    except ValueError:
+        show_count = 10  
+
+    # Sorting logic
+    if sort_by == "freelance":
+        jobs = JobPost.objects.filter(job_type="Freelance").order_by('-created_at') 
+    elif sort_by == "full_time":
+        jobs = JobPost.objects.filter(job_type="Full Time").order_by('-created_at') 
+    elif sort_by == "internship":
+        jobs = JobPost.objects.filter(job_type="Internship").order_by('-created_at') 
+    elif sort_by == "part_time":
+        jobs = JobPost.objects.filter(job_type="Part Time").order_by('-created_at') 
+    elif sort_by == "temporary":
+        jobs = JobPost.objects.filter(job_type="Temporary").order_by('-created_at') 
+    elif sort_by == "contractual":
+        jobs = JobPost.objects.filter(job_type="Contractual").order_by('-created_at') 
+    else:
+        jobs = JobPost.objects.all().order_by('-created_at').order_by('-created_at') 
+
+    total_jobs = jobs.count()  
+
+    # Pagination
+    paginator = Paginator(jobs, show_count)  
+    page_number = request.GET.get('page')
+    page_jobs = paginator.get_page(page_number) 
+    
+    
+    category = JobCategory.objects.all()
+ 
+    return render(request, 'jobs/job_list.html', {
+        'jobs': page_jobs,
+        'total_jobs': total_jobs,
+        'sort_by': sort_by,
+        'show_count': show_count,
+        
+        'category': category
+    })
+
+
 
 def job_detail(request, job_id):
     job = get_object_or_404(JobPost, id=job_id)
