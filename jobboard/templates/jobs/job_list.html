@@ -43,7 +43,7 @@
                         <div class="col-lg-4 col-md-12 rightSidebar">
 
                             <div class="side-bar">
-
+                                
                                 <div class="sidebar-elements search-bx">
                                 
                                     <form method="get">
@@ -56,20 +56,29 @@
                                                 {% endfor %}
                                             </select>
                                         </div>
-
+                                    
                                         <div class="form-group mb-4">
                                             <h4 class="section-head-small mb-4">Keyword</h4>
                                             <div class="input-group">
-                                                <input type="text" class="form-control" placeholder="Job Title or Keyword">
-                                                <button class="btn" type="button"><i class="feather-search"></i></button>
+                                                <input type="text" class="form-control" name="keyword" placeholder="Job Title or Keyword" value="{{ keyword|default:'' }}">
+                                                <button class="btn" type="submit"><i class="feather-search"></i></button>
                                             </div>
                                         </div> 
+
+                                        <div class="form-group mb-4">
+                                            <h4 class="section-head-small mb-4">Location</h4>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" name="location" placeholder="Search location" value="{{ location|default:'' }}">
+                                                <button class="btn" type="submit"><i class="feather-map-pin"></i></button>
+                                            </div>
+                                        </div>
                                         
-                                    
+                                  
                                         <!-- Keep sorting and pagination filters -->
                                         <input type="hidden" name="sort_by" value="{{ sort_by }}">
                                         <input type="hidden" name="show_count" value="{{ show_count }}">
                                     </form>
+                                    
                                                                             
                                     {% comment %} <form>
 
@@ -292,8 +301,14 @@
                                         <option value="60" {% if show_count == 60 %}selected{% endif %}>Show 60</option>
                                     </select>
                                     
-                                     {% if selected_category  %}
+                                    {% if selected_category  %}
                                      <input type="hidden" name="category" value="{{ selected_category }}">
+                                    {% endif %} 
+                                    {% if keyword  %}
+                                     <input type="hidden" name="keyword" value="{{ keyword }}">
+                                    {% endif %} 
+                                    {% if location  %}
+                                     <input type="hidden" name="location" value="{{ location }}">
                                     {% endif %} 
                                     
                                 </form>

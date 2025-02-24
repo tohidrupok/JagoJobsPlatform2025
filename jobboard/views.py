@@ -4,54 +4,60 @@ from .forms import JobApplicationForm, JobPostForm
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.core.cache import cache
+from django.db.models import Q
 
 
 def job_list(request):
     sort_by = request.GET.get('sort_by', 'most_recent')
-    show_count = request.GET.get('show_count', 10)  
+    show_count = request.GET.get('show_count', 10)
     category_id = request.GET.get('category')
+    keyword = request.GET.get('keyword', '').strip()  
+    location = request.GET.get('location', '').strip()  
+    
 
     try:
         show_count = int(show_count)
     except ValueError:
-        show_count = 10  
+        show_count = 10
 
-    # Get all job posts initially
-    jobs = JobPost.objects.all()
-
-    # Apply category filter if selected
+    #  Fast Filtering with Q Objects
+    filters = Q()
     if category_id:
-        jobs = jobs.filter(job_category_id=category_id)
+        filters &= Q(job_category_id=category_id)
 
-    # Apply sorting on the filtered jobs
-    if sort_by == "freelance":
-        jobs = jobs.filter(job_type="Freelance")
-    elif sort_by == "full_time":
-        jobs = jobs.filter(job_type="Full Time")
-    elif sort_by == "internship":
-        jobs = jobs.filter(job_type="Internship")
-    elif sort_by == "part_time":
-        jobs = jobs.filter(job_type="Part Time")
-    elif sort_by == "temporary":
-        jobs = jobs.filter(job_type="Temporary")
-    elif sort_by == "contractual":
-        jobs = jobs.filter(job_type="Contractual")
+    # Search kortecha filed ar upor
+    if keyword:
+        filters &= Q(title__icontains=keyword) | Q(job_description__icontains=keyword) | Q(job_requirements__icontains=keyword)| Q(job_location__icontains=keyword)
+    if location:
+        
+        filters &= Q(job_location__icontains=location)
 
-    # Always order by most recent jobs
-    jobs = jobs.order_by('-created_at')
+    job_type_map = {
+        "full_time": "Full Time",
+        "internship": "Internship",
+        "part_time": "Part Time",
+        "temporary": "Temporary",
+        "contractual": "Contractual"
+    }
+    if sort_by in job_type_map:
+        filters &= Q(job_type=job_type_map[sort_by])
+
+    jobs = JobPost.objects.filter(filters).order_by('-created_at').only(
+        "id", "title", "job_category_id", "job_type", "created_at"
+    )
 
     total_jobs = jobs.count()
 
-    # Pagination
     paginator = Paginator(jobs, show_count)
     page_number = request.GET.get('page')
     page_jobs = paginator.get_page(page_number)
 
-    # Cache job categories for optimization
+    # Optimized Category Cache
     categories = cache.get('job_categories')
     if not categories:
-        categories = JobCategory.objects.all()
+        categories = list(JobCategory.objects.values('id', 'name'))
         cache.set('job_categories', categories, timeout=3600)
+    
 
     return render(request, 'jobs/job_list.html', {
         'jobs': page_jobs,
@@ -59,9 +65,10 @@ def job_list(request):
         'sort_by': sort_by,
         'show_count': show_count,
         'category': categories,
-        'selected_category': category_id  
+        'selected_category': category_id,
+        'keyword': keyword, 
+        'location': location  
     })
-
 
 
 

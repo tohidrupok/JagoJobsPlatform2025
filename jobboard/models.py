@@ -67,4 +67,16 @@ class JobApplication(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.seeker.user.username} applied for {self.job.title}" 
+        return f"{self.seeker.user.username} applied for {self.job.title}"  
+    
+    
+    
+    
+    
+    
+# class JobPost(models.Model):
+#     title = models.CharField(max_length=255, db_index=True)  # Index for fast search
+#     job_description = models.TextField()
+#     job_requirements = models.TextField()
+#     job_category = models.ForeignKey(JobCategory, on_delete=models.SET_NULL, null=True, db_index=True)
+#     created_at = models.DateTimeField(auto_now_add=True, db_index=True)  # Index for sorting
