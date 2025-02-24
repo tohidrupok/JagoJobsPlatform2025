@@ -3,53 +3,66 @@ from .models import JobPost, JobApplication, JobCategory
 from .forms import JobApplicationForm, JobPostForm
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.core.cache import cache
 
 
 def job_list(request):
-  
     sort_by = request.GET.get('sort_by', 'most_recent')
     show_count = request.GET.get('show_count', 10)  
+    category_id = request.GET.get('category')
 
-    
     try:
         show_count = int(show_count)
     except ValueError:
         show_count = 10  
 
-    # Sorting logic
-    if sort_by == "freelance":
-        jobs = JobPost.objects.filter(job_type="Freelance").order_by('-created_at') 
-    elif sort_by == "full_time":
-        jobs = JobPost.objects.filter(job_type="Full Time").order_by('-created_at') 
-    elif sort_by == "internship":
-        jobs = JobPost.objects.filter(job_type="Internship").order_by('-created_at') 
-    elif sort_by == "part_time":
-        jobs = JobPost.objects.filter(job_type="Part Time").order_by('-created_at') 
-    elif sort_by == "temporary":
-        jobs = JobPost.objects.filter(job_type="Temporary").order_by('-created_at') 
-    elif sort_by == "contractual":
-        jobs = JobPost.objects.filter(job_type="Contractual").order_by('-created_at') 
-    else:
-        jobs = JobPost.objects.all().order_by('-created_at').order_by('-created_at') 
+    # Get all job posts initially
+    jobs = JobPost.objects.all()
 
-    total_jobs = jobs.count()  
+    # Apply category filter if selected
+    if category_id:
+        jobs = jobs.filter(job_category_id=category_id)
+
+    # Apply sorting on the filtered jobs
+    if sort_by == "freelance":
+        jobs = jobs.filter(job_type="Freelance")
+    elif sort_by == "full_time":
+        jobs = jobs.filter(job_type="Full Time")
+    elif sort_by == "internship":
+        jobs = jobs.filter(job_type="Internship")
+    elif sort_by == "part_time":
+        jobs = jobs.filter(job_type="Part Time")
+    elif sort_by == "temporary":
+        jobs = jobs.filter(job_type="Temporary")
+    elif sort_by == "contractual":
+        jobs = jobs.filter(job_type="Contractual")
+
+    # Always order by most recent jobs
+    jobs = jobs.order_by('-created_at')
+
+    total_jobs = jobs.count()
 
     # Pagination
-    paginator = Paginator(jobs, show_count)  
+    paginator = Paginator(jobs, show_count)
     page_number = request.GET.get('page')
-    page_jobs = paginator.get_page(page_number) 
-    
-    
-    category = JobCategory.objects.all()
- 
+    page_jobs = paginator.get_page(page_number)
+
+    # Cache job categories for optimization
+    categories = cache.get('job_categories')
+    if not categories:
+        categories = JobCategory.objects.all()
+        cache.set('job_categories', categories, timeout=3600)
+
     return render(request, 'jobs/job_list.html', {
         'jobs': page_jobs,
         'total_jobs': total_jobs,
         'sort_by': sort_by,
         'show_count': show_count,
-        
-        'category': category
+        'category': categories,
+        'selected_category': category_id  
     })
+
+
 
 
 
