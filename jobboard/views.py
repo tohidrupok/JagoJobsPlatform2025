@@ -5,33 +5,54 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.core.cache import cache
 from django.db.models import Q
+from django.utils.timezone import now, timedelta
 
 
 def job_list(request):
     sort_by = request.GET.get('sort_by', 'most_recent')
     show_count = request.GET.get('show_count', 10)
     category_id = request.GET.get('category')
-    keyword = request.GET.get('keyword', '').strip()  
-    location = request.GET.get('location', '').strip()  
-    
+    keyword = request.GET.get('keyword', '').strip()
+    location = request.GET.get('location', '').strip()
+    date_filter = request.GET.get('date_filter', '')  # ✅ Get selected date filter
+
+    print(f"Filters - Keyword: {keyword}, Location: {location}, Date Filter: {date_filter}")  # Debugging
 
     try:
         show_count = int(show_count)
     except ValueError:
         show_count = 10
 
-    #  Fast Filtering with Q Objects
+    # 🚀 Use Q Objects for Efficient Filtering
     filters = Q()
     if category_id:
         filters &= Q(job_category_id=category_id)
 
-    # Search kortecha filed ar upor
+    # 🔍 Search by Keyword
     if keyword:
-        filters &= Q(title__icontains=keyword) | Q(job_description__icontains=keyword) | Q(job_requirements__icontains=keyword)| Q(job_location__icontains=keyword)
+        filters &= Q(title__icontains=keyword) | Q(job_description__icontains=keyword) | Q(job_requirements__icontains=keyword)
+
+    # 📍 Search by Location
     if location:
-        
         filters &= Q(job_location__icontains=location)
 
+    # 📅 Filter by Date Posted
+    today = now().date()
+    if date_filter:
+        if date_filter == "today":
+            filters &= Q(application_deadline=today)
+        elif date_filter == "last_hour":
+            filters &= Q(created_at__gte=now() - timedelta(hours=1))
+        elif date_filter == "last_24_hours":
+            filters &= Q(created_at__gte=now() - timedelta(days=1))
+        elif date_filter == "last_7_days":
+            filters &= Q(created_at__gte=now() - timedelta(days=7))
+        elif date_filter == "last_14_days":
+            filters &= Q(created_at__gte=now() - timedelta(days=14))
+        elif date_filter == "last_30_days":
+            filters &= Q(created_at__gte=now() - timedelta(days=30))
+
+    # 🏷️ Sorting Logic
     job_type_map = {
         "full_time": "Full Time",
         "internship": "Internship",
@@ -42,22 +63,34 @@ def job_list(request):
     if sort_by in job_type_map:
         filters &= Q(job_type=job_type_map[sort_by])
 
+    # 📄 Query Database
     jobs = JobPost.objects.filter(filters).order_by('-created_at').only(
-        "id", "title", "job_category_id", "job_type", "created_at"
+        "id", "title", "job_category_id", "job_type", "job_location", "created_at"
     )
 
     total_jobs = jobs.count()
 
+    # 🔢 Paginate Results
     paginator = Paginator(jobs, show_count)
     page_number = request.GET.get('page')
     page_jobs = paginator.get_page(page_number)
 
-    # Optimized Category Cache
+    # 🔥 Use Cached Job Categories
     categories = cache.get('job_categories')
     if not categories:
         categories = list(JobCategory.objects.values('id', 'name'))
         cache.set('job_categories', categories, timeout=3600)
-    
+
+    # 🔹 Define Date Filter Options for Template
+    date_filter_options = {
+        "today": "Today Deadline",
+        "last_hour": "Last hour",
+        "last_24_hours": "Last 24 hours",
+        "last_7_days": "Last 7 days",
+        "last_14_days": "Last 14 days",
+        "last_30_days": "Last 30 days",
+        "all": "All"
+    }
 
     return render(request, 'jobs/job_list.html', {
         'jobs': page_jobs,
@@ -66,11 +99,11 @@ def job_list(request):
         'show_count': show_count,
         'category': categories,
         'selected_category': category_id,
-        'keyword': keyword, 
-        'location': location  
+        'keyword': keyword,
+        'location': location,
+        'date_filter_options': date_filter_options,  # ✅ Pass options to template
+        'selected_date_filter': date_filter  # ✅ Keep selected filter
     })
-
-
 
 
 def job_detail(request, job_id):

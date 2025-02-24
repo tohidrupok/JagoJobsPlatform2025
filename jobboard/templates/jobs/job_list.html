@@ -56,7 +56,7 @@
                                                 {% endfor %}
                                             </select>
                                         </div>
-                                    
+                                        
                                         <div class="form-group mb-4">
                                             <h4 class="section-head-small mb-4">Keyword</h4>
                                             <div class="input-group">
@@ -64,20 +64,38 @@
                                                 <button class="btn" type="submit"><i class="feather-search"></i></button>
                                             </div>
                                         </div> 
-
+                                    
                                         <div class="form-group mb-4">
                                             <h4 class="section-head-small mb-4">Location</h4>
                                             <div class="input-group">
                                                 <input type="text" class="form-control" name="location" placeholder="Search location" value="{{ location|default:'' }}">
                                                 <button class="btn" type="submit"><i class="feather-map-pin"></i></button>
                                             </div>
+                                        </div> 
+                                    
+                                        <div class="twm-sidebar-ele-filter">
+                                            <h4 class="section-head-small mb-4">Date Posts</h4>
+                                            <ul>
+                                                {% for value, label in date_filter_options.items %}
+                                                <li>
+                                                    <div class="form-check">
+                                                        <input type="radio" class="form-check-input" name="date_filter" value="{{ value }}" id="date_filter_{{ value }}"
+                                                            {% if selected_date_filter == value %}checked{% endif %} onchange="this.form.submit()">
+                                                        <label class="form-check-label" for="date_filter_{{ value }}">{{ label }}</label>
+                                                    </div>
+                                                </li>
+                                                {% endfor %}
+                                            </ul>
                                         </div>
                                         
-                                  
                                         <!-- Keep sorting and pagination filters -->
                                         <input type="hidden" name="sort_by" value="{{ sort_by }}">
                                         <input type="hidden" name="show_count" value="{{ show_count }}">
+                                        
+                                        <!-- Optional submit button if needed for other inputs -->
+                                        <!-- <button type="submit" class="btn btn-primary">Filter</button> -->
                                     </form>
+                                    
                                     
                                                                             
                                     {% comment %} <form>
