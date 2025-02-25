@@ -14,29 +14,26 @@ def job_list(request):
     category_id = request.GET.get('category')
     keyword = request.GET.get('keyword', '').strip()
     location = request.GET.get('location', '').strip()
-    date_filter = request.GET.get('date_filter', '')  # ✅ Get selected date filter
-
-    print(f"Filters - Keyword: {keyword}, Location: {location}, Date Filter: {date_filter}")  # Debugging
+    date_filter = request.GET.get('date_filter', '')  
 
     try:
         show_count = int(show_count)
     except ValueError:
         show_count = 10
 
-    # 🚀 Use Q Objects for Efficient Filtering
+ 
     filters = Q()
     if category_id:
         filters &= Q(job_category_id=category_id)
 
-    # 🔍 Search by Keyword
+
     if keyword:
         filters &= Q(title__icontains=keyword) | Q(job_description__icontains=keyword) | Q(job_requirements__icontains=keyword)
 
-    # 📍 Search by Location
+
     if location:
         filters &= Q(job_location__icontains=location)
 
-    # 📅 Filter by Date Posted
     today = now().date()
     if date_filter:
         if date_filter == "today":
@@ -52,7 +49,6 @@ def job_list(request):
         elif date_filter == "last_30_days":
             filters &= Q(created_at__gte=now() - timedelta(days=30))
 
-    # 🏷️ Sorting Logic
     job_type_map = {
         "full_time": "Full Time",
         "internship": "Internship",
@@ -63,25 +59,23 @@ def job_list(request):
     if sort_by in job_type_map:
         filters &= Q(job_type=job_type_map[sort_by])
 
-    # 📄 Query Database
     jobs = JobPost.objects.filter(filters).order_by('-created_at').only(
         "id", "title", "job_category_id", "job_type", "job_location", "created_at"
     )
 
     total_jobs = jobs.count()
 
-    # 🔢 Paginate Results
+    # Paginate 
     paginator = Paginator(jobs, show_count)
     page_number = request.GET.get('page')
     page_jobs = paginator.get_page(page_number)
 
-    # 🔥 Use Cached Job Categories
+    #Cached Categories
     categories = cache.get('job_categories')
     if not categories:
         categories = list(JobCategory.objects.values('id', 'name'))
         cache.set('job_categories', categories, timeout=3600)
 
-    # 🔹 Define Date Filter Options for Template
     date_filter_options = {
         "today": "Today Deadline",
         "last_hour": "Last hour",
@@ -101,8 +95,8 @@ def job_list(request):
         'selected_category': category_id,
         'keyword': keyword,
         'location': location,
-        'date_filter_options': date_filter_options,  # ✅ Pass options to template
-        'selected_date_filter': date_filter  # ✅ Keep selected filter
+        'date_filter_options': date_filter_options,  
+        'selected_date_filter': date_filter 
     })
 
 
