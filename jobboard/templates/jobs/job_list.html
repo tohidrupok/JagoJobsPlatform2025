@@ -334,36 +334,34 @@
 
                             <div class="row"> 
 
-                                {% for job   in  jobs %}
-                                <!--Block one-->
-                                <div class="col-lg-6 col-md-12 m-b30">
+                                {% for job in jobs %}
+<!--Block one-->
+<div class="col-lg-6 col-md-12 m-b30">
+    <div class="twm-jobs-grid-style1" onclick="window.location.href='{% url 'job_detail' job.id %}';" style="cursor: pointer;">
+        <div class="twm-media">
+            <img src="{% if job.employee.logo %}{{ job.employee.logo.url }}{% else %}images/jobs-company/default.jpg{% endif %}" alt="Company Logo">
+        </div>
+        <span class="twm-job-post-duration">{{ job.created_at|timesince }} ago</span>
+        {% if job.exclusive_job %}
+        <div class="twm-jobs-category green"><span class="twm-bg-green">Exclusive</span></div>
+        {% else %}
+        <div class="twm-jobs-category green"><span class="twm-bg-green">New</span></div>
+        {% endif %}
+        <div class="twm-mid-content">
+            <a href="{% url 'job_detail' job.id %}" class="twm-job-title">
+                <h4>{{ job.title }}</h4>
+            </a>
+            <p class="twm-job-address">{{ job.job_location }} <br>{{ job.employee.company_name}}</p>   
+            {% comment %} <p>{{ job.job_category }}  </p>     
+            <p>{{ job.job_type }}  </p>   {% endcomment %}
+        </div>
+        <div class="twm-right-content">
+            <a href="{% url 'job_detail' job.id %}" class="twm-jobs-browse site-text-primary">Browse Job</a>
+        </div>
+    </div>
+</div>
+{% endfor %}
 
-                                    <div class="twm-jobs-grid-style1">
-                                        <div class="twm-media">
-                                            <img src="{% if job.employee.logo %}{{ job.employee.logo.url }}{% else %}images/jobs-company/default.jpg{% endif %}" alt="Company Logo">
-                                        </div>
-                                        <span class="twm-job-post-duration">{{ job.created_at|timesince }} ago</span>
-                                        {% if job.exclusive_job %}
-                                        <div class="twm-jobs-category green"><span class="twm-bg-green">Exclusive</span></div>
-                                        {% else %}
-                                        <div class="twm-jobs-category green"><span class="twm-bg-green">New</span></div>
-                                        {% endif %}
-                                        <div class="twm-mid-content">
-                                            <a href="{% url 'job_detail' job.id %}" class="twm-job-title">
-                                                <h4>{{ job.title }}</h4>
-                                            </a>
-                                            <p class="twm-job-address">{{ job.job_location }} <br>{{ job.employee.company_name}}</p>   
-                                            <p>{{ job.job_category }}  </p>     
-                                            <p>{{ job.job_type }}  </p>  
-                                        </div>
-                                        <div class="twm-right-content">
-                                            <a href="{% url 'job_detail' job.id %}" class="twm-jobs-browse site-text-primary">Browse Job</a>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                                {% endfor %}
                                 
                             </div>
                             <div class="pagination-outer">
