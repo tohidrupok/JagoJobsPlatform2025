@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
+
 {% block body %}
 
       
@@ -48,7 +49,54 @@
                                 
                                     <form method="get">
                                         <div class="form-group mb-4">
-                                            <h4 class="section-head-small mb-4">Category</h4>
+                                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                                <h4 class="section-head-small">Category</h4>
+                                            
+                                                {% if selected_category or keyword or location or selected_date_filter %}
+                                                    <div class="d-flex align-items-center flex-wrap">
+                                                       
+                                                        <ul class="list-inline mb-0">
+                                                            {% if selected_category %}
+                                                                <li class="list-inline-item badge bg-light text-dark">
+                                                                    Category No: {{ selected_category }}
+                                                                    <a href="?{% for key, value in query_params.items %}{% if key != 'category' %}{{ key }}={{ value }}&{% endif %}{% endfor %}" class="text-danger ms-1">
+                                                                        <i class="fas fa-times"></i>
+                                                                    </a>
+                                                                </li>
+                                                            {% endif %}
+                                                            {% if keyword %}
+                                                                <li class="list-inline-item badge bg-light text-dark">
+                                                                    "{{ keyword }}"
+                                                                    <a href="?{% for key, value in query_params.items %}{% if key != 'keyword' %}{{ key }}={{ value }}&{% endif %}{% endfor %}" class="text-danger ms-1">
+                                                                        <i class="fas fa-times"></i>
+                                                                    </a>
+                                                                </li>
+                                                            {% endif %}
+                                                            {% if location %}
+                                                                <li class="list-inline-item badge bg-light text-dark">
+                                                                    "{{ location }}"
+                                                                    <a href="?{% for key, value in query_params.items %}{% if key != 'location' %}{{ key }}={{ value }}&{% endif %}{% endfor %}" class="text-danger ms-1">
+                                                                        <i class="fas fa-times"></i>
+                                                                    </a>
+                                                                </li>
+                                                            {% endif %}
+                                                            {% if selected_date_filter %}
+                                                                <li class="list-inline-item badge bg-light text-dark">
+                                                                     {{ selected_date_filter }}
+                                                                    <a href="?{% for key, value in query_params.items %}{% if key != 'date_filter' %}{{ key }}={{ value }}&{% endif %}{% endfor %}" class="text-danger ms-1">
+                                                                        <i class="fas fa-times"></i>
+                                                                    </a>
+                                                                </li>
+                                                            {% endif %}
+                                                        </ul>
+                                            
+                                                        <!-- Clear All Button -->
+                                                        <a href="?clear_all=1" class="btn btn-sm btn-outline-danger ms-2">Clear All</a>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                             
+                                            
                                             <select class="wt-select-bar-large selectpicker" name="category" data-live-search="true" data-bv-field="size" onchange="this.form.submit()">
                                                 <option value="" {% if not selected_category %}selected{% endif %}>All Category</option>
                                                 {% for cat in category %}
@@ -333,36 +381,34 @@
                             </div>
 
                             <div class="row"> 
-
                                 {% for job in jobs %}
-<!--Block one-->
-<div class="col-lg-6 col-md-12 m-b30">
-    <div class="twm-jobs-grid-style1" onclick="window.location.href='{% url 'job_detail' job.id %}';" style="cursor: pointer;">
-        <div class="twm-media">
-            <img src="{% if job.employee.logo %}{{ job.employee.logo.url }}{% else %}images/jobs-company/default.jpg{% endif %}" alt="Company Logo">
-        </div>
-        <span class="twm-job-post-duration">{{ job.created_at|timesince }} ago</span>
-        {% if job.exclusive_job %}
-        <div class="twm-jobs-category green"><span class="twm-bg-green">Exclusive</span></div>
-        {% else %}
-        <div class="twm-jobs-category green"><span class="twm-bg-green">New</span></div>
-        {% endif %}
-        <div class="twm-mid-content">
-            <a href="{% url 'job_detail' job.id %}" class="twm-job-title">
-                <h4>{{ job.title }}</h4>
-            </a>
-            <p class="twm-job-address">{{ job.job_location }} <br>{{ job.employee.company_name}}</p>   
-            {% comment %} <p>{{ job.job_category }}  </p>     
-            <p>{{ job.job_type }}  </p>   {% endcomment %}
-        </div>
-        <div class="twm-right-content">
-            <a href="{% url 'job_detail' job.id %}" class="twm-jobs-browse site-text-primary">Browse Job</a>
-        </div>
-    </div>
-</div>
-{% endfor %}
-
-                                
+                                <!--Block one-->
+                                <div class="col-lg-6 col-md-12 m-b30">
+                                    <div class="twm-jobs-grid-style1" onclick="window.location.href='{% url 'job_detail' job.id %}';" style="cursor: pointer;">
+                                        <div class="twm-media">
+                                            <img src="{% if job.employee.logo %}{{ job.employee.logo.url }}{% else %}images/jobs-company/default.jpg{% endif %}" alt="Company Logo">
+                                        </div>
+                                        <span class="twm-job-post-duration">{{ job.created_at|timesince }} ago</span>
+                                        {% if job.exclusive_job %}
+                                        <div class="twm-jobs-category green"><span class="twm-bg-green">Exclusive</span></div>
+                                        {% else %}
+                                        <div class="twm-jobs-category green"><span class="twm-bg-green">New</span></div>
+                                        {% endif %}
+                                        <div class="twm-mid-content">
+                                            <a href="{% url 'job_detail' job.id %}" class="twm-job-title">
+                                                <h4>{{ job.title }}</h4>
+                                            </a>
+                                            <p class="twm-job-address">{{ job.job_location }} <br>{{ job.employee.company_name}}</p>   
+                                           <p>{{ job.job_category }}  </p>     
+                                            <p>{{ job.job_type }}  </p>  
+                                        </div>
+                                        <div class="twm-right-content">
+                                            <a href="{% url 'job_detail' job.id %}" class="twm-jobs-browse site-text-primary">Browse Job</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+               
                             </div>
                             <div class="pagination-outer">
                                 <div class="pagination-style1">
@@ -407,13 +453,10 @@
                     </div>
                 </div>
             </div>   
-            <!-- OUR BLOG END -->
-          
-            
+            <!-- OUR BLOG END -->          
      
         </div>
         <!-- CONTENT END -->
-
 
 {% endblock %}
 

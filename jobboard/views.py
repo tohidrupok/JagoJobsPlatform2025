@@ -15,6 +15,21 @@ def job_list(request):
     keyword = request.GET.get('keyword', '').strip()
     location = request.GET.get('location', '').strip()
     date_filter = request.GET.get('date_filter', '')  
+    
+    # Check if user clicked "Remove" on a filter
+    if 'remove_category' in request.GET:
+        category_id = ''
+    if 'remove_keyword' in request.GET:
+        keyword = ''
+    if 'remove_location' in request.GET:
+        location = ''
+    if 'remove_date' in request.GET:
+        date_filter = ''
+
+    # Check if "Clear All" was clicked
+    if 'clear_all' in request.GET:
+        category_id = keyword = location = date_filter = ''
+        
 
     try:
         show_count = int(show_count)
@@ -64,6 +79,7 @@ def job_list(request):
     )
 
     total_jobs = jobs.count()
+    query_params = request.GET.copy()
 
     # Paginate 
     paginator = Paginator(jobs, show_count)
@@ -83,7 +99,7 @@ def job_list(request):
         "last_7_days": "Last 7 days",
         "last_14_days": "Last 14 days",
         "last_30_days": "Last 30 days",
-        "all": "All"
+        "all jobs": "All"
     }
 
     return render(request, 'jobs/job_list.html', {
@@ -96,7 +112,8 @@ def job_list(request):
         'keyword': keyword,
         'location': location,
         'date_filter_options': date_filter_options,  
-        'selected_date_filter': date_filter 
+        'selected_date_filter': date_filter ,
+        'query_params': query_params
     })
 
 
