@@ -4,29 +4,20 @@
 
 {% block body %}
 
-      
+        <br><br><br>
         <!-- CONTENT START -->
         <div class="page-content">
 
             <!-- Job Detail V.2 START -->
             <div class="section-full  p-t50 p-b90 bg-white">
                 <div class="container">
-                
+                    <div class="twm-job-detail-2-wrap">
                     <!-- BLOG SECTION START -->
                     <div class="section-content">
                         <div class="twm-job-self-wrap twm-job-detail-v2">
                             <div class="twm-job-self-info">
                                 <div class="twm-job-self-top">
-                                    <div class="twm-media-bg">
-                                        <img src="{{ job.created_at }}" alt="#">
-                                        <div class="twm-jobs-category green"><span class="twm-bg-green">New</span></div>
-                                        <div class="twm-job-self-bottom">
-                                            <a class="site-button" data-bs-toggle="modal" href="#apply_job_popup" role="button">
-                                                Apply Now
-                                            </a>
-                                        </div>
-
-                                    </div>
+                                    
                                     
                                     <div class="twm-mid-content">
 
@@ -34,13 +25,13 @@
                                             <img src="{{ job.employee.logo.url }}" alt="#">
                                         </div>
 
-                                        <h4 class="twm-job-title">{{ job.title }} <span class="twm-job-post-duration">/ 1 days ago</span></h4>
+                                        <h4 class="twm-job-title">{{ job.title }} <span class="twm-job-post-duration">/ {{ job.created_at|timesince }} ago</span></h4>
                                         <p class="twm-job-address"><i class="feather-map-pin"></i>{{ job.job_location }}</p>
                                         <div class="twm-job-self-mid">
                                             <div class="twm-job-self-mid-left">
-                                                <a href="https://themeforest.net/user/thewebmax/portfolio" class="twm-job-websites site-text-primary">https://thewebmax.com</a>
+                                                <a href="{{ job.employee.company_website }}" class="twm-job-websites site-text-primary">{{ job.employee.company_website }}</a>
                                             </div>
-                                            <div class="twm-job-apllication-area">Application ends:
+                                            <div class="twm-job-apllication-area">Application Deadline:
                                                 <span class="twm-job-apllication-date">{{ job.application_deadline }}</span>
                                             </div>
                                         </div>
@@ -48,10 +39,21 @@
                                         
                                     </div>
                                 </div>
+                                <div class="twm-media-bg">
+                                        
+                                    <div class="twm-jobs-category green"><span class="twm-bg-green">New</span></div>
+                                    
+                                    <div style="text-align: right;">
+                                        <a class="site-button" data-bs-toggle="modal" href="#apply_job_popup" role="button">
+                                            Apply Now
+                                        </a>
+                                    </div>
+
+                                </div>
                                 
                             </div>
                         </div>
-                        <div class="twm-job-detail-2-wrap">
+                      
                             <div class="row d-flex justify-content-center">
                                 <div class="col-lg-4 col-md-12 rightSidebar">
 
@@ -84,6 +86,15 @@
                                                     </li>
                                                     <li>
                                                         <div class="twm-s-info-inner">
+                                                            
+                                                            <i class="fas fa-money-bill-wave"></i>
+                                                            <span class="twm-title">Vacancy</span>
+                                                            <div class="twm-s-info-discription">{{ job.no_of_vacancy }}</div>
+                                                        </div>
+                                                    </li> 
+                                                    
+                                                    <li>
+                                                        <div class="twm-s-info-inner">
                                                             <i class="fas fa-map-marker-alt"></i>
                                                             <span class="twm-title">Location</span>
                                                             <div class="twm-s-info-discription">{{ job.job_location }}</div>
@@ -103,13 +114,7 @@
                                                             <div class="twm-s-info-discription">{{ job.experience_required }}</div>
                                                         </div>
                                                     </li>
-                                                    <li>
-                                                        <div class="twm-s-info-inner">
-                                                            <i class="fas fa-suitcase"></i>
-                                                            <span class="twm-title">Qualification</span>
-                                                            <div class="twm-s-info-discription">Bachelor Degree </div>
-                                                        </div>
-                                                    </li>
+                                                    
                                                     <li>
                                                         <div class="twm-s-info-inner">
                                                             <i class="fas fa-venus-mars"></i>
@@ -119,12 +124,13 @@
                                                     </li>
                                                     <li>
                                                         <div class="twm-s-info-inner">
-                                                            
-                                                            <i class="fas fa-money-bill-wave"></i>
-                                                            <span class="twm-title">Offered Salary</span>
-                                                            <div class="twm-s-info-discription">$2000-$2500 / Month</div>
+                                                            <i class="fas fa-suitcase"></i>
+                                                            <span class="twm-title">Qualification</span>
+                                                            <div class="twm-s-info-discription">{{ job.educational_qualification }}</div>
                                                         </div>
-                                                    </li>
+                                                    </li> 
+
+                                                   
         
                                                 </ul>
                                                 
@@ -263,12 +269,21 @@
                                                     </div>
                                                 </div>
                                                 
-                                            </div>
+                                            </div>   
         
                                         </div>
                                         <h4 class="twm-s-title">Video</h4>
                                         <div class="video-yt-section">
-                                            <iframe title="Envato Visits Their New Office" width="660" height="371" src="https://www.youtube.com/embed/SZEflIVnhH8?feature=oembed"></iframe> 
+                                            {% if job.employee.get_embed_url %}
+                                                <iframe title="Job Video" width="660" height="371" 
+                                                        src="{{ job.employee.get_embed_url }}" 
+                                                        frameborder="0" 
+                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                                        allowfullscreen>
+                                                </iframe>
+                                            {% else %}
+                                                <p>No video available for this job.</p>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>

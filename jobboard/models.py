@@ -69,7 +69,8 @@ class JobApplication(models.Model):
     def __str__(self):
         return f"{self.seeker.user.username} applied for {self.job.title}"  
     
-    
+    class Meta:
+        unique_together = ('job', 'seeker')
     
     
     

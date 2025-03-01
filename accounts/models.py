@@ -109,3 +109,12 @@ class EmployerProfile(models.Model):
     class Meta:
         verbose_name = "Employer Profile"
         verbose_name_plural = "Employer Profiles"
+        
+    def get_embed_url(self):
+        """Convert YouTube URL to embed URL."""
+        if self.twitter_link:
+            if "watch?v=" in self.twitter_link:
+                return self.twitter_link.replace("watch?v=", "embed/")
+            elif "youtu.be/" in self.twitter_link:
+                return self.twitter_link.replace("youtu.be/", "youtube.com/embed/")
+        return None  # If no video URL is provided

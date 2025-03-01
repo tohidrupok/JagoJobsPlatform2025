@@ -209,13 +209,18 @@
                                         <div class="row">                  
 
                                             <div class="col-lg-12 col-md-12 m-b30">
-                                                <h4 class="twm-s-title">Video</h4>
-                                                <div class="video-section-first" style="background-image: url({% static 'images/detail-pic/company-bnr1.jpeg' %});">
-                                                    <a href="{{ profile.google_link }}" class="mfp-video play-now-video">
-                                                        <i class="icon feather-play"></i>
-                                                        <span class="ripple"></span>
-                                                    </a>
-                                                </div> 
+                                                <div class="video-yt-section">
+                                                    {% if profile.get_embed_url %}
+                                                        <iframe title="Job Video" width="660" height="371" 
+                                                                src="{{ profile.get_embed_url }}" 
+                                                                frameborder="0" 
+                                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                                                allowfullscreen>
+                                                        </iframe>
+                                                    {% else %}
+                                                        <p>No video available for this job.</p>
+                                                    {% endif %}
+                                                </div>
                                             </div>
 
                                             <div class="col-lg-12 col-md-12">
