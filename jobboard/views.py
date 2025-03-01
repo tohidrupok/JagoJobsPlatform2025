@@ -116,10 +116,14 @@ def job_list(request):
         'query_params': query_params
     })
 
-
+from django.urls import reverse
 def job_detail(request, job_id):
     job = get_object_or_404(JobPost, id=job_id)
-    return render(request, 'jobs/job_detail.html', {'job': job})
+    job_url = request.build_absolute_uri(reverse('job_detail', args=[job.id]))
+    related_jobs = JobPost.objects.filter(job_category=job.job_category).exclude(id=job.id).order_by('-created_at')[:9]
+    print(related_jobs)
+
+    return render(request, 'jobs/job_detail.html', {'job': job, 'job_url': job_url, 'related_jobs': related_jobs})
 
 @login_required
 def create_job(request):

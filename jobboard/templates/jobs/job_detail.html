@@ -61,20 +61,7 @@
                                         <div class="twm-s-info2-wrap mb-5">
                                             <div class="twm-s-info2">
                                                 <h4 class="section-head-small mb-4">Job Information</h4>
-                                                <ul class="twm-job-hilites">
-                                                    <li>
-                                                        <i class="fas fa-calendar-alt"></i>
-                                                        <span class="twm-title">Date Posted</span>
-                                                    </li>
-                                                    <li>
-                                                        <i class="fas fa-eye"></i>
-                                                        <span class="twm-title">8160 Views</span>
-                                                    </li>
-                                                    <li>
-                                                        <i class="fas fa-file-signature"></i>
-                                                        <span class="twm-title">6 Applicants</span>
-                                                    </li>
-                                                </ul>
+                                                
                                                 <ul class="twm-job-hilites2">
         
                                                     <li>
@@ -103,8 +90,8 @@
                                                     <li>
                                                         <div class="twm-s-info-inner">
                                                             <i class="fas fa-user-tie"></i>
-                                                            <span class="twm-title">Job Title</span>
-                                                            <div class="twm-s-info-discription">{{ job.title }}</div>
+                                                            <span class="twm-title">Salary Range</span>
+                                                            <div class="twm-s-info-discription">{{ job.salary_range }}</div>
                                                         </div>
                                                     </li>
                                                     <li>
@@ -112,6 +99,13 @@
                                                             <i class="fas fa-clock"></i>
                                                             <span class="twm-title">Experience</span>
                                                             <div class="twm-s-info-discription">{{ job.experience_required }}</div>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="twm-s-info-inner">
+                                                            <i class="fas fa-clock"></i>
+                                                            <span class="twm-title">Job Type</span>
+                                                            <div class="twm-s-info-discription">{{ job.job_type }}</div>
                                                         </div>
                                                     </li>
                                                     
@@ -137,7 +131,7 @@
                                             </div>
                                         </div>
         
-                                        <div class="widget tw-sidebar-tags-wrap">
+                                        {% comment %} <div class="widget tw-sidebar-tags-wrap">
                                             <h4 class="section-head-small mb-4">Job Skills</h4>
                                             
                                             <div class="tagcloud">
@@ -151,7 +145,7 @@
                                                 <a href="javascript:void(0)">Drupal</a>
                                                 <a href="javascript:void(0)">Joomla</a>
                                             </div>
-                                        </div>
+                                        </div> {% endcomment %}
 
                                     </div>
 
@@ -213,24 +207,36 @@
                                                 {% endif %}
                                             {% endfor %}
                                         </ul>
+                                        <h4 class="twm-s-title">Employment Information:</h4>
+                                               <ul class="description-list">
+                                                 <li> <i class="feather-check"></i> {{ job.job_level }} Job</li>
+                                                 <li> <i class="feather-check"></i> {{ job.cv_receive_method }} Job</li>                                               
+                                        </ul>
                                                                             
                                         <h4 class="twm-s-title">Share Profile</h4>
                                         <div class="twm-social-tags">
-                                            <a href="javascript:void(0)" class="fb-clr">Facebook</a>
-                                            <a href="javascript:void(0)" class="tw-clr">Twitter</a>
-                                            <a href="javascript:void(0)" class="link-clr">Linkedin</a>                                            
-                                            <a href="javascript:void(0)" class="whats-clr">Whatsapp</a>
-                                            <a href="javascript:void(0)" class="pinte-clr">Pinterest</a>
+                                            <!-- Facebook Share -->
+                                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ job_url }}" class="fb-clr" target="_blank">Facebook</a>
+                                            
+                                            <!-- Twitter Share -->
+                                            <a href="https://twitter.com/intent/tweet?url={{ job_url }}&text=Check%20out%20this%20job%20posting!" class="tw-clr" target="_blank">Twitter</a>
+                                            
+                                            <!-- LinkedIn Share -->
+                                            <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ job_url }}" class="link-clr" target="_blank">Linkedin</a>
+                                            
+                                            <!-- WhatsApp Share -->
+                                            <a href="https://api.whatsapp.com/send?text={{ job_url }}" class="whats-clr" target="_blank">Whatsapp</a>
+                                            
                                         </div>
 
-                                        <h4 class="twm-s-title">Location</h4>
+                                        {% comment %} <h4 class="twm-s-title">Location</h4>
                                         <div class="twm-m-map mb-5">
                                             <div class="twm-m-map-iframe">
                                                 <iframe height="310" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3304.8534521658976!2d-118.2533646842856!3d34.073270780600225!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2c6fd9829c6f3%3A0x6ecd11bcf4b0c23a!2s1363%20Sunset%20Blvd%2C%20Los%20Angeles%2C%20CA%2090026%2C%20USA!5e0!3m2!1sen!2sin!4v1620815366832!5m2!1sen!2sin"></iframe>
                                             </div>
-                                        </div>
+                                        </div> {% endcomment %}
 
-                                        <h4 class="twm-s-title">Office Photos</h4>
+                                        {% comment %} <h4 class="twm-s-title">Office Photos</h4>
                                         <div class="tw-sidebar-gallery-2">
                                             <div class="row">
                                                 <div class="col-lg-3 col-md-3 col-sm-6">
@@ -271,7 +277,7 @@
                                                 
                                             </div>   
         
-                                        </div>
+                                        </div> {% endcomment %}
                                         <h4 class="twm-s-title">Video</h4>
                                         <div class="video-yt-section">
                                             {% if job.employee.get_embed_url %}
@@ -311,162 +317,36 @@
                 <div class="container">
                     <div class="section-content">
                         <div class="owl-carousel twm-related-jobs-carousel owl-btn-vertical-center">
-                        
+                            {% for related_job in related_jobs %}
                             <div class="item">
                                 <div class="twm-jobs-grid-style2">
                                     <div class="twm-media">
-                                        <img src="images/jobs-company/pic1.jpg" alt="#">
+                                        <img src="{{ related_job.employee.company_logo.url }}" alt="{{ related_job.title }}">
                                     </div>
-                                    <span class="twm-job-post-duration">1 days ago</span>
-                                    <div class="twm-jobs-category green"><span class="twm-bg-green">New</span></div>
+                                    <span class="twm-job-post-duration">{{ related_job.created_at|timesince }} ago</span>
+                                    <div class="twm-jobs-category green">
+                                        <span class="twm-bg-{{ related_job.job_type|lower }}">{{ related_job.job_type }}</span>
+                                    </div>
                                     <div class="twm-mid-content">
-                                        <a href="job-detail.html" class="twm-job-title">
-                                            <h4>Senior Web Designer , Developer</h4>
+                                        <a href="{{ related_job.get_absolute_url }}" class="twm-job-title">
+                                            <h4>{{ related_job.title }}</h4>
                                         </a>
-                                        <p class="twm-job-address">1363-1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
-                                        <a href="https://themeforest.net/user/thewebmax/portfolio" class="twm-job-websites site-text-primary">https://thewebmax.com</a>
+                                        <p class="twm-job-address">{{ related_job.job_location }}</p>
+                                        <a href="{{ related_job.employee.website }}" class="twm-job-websites site-text-primary">{{ related_job.employee.website }}</a>
                                     </div>
                                     <div class="twm-right-content">
-                                        
-                                        <div class="twm-jobs-amount">$2500 <span>/ Month</span></div>
-                                        <a href="job-detail.html" class="twm-jobs-browse site-text-primary">Browse Job</a>
+                                        <div class="twm-jobs-amount">{{ related_job.salary_range }} <span>/ Month</span></div>
+                                        <a href="{{ related_job.get_absolute_url }}" class="twm-jobs-browse site-text-primary">Browse Job</a>
                                     </div>
                                 </div>
                             </div>
-                            
-                            <div class="item">
-                                <div class="twm-jobs-grid-style2">
-                                    <div class="twm-media">
-                                        <img src="images/jobs-company/pic2.jpg" alt="#">
-                                    </div>
-                                    <span class="twm-job-post-duration">15 days ago</span>
-                                    <div class="twm-jobs-category green"><span class="twm-bg-brown">Intership</span></div>
-                                    <div class="twm-mid-content">
-                                        <a href="job-detail.html" class="twm-job-title">
-                                            <h4>Senior Rolling Stock Technician</h4>
-                                        </a>
-                                        <p class="twm-job-address">1363-1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
-                                        <a href="https://themeforest.net/user/thewebmax/portfolio" class="twm-job-websites site-text-primary">https://thewebmax.com</a>
-                                    </div>
-                                    <div class="twm-right-content">
-                                        <div class="twm-jobs-amount">$7 <span>/ Hour</span></div>
-                                        <a href="job-detail.html" class="twm-jobs-browse site-text-primary">Browse Job</a>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="item">
-                                <div class="twm-jobs-grid-style2">
-                                    <div class="twm-media">
-                                        <img src="images/jobs-company/pic3.jpg" alt="#">
-                                    </div>
-                                    <span class="twm-job-post-duration">6 Month ago</span>
-                                    <div class="twm-jobs-category green"><span class="twm-bg-purple">Fulltime</span></div>
-                                    <div class="twm-mid-content">
-                                        <a href="job-detail.html" class="twm-job-title">
-                                            <h4 class="twm-job-title">IT Department Manager</h4>
-                                        </a>
-                                        <p class="twm-job-address">1363-1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
-                                        <a href="https://themeforest.net/user/thewebmax/portfolio" class="twm-job-websites site-text-primary">https://thewebmax.com</a>
-                                    </div>
-                                    <div class="twm-right-content">
-                                        
-                                        <div class="twm-jobs-amount">$2500 <span>/ Month</span></div>
-                                        <a href="job-detail.html" class="twm-jobs-browse site-text-primary">Browse Job</a>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="item">
-                                <div class="twm-jobs-grid-style2">
-                                    <div class="twm-media">
-                                        <img src="images/jobs-company/pic4.jpg" alt="#">
-                                    </div>
-                                    <span class="twm-job-post-duration">2 days ago</span>
-                                    <div class="twm-jobs-category green"><span class="twm-bg-sky">Freelancer</span></div>
-                                    <div class="twm-mid-content">
-                                        <a href="job-detail.html" class="twm-job-title">
-                                            <h4 class="twm-job-title">Art Production Specialist</h4>
-                                        </a>
-                                        <p class="twm-job-address">1363-1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
-                                        <a href="https://themeforest.net/user/thewebmax/portfolio" class="twm-job-websites site-text-primary">https://thewebmax.com</a>
-                                    </div>
-                                    <div class="twm-right-content">
-                                        
-                                        <div class="twm-jobs-amount">$1800 <span>/ Month</span></div>
-                                        <a href="job-detail.html" class="twm-jobs-browse site-text-primary">Browse Job</a>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="item">
-                                <div class="twm-jobs-grid-style2">
-                                    <div class="twm-media">
-                                        <img src="images/jobs-company/pic5.jpg" alt="#">
-                                    </div>
-                                    <span class="twm-job-post-duration">1 days ago</span>
-                                    <div class="twm-jobs-category green"><span class="twm-bg-golden">Temporary</span></div>
-                                    <div class="twm-mid-content">
-                                        <a href="job-detail.html" class="twm-job-title">
-                                            <h4 class="twm-job-title">Recreation &amp; Fitness Worker</h4>
-                                        </a>
-                                        <p class="twm-job-address">1363-1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
-                                        <a href="https://themeforest.net/user/thewebmax/portfolio" class="twm-job-websites site-text-primary">https://thewebmax.com</a>
-                                    </div>
-                                    <div class="twm-right-content">
-                                        <div class="twm-jobs-amount">$1000 <span>/ Month</span></div>
-                                        <a href="job-detail.html" class="twm-jobs-browse site-text-primary">Browse Job</a>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="item">
-                                <div class="twm-jobs-grid-style2">
-                                    <div class="twm-media">
-                                        <img src="images/jobs-company/pic1.jpg" alt="#">
-                                    </div>
-                                    <span class="twm-job-post-duration">1 days ago</span>
-                                    <div class="twm-jobs-category green"><span class="twm-bg-green">New</span></div>
-                                    <div class="twm-mid-content">
-                                        <a href="job-detail.html" class="twm-job-title">
-                                            <h4>Senior Web Designer , Developer</h4>
-                                        </a>
-                                        <p class="twm-job-address">1363-1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
-                                        <a href="https://themeforest.net/user/thewebmax/portfolio" class="twm-job-websites site-text-primary">https://thewebmax.com</a>
-                                    </div>
-                                    <div class="twm-right-content">
-                                        
-                                        <div class="twm-jobs-amount">$19 <span>/ Hour</span></div>
-                                        <a href="job-detail.html" class="twm-jobs-browse site-text-primary">Browse Job</a>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="item">
-                                <div class="twm-jobs-grid-style2">
-                                    <div class="twm-media">
-                                        <img src="images/jobs-company/pic1.jpg" alt="#">
-                                    </div>
-                                    <span class="twm-job-post-duration">1 days ago</span>
-                                    <div class="twm-jobs-category green"><span class="twm-bg-green">New</span></div>
-                                    <div class="twm-mid-content">
-                                        <a href="job-detail.html" class="twm-job-title">
-                                            <h4>Senior Web Designer , Developer</h4>
-                                        </a>
-                                        <p class="twm-job-address">1363-1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
-                                        <a href="https://themeforest.net/user/thewebmax/portfolio" class="twm-job-websites site-text-primary">https://thewebmax.com</a>
-                                    </div>
-                                    <div class="twm-right-content">
-                                        
-                                        <div class="twm-jobs-amount">$2500 <span>/ Month</span></div>
-                                        <a href="job-detail.html" class="twm-jobs-browse site-text-primary">Browse Job</a>
-                                    </div>
-                                </div>
-                            </div>
-                                                                 
+                            {% empty %}
+                                <p>No related jobs found in this category.</p>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
+                
 
             </div>
             <!-- Related Jobs END -->
@@ -555,7 +435,7 @@
 
 
 
-
+{% comment %} 
 
 
 
@@ -581,7 +461,7 @@
 <a href="{% url 'apply_job' job.id %}">Apply for this Job</a>
 {% else %}
     <p>You must be logged in to apply for this job.</p>
-{% endif %}
+{% endif %} {% endcomment %}
 
 
 {% endblock %}

@@ -1,6 +1,6 @@
 from django.db import models
 from accounts.models import EmployerProfile, SeekerProfile
-
+from django.urls import reverse
 
 #Job Post
 class JobCategory(models.Model):
@@ -40,11 +40,15 @@ class JobPost(models.Model):
     job_location = models.CharField(max_length=200)
     exclusive_job = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
+    salary_range = models.CharField(max_length=200, null= True, blank= True, default='Negotiable')
     
 
     def __str__(self):
         return self.title
-
+    
+    def get_absolute_url(self):
+        return reverse('job_detail', args=[str(self.id)]) 
+    
 #job Apply 
 
 class JobApplication(models.Model):
@@ -69,11 +73,7 @@ class JobApplication(models.Model):
     def __str__(self):
         return f"{self.seeker.user.username} applied for {self.job.title}"  
     
-    class Meta:
-        unique_together = ('job', 'seeker')
-    
-    
-    
+ 
     
 # class JobPost(models.Model):
 #     title = models.CharField(max_length=255, db_index=True)  # Index for fast search
