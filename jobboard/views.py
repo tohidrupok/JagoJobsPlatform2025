@@ -116,14 +116,23 @@ def job_list(request):
         'query_params': query_params
     })
 
-from django.urls import reverse
+
 def job_detail(request, job_id):
     job = get_object_or_404(JobPost, id=job_id)
-    job_url = request.build_absolute_uri(reverse('job_detail', args=[job.id]))
+    seeker = request.user.seeker_profile
     related_jobs = JobPost.objects.filter(job_category=job.job_category).exclude(id=job.id).order_by('-created_at')[:9]
-    print(related_jobs)
+    
+    form = JobApplicationForm(seeker=request.user.seeker_profile if hasattr(request.user, 'seeker_profile') else None)
+    has_applied = JobApplication.objects.filter(job=job, seeker=request.user.seeker_profile).exists() if request.user.is_authenticated else False
 
-    return render(request, 'jobs/job_detail.html', {'job': job, 'job_url': job_url, 'related_jobs': related_jobs})
+    return render(request, 'jobs/job_detail.html', {
+        'job': job,
+        'seeker': seeker,
+        'form': form,
+        'related_jobs': related_jobs,
+        'has_applied': has_applied
+    })
+    
 
 @login_required
 def create_job(request):
@@ -140,11 +149,16 @@ def create_job(request):
     return render(request, 'jobs/create_job.html', {'form': form})
 
 
+from django.http import JsonResponse
 @login_required
 def apply_job(request, job_id):
     job = get_object_or_404(JobPost, id=job_id)
     seeker = request.user.seeker_profile
-
+    
+    if JobApplication.objects.filter(job=job, seeker=seeker).exists():
+        return JsonResponse({"success": False, "error": "You have already applied for this job."})
+ 
+ 
     if request.method == "POST":
         form = JobApplicationForm(request.POST, request.FILES, seeker=seeker)
         if form.is_valid():
@@ -152,11 +166,11 @@ def apply_job(request, job_id):
             application.job = job
             application.seeker = seeker
             application.save()
-            return redirect('job_detail', job_id=job.id)
-    else:
-        form = JobApplicationForm(seeker=seeker)
+            return JsonResponse({"success": True})
+        else:
+            return JsonResponse({"success": False, "error": "Invalid form submission."})
 
-    return render(request, 'jobs/apply_job.html', {'form': form, 'job': job})
+    return JsonResponse({"success": False, "error": "Invalid request."})
 
 
 @login_required

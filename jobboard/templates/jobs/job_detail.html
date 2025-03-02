@@ -39,17 +39,21 @@
                                         
                                     </div>
                                 </div>
-                                <div class="twm-media-bg">
-                                        
-                                    <div class="twm-jobs-category green"><span class="twm-bg-green">New</span></div>
-                                    
-                                    <div style="text-align: right;">
-                                        <a class="site-button" data-bs-toggle="modal" href="#apply_job_popup" role="button">
-                                            Apply Now
-                                        </a>
+                                {% if request.user.is_authenticated and not has_applied %}
+                                    <div class="twm-media-bg">
+                                        <div class="twm-jobs-category green"><span class="twm-bg-green">New</span></div>
+                                        <div style="text-align: right;">
+                                            <a class="site-button" data-bs-toggle="modal" href="#apply_job_popup" role="button">
+                                                Apply Now
+                                            </a>
+                                        </div>
                                     </div>
-
+                                {% else %}
+                                <div class="alert alert-warning text-center" role="alert" style="font-weight: bold;">
+                                    <i class="fas fa-exclamation-circle"></i> You already applied for this job.
                                 </div>
+                                
+                                {% endif %}
                                 
                             </div>
                         </div>
@@ -321,7 +325,7 @@
                             <div class="item">
                                 <div class="twm-jobs-grid-style2">
                                     <div class="twm-media">
-                                        <img src="{{ related_job.employee.company_logo.url }}" alt="{{ related_job.title }}">
+                                        <img src="{{ related_job.employee.logo.url }}" alt="{{ related_job.title }}">
                                     </div>
                                     <span class="twm-job-post-duration">{{ related_job.created_at|timesince }} ago</span>
                                     <div class="twm-jobs-category green">
@@ -355,64 +359,107 @@
         </div>
         <!-- CONTENT END -->
 
-        <!--apply job popup -->
-        <div class="modal fade" id="apply_job_popup" aria-hidden="true" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="sign_up_popupLabel">Apply For This Job</h4>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                    
-                    <div class="modal-body">
-                        <div class="apl-job-inpopup">
-                            <!--Basic Information-->
-                            <div class="panel panel-default">
-                                
-                                <div class="panel-body wt-panel-body p-a20 ">
 
-                                    <div class="twm-tabs-style-1">
-                                            
-                                        <div class="row">
-                                                
-                                                <div class="col-md-12">
-                                                    <div class="form-group">
-                                                        <label>Message</label>
-                                                        <textarea class="form-control" rows="3" placeholder="Message sent to the employer"></textarea>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="col-lg-12 col-md-12">
-                                                    <div class="form-group">
-                                                        <label>Upload Resume</label>
-                                                        <form action="upload.php" class="dropzone dz-clickable"><div class="dz-default dz-message"><span><i class="sl sl-icon-plus"></i> Click here or drop files to upload</span></div></form>
-                                                        <small>If you do not have a resume document, you may write your brief professional profile <a class="site-text-primary" href="javascript:void(0);">here</a></small>
-                                                    </div>                                    
-                                                </div>
 
-                                            
-                                                                
-                                                <div class="col-xl-12 col-lg-12 col-md-12"> 
-                                                    <div class="text-left">
-                                                        <button type="submit" class="site-button">Send Application</button>
-                                                    </div>
-                                                </div> 
-                                                
-                                            
-                                                
-                                        </div>
-                                        
-                                    </div>  
-
-                                </div>
-                            </div>
-                        </div> 
-                    </div>
-                </div>
-            </div>
+<!-- Apply Job Popup -->
+<div class="modal fade" id="apply_job_popup" aria-hidden="true" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
             
+            <div class="modal-header">
+                <h4 class="modal-title">Apply For This Job</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+        
+            <div class="modal-body">
+                <div class="apl-job-inpopup">
+                    <div class="panel panel-default">
+                        <div class="panel-body wt-panel-body p-a20">
+                            <div class="twm-tabs-style-1">
+                                
+                                <form id="jobApplicationForm" method="POST" enctype="multipart/form-data" class="p-4 bg-white shadow rounded">
+                                    {% csrf_token %}
+                                    
+                                    <h4 class="mb-3 text-primary">Job Application</h4>
+                                    
+                                    <!-- View Resume Section -->
+                                    <div class="mb-3">
+                                        <label class="fw-bold">Your Resume:</label>
+                                        {% if seeker.resume %}
+                                            <p>
+                                                <a href="{{ seeker.resume.url }}" target="_blank" class="btn btn-outline-primary btn-sm">
+                                                    <i class="fas fa-file-alt"></i> View Resume
+                                                </a>
+                                            </p>
+                                        {% else %}
+                                            <p class="text-muted">No resume uploaded yet.</p>
+                                        {% endif %}
+                                    </div>
+                                
+                                    <!-- Resume Upload -->
+                                    <div class="mb-3">
+                                        <label class="fw-bold">If Upload New Resume(Optional):</label>
+                                        <input type="file" name="resume" id="id_resume" class="form-control">
+                                    </div>
+                                       
+                                    <!-- Expected Salary -->
+                                    <div class="mb-3">
+                                        <label class="fw-bold">Expected Salary:</label>
+                                        <input type="number" name="expected_Salary" id="id_expected_Salary" class="form-control" placeholder="Enter expected salary">
+                                    </div>
+                                    
+                                    <!-- Error Message -->
+                                    <p id="form-error" class="text-danger" style="display: none;"></p>
+                                    
+                                    <!-- Submit Button -->
+                                    <div class="text-left">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-paper-plane"></i> Send Application
+                                        </button>
+                                    </div> 
+                                </form>
+ 
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+            </div>
         </div>
+    </div>
+</div>
+
+<!-- AJAX Script to Submit Form Without Reload -->
+<script>
+document.getElementById("jobApplicationForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent default form submission
+    
+    let formData = new FormData(this);
+    let errorMsg = document.getElementById("form-error");
+
+    fetch("{% url 'apply_job' job.id %}", {
+        method: "POST",
+        body: formData,
+        headers: {
+            "X-CSRFToken": document.querySelector('[name=csrfmiddlewaretoken]').value
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert("Application submitted successfully!");
+            location.reload(); // Reload page to update UI
+        } else {
+            errorMsg.textContent = data.error || "Something went wrong.";
+            errorMsg.style.display = "block";
+        }
+    })
+    .catch(error => {
+        errorMsg.textContent = "An error occurred. Please try again.";
+        errorMsg.style.display = "block";
+    });
+});
+</script>
 
 
 
@@ -420,13 +467,14 @@
 
 
 
-<!-- Apply button appears if the seeker is logged in -->
+
+{% comment %} <!-- Apply button appears if the seeker is logged in -->
 {% if user.is_authenticated %}
 <a href="{% url 'apply_job' job.id %}">Apply for this Job</a>
 {% else %}
     <p>You must be logged in to apply for this job.</p>
 {% endif %}
-
+ {% endcomment %}
 
 {% comment %} <h2>{{ job.title }}</h2>
 <p><strong>Company Industry Type:</strong> {{ job.company_industry_type }}</p>

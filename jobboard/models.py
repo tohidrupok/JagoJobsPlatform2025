@@ -54,8 +54,9 @@ class JobPost(models.Model):
 class JobApplication(models.Model):
     job = models.ForeignKey(JobPost, on_delete=models.CASCADE, related_name='applications')
     seeker = models.ForeignKey(SeekerProfile, on_delete=models.CASCADE, related_name='applications')
-    resume = models.FileField(upload_to='media/resumes/', blank=True, verbose_name="Resume")  
+    resume = models.FileField(upload_to='media/apply/resumes/', blank=True, verbose_name="Resume")  
     applied_at = models.DateTimeField(auto_now_add=True)
+    expected_Salary = models.IntegerField(null=True, blank=True)
 
     STATUS_CHOICES = [
         ('pending', 'Pending'),
