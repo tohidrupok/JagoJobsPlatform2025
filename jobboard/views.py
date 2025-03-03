@@ -119,16 +119,13 @@ def job_list(request):
 
 def job_detail(request, job_id):
     job = get_object_or_404(JobPost, id=job_id)
-    seeker = request.user.seeker_profile
+    seeker = request.user.seeker_profile if request.user.is_authenticated and hasattr(request.user, 'seeker_profile') else None
     related_jobs = JobPost.objects.filter(job_category=job.job_category).exclude(id=job.id).order_by('-created_at')[:9]
-    
-    form = JobApplicationForm(seeker=request.user.seeker_profile if hasattr(request.user, 'seeker_profile') else None)
-    has_applied = JobApplication.objects.filter(job=job, seeker=request.user.seeker_profile).exists() if request.user.is_authenticated else False
+    has_applied = JobApplication.objects.filter(job=job, seeker=seeker).exists() if seeker else False
 
     return render(request, 'jobs/job_detail.html', {
         'job': job,
         'seeker': seeker,
-        'form': form,
         'related_jobs': related_jobs,
         'has_applied': has_applied
     })

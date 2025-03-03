@@ -39,7 +39,8 @@
                                         
                                     </div>
                                 </div>
-                                {% if request.user.is_authenticated and not has_applied %}
+                                {% if seeker %}
+                                {% if not has_applied %}
                                     <div class="twm-media-bg">
                                         <div class="twm-jobs-category green"><span class="twm-bg-green">New</span></div>
                                         <div style="text-align: right;">
@@ -49,11 +50,15 @@
                                         </div>
                                     </div>
                                 {% else %}
-                                <div class="alert alert-warning text-center" role="alert" style="font-weight: bold;">
-                                    <i class="fas fa-exclamation-circle"></i> You already applied for this job.
-                                </div>
-                                
+                                    <div class="alert alert-warning text-center" role="alert">
+                                        <i class="fas fa-exclamation-circle"></i> You already applied for this job.
+                                    </div>
                                 {% endif %}
+                            {% else %}
+                                <div class="alert alert-info text-center">
+                                    <i class="fas fa-info-circle"></i> Log in as a seeker to apply for this job.
+                                </div>
+                            {% endif %}
                                 
                             </div>
                         </div>
