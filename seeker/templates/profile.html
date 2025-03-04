@@ -64,10 +64,10 @@
                                
                                 <div class="twm-nav-list-1">
                                     <ul>
-                                        <li><a href="candidate-dashboard.html"><i class="fa fa-tachometer-alt"></i> Dashboard</a></li>
-                                        <li class="active"><a href="candidate-profile.html"><i class="fa fa-user"></i> My Pfofile</a></li>
+                                        <li><a href="{% url 'view_profile' %}"><i class="fa fa-user"></i> Profile View</a></li>
+                                        <li><a href="candidate-dashboard.html"><i class="fa fa-tachometer-alt"></i> Dashboard</a></li>         
+                                        <li class="active"><a href="{% url 'my_resume' %}"><i class="fa fa-receipt"></i> My Resume</a></li>
                                         <li><a href="candidate-jobs-applied.html"><i class="fa fa-suitcase"></i> Applied Jobs</a></li>
-                                        <li><a href="candidate-my-resume.html"><i class="fa fa-receipt"></i> My Resume</a></li>
                                         <li><a href="candidate-saved-jobs.html"><i class="fa fa-file-download"></i> Saved Jobs</a></li>
                                         <li><a href="candidate-cv-manager.html"><i class="fa fa-paperclip"></i> CV Manager</a></li>
                                         <li><a href="candidate-job-alert.html"><i class="fa fa-bell"></i> Job Alerts</a></li>

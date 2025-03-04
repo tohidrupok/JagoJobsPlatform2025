@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Resume, Education, Employment, Skill, Project, Certification
-from .forms import ResumeForm, EducationForm, EmploymentForm, SkillForm, ProjectForm, CertificationForm, SeekerProfileForm
+from .forms import ResumeForm, EducationForm, EmploymentForm, SkillForm, ProjectForm, CertificationForm, SeekerProfileForm, PersonalDetailsForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required 
 from accounts.models import SeekerProfile
@@ -34,6 +34,19 @@ def my_resume(request):
     
     resume = get_object_or_404(Resume, user=request.user)
     
+    if request.method == "POST" and request.FILES.get("logo"):
+        resume.image = request.FILES["logo"]
+        resume.save()
+        return JsonResponse({"success": True, "logo_url": resume.image.url}) 
+    
+    if request.method == "POST":
+        form = ResumeForm(request.POST, request.FILES, instance=resume)
+        if form.is_valid():
+            form.save()
+            return redirect('my_resume')  
+    else:
+        form = ResumeForm(instance=resume) 
+            
     # Fetch related data
     educations = resume.educations.all().order_by('-id')
     employments = resume.employments.all().order_by('-id')
@@ -42,6 +55,7 @@ def my_resume(request):
     certifications = resume.certifications.all().order_by('-id')
     
     context = {
+        'form': form,
         'resume': resume,
         'educations': educations,
         'employments': employments,
@@ -50,6 +64,26 @@ def my_resume(request):
         'certifications': certifications,
     }
     return render(request, 'resume_detail.html', context) 
+
+# @login_required
+# def seeker_profile(request):
+   
+#     resume = get_object_or_404(Resume, user=request.user)
+    
+#     if request.method == "POST" and request.FILES.get("logo"):
+#         resume.image = request.FILES["logo"]
+#         resume.save()
+#         return JsonResponse({"success": True, "logo_url": resume.image.url}) 
+    
+#     if request.method == "POST":
+#         form = ResumeForm(request.POST, request.FILES, instance=resume)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('employer_profile')  
+#     else:
+#         form = ResumeForm(instance=resume)
+    
+#     return render(request, 'resume_detail.html', {'form': form, 'resume': resume}) 
 
 @login_required
 def all_resumes(request):
@@ -281,4 +315,37 @@ def edit_profile(request):
 #     else:
 #         return redirect('home')
     
-#     return render(request, template, {'profile': profile})
+#     return render(request, template, {'profile': profile}) 
+
+from django.http import JsonResponse
+def edit_personal_details(request, resume_id):
+    resume = get_object_or_404(Resume, id=resume_id)
+    data = {
+        "name": resume.name,
+        "title": resume.title,
+        "date_of_birth": resume.date_of_birth.strftime('%Y-%m-%d') if resume.date_of_birth else "",
+        "permanent_address": resume.permanent_address,
+        "gender": resume.gender,
+        "email": resume.email,
+        "phone_number": resume.phone_number,
+        
+        "area_pin_code": resume.area_pin_code,
+        "marital_status": resume.marital_status,
+        "hometown": resume.hometown,
+        "languages": resume.languages,
+    }
+    return JsonResponse(data) 
+
+def update_personal_details(request, resume_id):
+    resume = get_object_or_404(Resume, id=resume_id)
+
+    if request.method == "POST":
+        form = PersonalDetailsForm(request.POST, instance=resume)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Personal details updated successfully!")  # Success message
+            return redirect("my_resume")  # Redirect to 'my_resume' page
+        else:
+            messages.error(request, "Error updating details. Please check your inputs.")  # Error message
+
+    return redirect("my_resume") 

@@ -7,7 +7,7 @@ urlpatterns = [
     path('resume/<int:resume_id>/', views.resume_detail, name='resume_detail'),
     # path('application/', views.application, name = "application"
     # path('application/list', views.application_list, name = "appliapplication_listcation"
-    
+    # path('profile/edit/', views.seeker_profile, name='seeker_profile_edit'),
     
     path('edit/resume/', views.edit_resume, name='edit_resume'),
     path('edit/education/<int:pk>/', views.edit_education, name='edit_education'),
@@ -23,11 +23,16 @@ urlpatterns = [
     path('add/skill/', views.add_skill, name='add_skill'),
     path('add/project/', views.add_project, name='add_project'),
     path('add/certification/', views.add_certification, name='add_certification'), 
+
     
 
     
     path('profile/view/', views.view_profile, name='view_profile'),
     path('profile/edit/', views.edit_profile, name='edit_profile'),
+    
+    
+    path('resume/edit/<int:resume_id>/', views.edit_personal_details, name='edit_personal_details'),
+    path('resume/update/<int:resume_id>/', views.update_personal_details, name='update_personal_details'),
     
 ]
 

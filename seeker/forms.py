@@ -6,13 +6,19 @@ class ResumeForm(forms.ModelForm):
     class Meta:
         model = Resume
         fields = [
-            'date_of_birth', 'gender', 'marital_status', 'passport_number', 'languages',
-            'permanent_address', 'area_pin_code', 'hometown', 'email', 'phone_number',
-            'desired_industry', 'desired_location', 'functional_area', 'job_type',
-            'expected_salary', 'availability_to_join', 'profile_summary',
+            'image', 'profile_summary',
             'linkedin_profile', 'github_profile', 'portfolio_link'
         ]
-
+    image = forms.ImageField(required=False, widget=forms.ClearableFileInput(attrs={'class': 'form-control'})) 
+    
+class PersonalDetailsForm(forms.ModelForm):
+    class Meta:
+        model = Resume
+        fields = [
+            'date_of_birth', 'gender', 'marital_status', 'languages',
+            'permanent_address', 'area_pin_code', 'hometown', 'email', 'phone_number',
+            'name','title'
+        ]
 class EducationForm(forms.ModelForm):
     class Meta:
         model = Education
@@ -46,3 +52,4 @@ class SeekerProfileForm(forms.ModelForm):
             'bio', 'resume', 'skills', 'name', 'professional_title',
             'current_salary', 'expected_salary', 'phone', 'email_address', 'location'
         ]
+

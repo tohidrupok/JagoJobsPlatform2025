@@ -52,10 +52,14 @@ class Resume(models.Model):
     # Links (Online Profiles)
     linkedin_profile = models.URLField(blank=True, null=True)
     github_profile = models.URLField(blank=True, null=True)
-    portfolio_link = models.URLField(blank=True, null=True)
+    portfolio_link = models.URLField(blank=True, null=True) 
+    name = models.CharField(max_length=255, blank=True, null=True, verbose_name="Full Name")  
+    title = models.CharField(max_length=255, blank=True, null=True, verbose_name="Professional Title") 
+    image = models.ImageField(upload_to='media/seeker_image/', blank=True, null=True, verbose_name="Seeker Image", default='media/default/default_logo.png')
+    
 
     def __str__(self):
-        return f"Resume for {self.email}{self.user}"
+        return f"Resume for {self.user}"
 
 class Education(models.Model):
     resume = models.ForeignKey(
