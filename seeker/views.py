@@ -250,6 +250,8 @@ def add_certification(request):
 #upload resume
 @login_required
 def upload_resume(request):
+    
+    resume = get_object_or_404(Resume, user=request.user)
     profile = SeekerProfile.objects.get(user=request.user)
     
     if request.method == "POST":
@@ -261,7 +263,7 @@ def upload_resume(request):
     else:
         form = SeekerProfileForm(instance=profile)
 
-    return render(request, 'upload_resume.html', {'form': form})
+    return render(request, 'upload_resume.html', {'form': form, 'resume': resume })
 
 
 
