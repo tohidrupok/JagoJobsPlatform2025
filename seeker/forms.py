@@ -48,8 +48,7 @@ class CertificationForm(forms.ModelForm):
 class SeekerProfileForm(forms.ModelForm):
     class Meta:
         model = SeekerProfile
-        fields = [
-            'bio', 'resume', 'skills', 'name', 'professional_title',
-            'current_salary', 'expected_salary', 'phone', 'email_address', 'location'
-        ]
-
+        fields = ['resume']
+        widgets = {
+            'resume': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+        }

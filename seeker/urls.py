@@ -23,7 +23,7 @@ urlpatterns = [
     path('add/skill/', views.add_skill, name='add_skill'),
     path('add/project/', views.add_project, name='add_project'),
     path('add/certification/', views.add_certification, name='add_certification'), 
-
+    path('upload-resume/', views.upload_resume, name='upload_resume'),
     
 
     

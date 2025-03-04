@@ -1,0 +1,19 @@
+
+
+
+<div class="container mt-4">
+    <h2>Upload Resume</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="id_resume" class="form-label">Upload Resume (PDF, DOCX)</label>
+            {{ form.resume }}
+        </div>
+        <button type="submit" class="btn btn-primary">Upload</button>
+    </form>
+
+    {% if user.seeker_profile.resume %}
+    <p>Current Resume: <a href="{{ user.seeker_profile.resume.url }}" target="_blank">Download</a></p>
+    {% endif %}
+</div>
+

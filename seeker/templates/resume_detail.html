@@ -102,6 +102,7 @@
                                     <ul>
                                         <li><a href="{% url 'view_profile' %}"><i class="fa fa-user"></i> Profile View</a></li>
                                         <li><a href="candidate-dashboard.html"><i class="fa fa-tachometer-alt"></i> Dashboard</a></li>         
+                                        <li ><a href="{% url 'upload_resume' %}"><i class="fa fa-receipt"></i> Upload Resume</a></li>
                                         <li class="active"><a href="{% url 'my_resume' %}"><i class="fa fa-receipt"></i> My Resume</a></li>
                                         <li><a href="candidate-jobs-applied.html"><i class="fa fa-suitcase"></i> Applied Jobs</a></li>
                                         <li><a href="candidate-saved-jobs.html"><i class="fa fa-file-download"></i> Saved Jobs</a></li>
@@ -228,6 +229,7 @@
                                                             <i class="fas fa-edit" title="Edit"></i>
                                                         </a>
                                                     </li>
+                                                    <br>
                                                     {% endfor %}
                                                    
                                                 </ul> 
@@ -614,7 +616,8 @@
                                                             <a href="{% url 'edit_project' project.pk %}" style="margin-left: 10px;">
                                                                 <i class="fas fa-edit" title="Edit"></i>
                                                             </a>
-                                                        </li>
+                                                        </li> 
+                                                        <br>
                                                     {% endfor %}
                                                      
                                             
@@ -759,7 +762,7 @@
                                                     <i class="fas fa-edit" title="Edit"></i>
                                                 </a>
                                 
-                                            </li>
+                                            </li><br>
                                             {% endfor %} 
                                         </ul>
                                     

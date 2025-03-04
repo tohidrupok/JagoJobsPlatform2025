@@ -247,6 +247,22 @@ def add_certification(request):
     return render(request, 'edit.html', {'form': form})  
 
 
+#upload resume
+@login_required
+def upload_resume(request):
+    profile = SeekerProfile.objects.get(user=request.user)
+    
+    if request.method == "POST":
+        form = SeekerProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('view_profile') 
+
+    else:
+        form = SeekerProfileForm(instance=profile)
+
+    return render(request, 'upload_resume.html', {'form': form})
+
 
 
 
@@ -316,6 +332,10 @@ def edit_profile(request):
 #         return redirect('home')
     
 #     return render(request, template, {'profile': profile}) 
+
+
+
+#Personal data's views
 
 from django.http import JsonResponse
 def edit_personal_details(request, resume_id):
