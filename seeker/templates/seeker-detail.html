@@ -13,15 +13,15 @@
                         <div class="twm-candi-self-top">
                             <div class="twm-candi-fee">$20 / Day</div>
                             <div class="twm-media">
-                                <img src="{% static 'images/candidates/demo.jpeg' %}" alt="#">
+                                <img src="{{ resume.image.url }}" alt="#">
 
                             </div>
                             <div class="twm-mid-content">
+                                 
+                                <h4 class="twm-job-title">{{ resume.name }}</h4> 
                                 
-                                <h4 class="twm-job-title">{{ profile.name }}</h4> 
-                                
-                                <p>{{ profile.professional_title }}</p>
-                                <p class="twm-candidate-address"><i class="feather-map-pin"></i>{{ profile.location }}</p>
+                                <p>{{ resume.title }}</p>
+                                <p class="twm-candidate-address"><i class="feather-map-pin"></i>{{ resume.hometown }}</p>
                                 
                             </div>
                         </div>
@@ -52,20 +52,20 @@
                                 
                                 <div class="twm-candidate-profile-pic">
                                     
-                                    <img src="{% static 'images/candidates/demo.jpeg' %}" alt="#">
+                                    <img src="{{ resume.image.url }}" alt="#">
                                     <div class="upload-btn-wrapper">
                                         
                                         <div id="upload-image-grid"></div>
-                                        <button class="site-button button-sm">Upload Photo</button>
+                                        
                                         <input type="file" name="myfile" id="file-uploader" accept=".jpg, .jpeg, .png">
                                     </div>
                                     
                                 </div>
                                 <div class="twm-mid-content text-center">
                                     <a href="candidate-detail.html" class="twm-job-title">
-                                        <h4>{{ profile.name }}</h4>
+                                        <h4>{{ resume.name }}</h4>
                                     </a>
-                                    <p>{{ profile.professional_title }}</p>
+                                    <p>{{ resume.title }}</p>
                                 </div>
                                
                                 <div class="twm-nav-list-1">
@@ -92,7 +92,7 @@
                             <div class="twm-right-section-panel site-bg-gray">
                                 <h4 class="twm-s-title m-t0">About Me</h4>
 
-                                    <p>{{ profile.bio }}</p>
+                                    <p>{{ resume.profile_summary }}</p>
                                   
                                 <div class="twm-s-info-wrap mb-5">
                                     <h4 class="section-head-small mb-4">Profile Info</h4> 
@@ -102,8 +102,8 @@
                                             <div class="col-md-6">
                                                 <div class="twm-s-info-inner">
                                                     <i class="fas fa-money-bill-wave"></i>
-                                                    <span class="twm-title">Current Salary</span>
-                                                    <div class="twm-s-info-discription">{{ profile.current_salary }}BDT</div>
+                                                    <span class="twm-title">Expected Salary</span>
+                                                    <div class="twm-s-info-discription">{{ resume.expected_salary }}BDT</div>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -124,14 +124,14 @@
                                                 <div class="twm-s-info-inner">
                                                     <i class="fas fa-mobile-alt"></i>
                                                     <span class="twm-title">Phone</span>
-                                                    <div class="twm-s-info-discription">{{ profile.phone }}</div>
+                                                    <div class="twm-s-info-discription">{{ resume.phone_number }}</div>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="twm-s-info-inner">
                                                     <i class="fas fa-at"></i>
                                                     <span class="twm-title">Email</span>
-                                                    <div class="twm-s-info-discription">{{ profile.email_address }}</div>
+                                                    <div class="twm-s-info-discription">{{ resume.email }}</div>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -145,8 +145,8 @@
                                                 <div class="twm-s-info-inner">
                                                     
                                                     <i class="fas fa-map-marker-alt"></i>
-                                                    <span class="twm-title">Address</span>
-                                                    <div class="twm-s-info-discription">{{ profile.location }}</div>
+                                                    <span class="twm-title">Permanent Address</span>
+                                                    <div class="twm-s-info-discription">{{ resume.permanent_address }}</div>
                                                 </div>
                                             </div>
 
@@ -224,7 +224,7 @@
                                                     <div class="form-group">
                                                         <label>Your Name</label>
                                                         <div class="ls-inputicon-box">
-                                                            <input class="form-control" name="company_name" type="text" value="{{ profile.name }}" readonly>
+                                                            <input class="form-control" name="company_name" type="text" value="{{ resume.name }}" readonly>
                                                             <i class="fs-input-icon fa fa-user"></i>
                                                         </div>
                                                     </div>
@@ -235,7 +235,7 @@
                                                     <div class="form-group">
                                                         <label>Phone</label>
                                                         <div class="ls-inputicon-box">
-                                                            <input class="form-control" name="company_phone" type="text" value="{{ profile.phone }}" readonly>
+                                                            <input class="form-control" name="company_phone" type="text" value="{{ resume.phone_number }}" readonly>
                                                             <i class="fs-input-icon fa fa-phone-alt"></i>
                                                         </div>
                                                     </div>
@@ -246,7 +246,7 @@
                                                     <div class="form-group">
                                                         <label>Email Address</label>
                                                         <div class="ls-inputicon-box">
-                                                            <input class="form-control" name="company_Email" type="email" value="{{ profile.email_address }}" readonly>
+                                                            <input class="form-control" name="company_Email" type="email" value="{{ resume.email }}" readonly>
                                                             <i class="fs-input-icon fas fa-at"></i>
                                                         </div>
                                                     </div>
@@ -290,7 +290,7 @@
                                                     <div class="form-group city-outer-bx has-feedback">
                                                         <label>Job Category</label>
                                                         <div class="ls-inputicon-box">
-                                                            <input class="form-control" name="company_since" type="text" value="IT & Software" readonly>
+                                                            <input class="form-control" name="company_since" type="text" value="{{ resume.languages }}" readonly>
                                                             <i class="fs-input-icon fa fa-border-all"></i>
                                                         </div>
                                                     </div>
@@ -307,49 +307,20 @@
                                                     </div>
                                                 </div>
                                     
-                                                <!-- Current Salary -->
-                                                <div class="col-xl-4 col-lg-6 col-md-12">
-                                                    <div class="form-group city-outer-bx has-feedback">
-                                                        <label>Current Salary</label>
-                                                        <div class="ls-inputicon-box">
-                                                            <input class="form-control" name="company_since" type="text" value="${{ profile.current_salary }}" readonly>
-                                                            <i class="fs-input-icon fa fa-dollar-sign"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                    
-                                                <!-- Expected Salary -->
-                                                <div class="col-xl-4 col-lg-6 col-md-12">
-                                                    <div class="form-group city-outer-bx has-feedback">
-                                                        <label>Expected Salary</label>
-                                                        <div class="ls-inputicon-box">
-                                                            <input class="form-control" name="company_since" type="text" value="${{ profile.expected_salary }}" readonly>
-                                                            <i class="fs-input-icon fa fa-dollar-sign"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                
                                     
                                                 <!-- Age -->
                                                 <div class="col-xl-4 col-lg-12 col-md-12">
                                                     <div class="form-group city-outer-bx has-feedback">
                                                         <label>Age</label>
                                                         <div class="ls-inputicon-box">
-                                                            <input class="form-control" name="company_since" type="text" placeholder="35 Years" readonly>
+                                                            <input class="form-control" type="text" value="{{ age }} Years" placeholder="Age" readonly>
                                                             <i class="fs-input-icon fa fa-child"></i>
                                                         </div>
                                                     </div>
                                                 </div>
                                     
-                                                <!-- Country -->
-                                                <div class="col-xl-4 col-lg-6 col-md-12">
-                                                    <div class="form-group city-outer-bx has-feedback">
-                                                        <label>Passport Nnumber</label>
-                                                        <div class="ls-inputicon-box">
-                                                            <input class="form-control" name="company_since" type="text" value="{{ resume.passport_number }}"readonly>
-                                                            <i class="fs-input-icon fa fa-globe-americas"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                               
                                                 
                                                 <!-- City -->
                                                 <div class="col-xl-4 col-lg-6 col-md-12">
@@ -378,7 +349,7 @@
                                                     <div class="form-group city-outer-bx has-feedback">
                                                         <label>Full Address</label>
                                                         <div class="ls-inputicon-box">
-                                                            <input class="form-control" name="company_since" type="text" value="{{ profile.location }}" readonly>
+                                                            <input class="form-control" name="company_since" type="text" value="{{ resume.permanent_address }}" readonly>
                                                             <i class="fs-input-icon fas fa-map-marker-alt"></i>
                                                         </div>
                                                     </div>
@@ -402,7 +373,7 @@
                                                             <label>LinkedIn</label>
                                                             <div class="ls-inputicon-box">
                                                                 <a class="form-control wt-form-control" href="{{ resume.linkedin_profile }}" target="_blank" style="display: block; text-decoration: none; color: inherit;">
-                                                                    <i class="fs-input-icon fab fa-linkedin-in"></i>
+                                                                    <i class="fs-input-icon fab fa-linkedin-in"></i><p>   View Profile</P>
                                                                 </a>
                                                             </div>
                                                         </div>
@@ -416,7 +387,7 @@
                                                             <label>GitHub</label>
                                                             <div class="ls-inputicon-box">
                                                                 <a class="form-control wt-form-control" href="{{ resume.github_profile }}" target="_blank" style="display: block; text-decoration: none; color: inherit;">
-                                                                    <i class="fs-input-icon fab fa-github"></i>
+                                                                    <i class="fs-input-icon fab fa-github"></i><p>   View Profile</P>
                                                                 </a>
                                                             </div>
                                                         </div>
@@ -427,10 +398,10 @@
                                                 {% if resume.portfolio_link %}
                                                     <div class="col-xl-4 col-lg-6 col-md-12">
                                                         <div class="form-group">
-                                                            <label>Portfolio</label>
+                                                            <label>Others/Portfolio</label>
                                                             <div class="ls-inputicon-box">
                                                                 <a class="form-control wt-form-control" href="{{ resume.portfolio_link }}" target="_blank" style="display: block; text-decoration: none; color: inherit;">
-                                                                    <i class="fs-input-icon fas fa-briefcase"></i>
+                                                                    <i class="fs-input-icon fas fa-briefcase"></i><p>   View Profile</P>
                                                                 </a>
                                                             </div>
                                                         </div>

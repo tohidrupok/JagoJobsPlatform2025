@@ -4,6 +4,7 @@ from .forms import ResumeForm, EducationForm, EmploymentForm, SkillForm, Project
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required 
 from accounts.models import SeekerProfile
+from datetime import date
 
 
 @login_required
@@ -276,7 +277,13 @@ def view_profile(request):
     if request.user.is_seeker:
         profile = get_object_or_404(SeekerProfile, user=request.user)
         resume = get_object_or_404(Resume, user=request.user)
-    
+        age = None
+        if resume.date_of_birth:
+            today = date.today()
+            age = today.year - resume.date_of_birth.year - (
+                (today.month, today.day) < (resume.date_of_birth.month, resume.date_of_birth.day)
+            )
+
         # Fetch related data
         educations = resume.educations.all().order_by('-id')
         employments = resume.employments.all().order_by('-id')
@@ -297,6 +304,7 @@ def view_profile(request):
             'skills': skills,
             'projects': projects,
             'certifications': certifications,
+            'age': age,
         }
     
     return render(request, template, context)
