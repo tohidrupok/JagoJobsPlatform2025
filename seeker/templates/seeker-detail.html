@@ -11,7 +11,7 @@
                 <div class="container">
                     <div class="twm-candi-self-info-2">
                         <div class="twm-candi-self-top">
-                            <div class="twm-candi-fee">$20 / Day</div>
+                            <div class="twm-candi-fee">Job hunting</div>
                             <div class="twm-media">
                                 <img src="{{ resume.image.url }}" alt="#">
 
@@ -32,10 +32,15 @@
                             <button class="de-info twm-bg-sky"><i class="fa fa-save"></i> Save</button>
                         </div>
                         <div class="twm-candi-self-bottom">
-                            <a href="contact.html" class="site-button">Contact Us</a>
+                            <a href="" class="site-button">Contact Us</a>
                             {% if profile.resume %}
                                 <a href="{{ profile.resume.url }}" class="site-button secondry">Download CV</a>
+                            {% else %}
+                                <p class="site-button" >
+                                    No resume added yet.
+                                </p>
                             {% endif %}
+                            
                         </div>
                     </div>
                 </div>
@@ -290,7 +295,7 @@
                                                     <div class="form-group city-outer-bx has-feedback">
                                                         <label>Job Category</label>
                                                         <div class="ls-inputicon-box">
-                                                            <input class="form-control" name="company_since" type="text" value="{{ resume.languages }}" readonly>
+                                                            <input class="form-control" name="company_since" type="text" value="{{ resume.job_type }}" readonly>
                                                             <i class="fs-input-icon fa fa-border-all"></i>
                                                         </div>
                                                     </div>
@@ -301,7 +306,8 @@
                                                     <div class="form-group city-outer-bx has-feedback">
                                                         <label>Experience</label>
                                                         <div class="ls-inputicon-box">
-                                                            <input class="form-control" name="company_since" type="text" value="05 Years" readonly>
+                                                            
+                                                            <input class="form-control" type="text" value="{{ total_years_of_experience }} Years" placeholder="05 Years" readonly>
                                                             <i class="fs-input-icon fa fa-user-edit"></i>
                                                         </div>
                                                     </div>

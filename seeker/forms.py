@@ -7,8 +7,11 @@ class ResumeForm(forms.ModelForm):
         model = Resume
         fields = [
             'image', 'profile_summary',
-            'linkedin_profile', 'github_profile', 'portfolio_link'
+            'linkedin_profile', 'github_profile', 'portfolio_link','expected_salary', 'availability_to_join'
         ]
+        widgets = {
+            'availability_to_join': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+        }
     image = forms.ImageField(required=False, widget=forms.ClearableFileInput(attrs={'class': 'form-control'})) 
     
 class PersonalDetailsForm(forms.ModelForm):

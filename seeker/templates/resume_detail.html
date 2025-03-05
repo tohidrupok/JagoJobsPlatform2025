@@ -1141,7 +1141,7 @@
                                                         <div class="form-group">
                                                             <label class="fw-bold">Linkedin Profile</label>
                                                             <div class="input-group">
-                                                                <span class="input-group-text"><i class="fa fa-globe"></i></span>
+                                                                <span class="input-group-text"><i class="fab fa-linkedin-in"></i></span>
                                                                 {{ form.linkedin_profile }}
                                                             </div>
                                                         </div>
@@ -1149,22 +1149,47 @@
 
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label class="fw-bold">Github</label>
+                                                            <label class="fw-bold">Github Profile </label>
                                                             <div class="input-group">
-                                                                <span class="input-group-text"><i class="fab fa-facebook-f"></i></span>
+                                                                <span class="input-group-text"><i class="fab fa-github"></i></span>
                                                                 {{ form.github_profile }}
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label class="fw-bold">Portfolio Link</label>
+                                                            <label class="fw-bold">Others/ Portfolio Link</label>
                                                             <div class="input-group">
-                                                                <span class="input-group-text"><i class="fab fa-twitter"></i></span>
+                                                                <span class="input-group-text"><i class="fas fa-briefcase"></i></span>
                                                                 {{ form.portfolio_link }}
                                                             </div>
                                                         </div>
                                                     </div> 
+
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label class="fw-bold">Expected Salary</label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-text"><i class="fas fa-briefcase"></i></span>
+                                                                {{ form.expected_salary }}
+                                                            </div>
+                                                        </div>
+                                                    </div>  
+                                                    
+                                                     <!-- Date of Birth -->
+                                                     
+                                                     <div class="col-md-4"> 
+                                                        <div class="form-group">
+                                                            <label class="fw-bold">Availability to Join<br>(mm/dd/yyyy)</label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                                                                {{ form.availability_to_join }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+
+                                                    
                                                     <div class="col-12 text-end">
                                                         <button type="submit" class="btn btn-primary">Save Changes</button>
                                                     </div>

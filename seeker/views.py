@@ -55,6 +55,7 @@ def my_resume(request):
     projects = resume.projects.all().order_by('-id')
     certifications = resume.certifications.all().order_by('-id')
     
+
     context = {
         'form': form,
         'resume': resume,
@@ -63,6 +64,8 @@ def my_resume(request):
         'skills': skills,
         'projects': projects,
         'certifications': certifications,
+        
+        
     }
     return render(request, 'resume_detail.html', context) 
 
@@ -290,6 +293,8 @@ def view_profile(request):
         skills = resume.skills.all().order_by('-id')
         projects = resume.projects.all().order_by('-id')
         certifications = resume.certifications.all().order_by('-id')
+        total_years_of_experience = sum([employment.duration() for employment in employments])
+        print("Total yearts of ",total_years_of_experience)
         
         
         template = 'seeker-detail.html'
@@ -305,6 +310,7 @@ def view_profile(request):
             'projects': projects,
             'certifications': certifications,
             'age': age,
+            'total_years_of_experience': total_years_of_experience,
         }
     
     return render(request, template, context)
