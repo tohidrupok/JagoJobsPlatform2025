@@ -33,7 +33,9 @@
                         </div>
                         <div class="twm-candi-self-bottom">
                             <a href="contact.html" class="site-button">Contact Us</a>
-                            <a href="{{ profile.resume.url }}" class="site-button secondry">Download CV</a>
+                            {% if profile.resume %}
+                                <a href="{{ profile.resume.url }}" class="site-button secondry">Download CV</a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

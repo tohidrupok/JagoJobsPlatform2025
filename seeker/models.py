@@ -14,7 +14,6 @@ class Resume(models.Model):
     GENDER_CHOICES = [
         ('Male', 'Male'),
         ('Female', 'Female'),
-        ('Other', 'Other'),
     ]
     gender = models.CharField(max_length=6, choices=GENDER_CHOICES, blank=True)
     
@@ -28,7 +27,7 @@ class Resume(models.Model):
     permanent_address = models.TextField( blank=True)
     area_pin_code = models.CharField(max_length=10, blank=True)
     hometown = models.CharField(max_length=255, blank=True)   
-    email = models.EmailField()
+    email = models.EmailField( blank=True, null=True)
     phone_number = models.CharField(max_length=15, blank=True)
 
     # Career Details
