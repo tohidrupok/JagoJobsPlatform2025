@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required 
 from accounts.models import SeekerProfile
 from datetime import date
+from django.http import JsonResponse, HttpResponseForbidden
 
 
 @login_required
@@ -32,6 +33,9 @@ def resume_detail(request, resume_id):
 
 @login_required
 def my_resume(request):
+    
+    if not request.user.is_seeker:  
+        return HttpResponseForbidden("Access restricted.")
     
     resume = get_object_or_404(Resume, user=request.user)
     
@@ -97,6 +101,9 @@ def all_resumes(request):
 
 @login_required
 def edit_resume(request):
+    if not request.user.is_seeker:  
+        return HttpResponseForbidden("Access restricted.")
+    
     resume = get_object_or_404(Resume, user=request.user)
     if request.method == 'POST':
         form = ResumeForm(request.POST, instance=resume)
@@ -109,6 +116,9 @@ def edit_resume(request):
 
 @login_required
 def edit_education(request, pk):
+    if not request.user.is_seeker:  
+        return HttpResponseForbidden("Access restricted.")
+    
     education = get_object_or_404(Education, pk=pk)
     if request.method == 'POST':
         form = EducationForm(request.POST, instance=education)
@@ -122,6 +132,10 @@ def edit_education(request, pk):
 
 @login_required
 def delete_education(request, pk):
+    
+    if not request.user.is_seeker:  
+        return HttpResponseForbidden("Access restricted.")
+    
     education = get_object_or_404(Education, pk=pk)
 
     if request.method == 'POST':
@@ -132,6 +146,10 @@ def delete_education(request, pk):
 
 @login_required
 def delete_employment(request, pk):
+    
+    if not request.user.is_seeker:  
+        return HttpResponseForbidden("Access restricted.")
+    
     employment = get_object_or_404(Employment, pk=pk)
 
     if request.method == 'POST':
@@ -142,6 +160,11 @@ def delete_employment(request, pk):
 
 @login_required
 def delete_project(request, pk):
+    
+    if not request.user.is_seeker:  
+        return HttpResponseForbidden("Access restricted.")
+    
+    
     project = get_object_or_404(Project, pk=pk)
 
     if request.method == 'POST':
@@ -152,6 +175,11 @@ def delete_project(request, pk):
 
 @login_required
 def delete_certification(request, pk):
+    
+    if not request.user.is_seeker:  
+        return HttpResponseForbidden("Access restricted.")
+    
+    
     certification = get_object_or_404(Certification, pk=pk)
 
     if request.method == 'POST':
@@ -162,6 +190,9 @@ def delete_certification(request, pk):
 
 @login_required
 def delete_skill(request, pk):
+    if not request.user.is_seeker:  
+        return HttpResponseForbidden("Access restricted.")
+    
     skill = get_object_or_404(Skill, pk=pk)
 
     if request.method == 'POST':
@@ -172,6 +203,9 @@ def delete_skill(request, pk):
 
 @login_required
 def edit_employment(request, pk):
+    if not request.user.is_seeker:  
+        return HttpResponseForbidden("Access restricted.")
+    
     employment = get_object_or_404(Employment, pk=pk)
     resume = get_object_or_404(Resume, user=request.user)
     
@@ -187,6 +221,9 @@ def edit_employment(request, pk):
 
 @login_required
 def edit_skill(request, pk):
+    if not request.user.is_seeker:  
+        return HttpResponseForbidden("Access restricted.")
+    
     skill = get_object_or_404(Skill, pk=pk)
     resume = get_object_or_404(Resume, user=request.user)
     if request.method == 'POST':
@@ -201,6 +238,9 @@ def edit_skill(request, pk):
 
 @login_required
 def edit_project(request, pk):
+    if not request.user.is_seeker:  
+        return HttpResponseForbidden("Access restricted.")
+    
     project = get_object_or_404(Project, pk=pk)
     resume = get_object_or_404(Resume, user=request.user) 
     
@@ -215,6 +255,9 @@ def edit_project(request, pk):
 
 @login_required
 def edit_certification(request, pk):
+    if not request.user.is_seeker:  
+        return HttpResponseForbidden("Access restricted.")
+    
     certification = get_object_or_404(Certification, pk=pk)
     resume = get_object_or_404(Resume, user=request.user)
     
@@ -230,6 +273,9 @@ def edit_certification(request, pk):
 #ADD New Object
 @login_required
 def add_education(request):
+    if not request.user.is_seeker:  
+        return HttpResponseForbidden("Access restricted.")
+    
     resume = Resume.objects.get(user=request.user)  
     if request.method == 'POST':
         form = EducationForm(request.POST)
@@ -244,6 +290,9 @@ def add_education(request):
 
 @login_required
 def add_employment(request):
+    if not request.user.is_seeker:  
+        return HttpResponseForbidden("Access restricted.")
+    
     resume = Resume.objects.get(user=request.user)
     if request.method == 'POST':
         form = EmploymentForm(request.POST)
@@ -258,6 +307,9 @@ def add_employment(request):
 
 @login_required
 def add_skill(request):
+    if not request.user.is_seeker:  
+        return HttpResponseForbidden("Access restricted.")
+    
     resume = Resume.objects.get(user=request.user)
     if request.method == 'POST':
         form = SkillForm(request.POST)
@@ -273,6 +325,9 @@ def add_skill(request):
 
 @login_required
 def add_project(request):
+    if not request.user.is_seeker:  
+        return HttpResponseForbidden("Access restricted.")
+    
     resume = Resume.objects.get(user=request.user)
     if request.method == 'POST':
         form = ProjectForm(request.POST)
@@ -288,6 +343,9 @@ def add_project(request):
 
 @login_required
 def add_certification(request):
+    if not request.user.is_seeker:  
+        return HttpResponseForbidden("Access restricted.")
+    
     resume = Resume.objects.get(user=request.user)
     if request.method == 'POST':
         form = CertificationForm(request.POST)
@@ -304,6 +362,8 @@ def add_certification(request):
 #upload resume
 @login_required
 def upload_resume(request):
+    if not request.user.is_seeker:  
+        return HttpResponseForbidden("Access restricted.")
     
     resume = get_object_or_404(Resume, user=request.user)
     profile = SeekerProfile.objects.get(user=request.user)
@@ -325,7 +385,9 @@ def upload_resume(request):
 
 @login_required
 def view_profile(request):
-    """View profile based on the user's role."""
+    if not request.user.is_seeker:  
+        return HttpResponseForbidden("Access restricted.")
+    
     
     if request.user.is_seeker:
         profile = get_object_or_404(SeekerProfile, user=request.user)
@@ -388,22 +450,9 @@ def edit_profile(request):
     return render(request, template, {'form': form}) 
 
 
-
-# def view_profile(request):
-#     """View profile based on the user's role."""
-#     if request.user.is_seeker:
-#         profile = get_object_or_404(SeekerProfile, user=request.user)
-#         template = 'seeker-detail.html'
-#     else:
-#         return redirect('home')
-    
-#     return render(request, template, {'profile': profile}) 
-
-
-
 #Personal data's views
 
-from django.http import JsonResponse
+
 def edit_personal_details(request, resume_id):
     resume = get_object_or_404(Resume, id=resume_id)
     data = {

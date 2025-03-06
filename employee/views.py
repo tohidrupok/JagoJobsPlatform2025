@@ -91,6 +91,9 @@ from django.contrib import messages
 
 @login_required
 def create_job(request):
+    if not request.user.is_employer:
+        return HttpResponseForbidden("Access restricted to employers.") 
+    
     employer = get_object_or_404(EmployerProfile, user=request.user)  # Get the employer profile
 
     if request.method == "POST":

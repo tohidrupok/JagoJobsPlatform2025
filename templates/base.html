@@ -88,48 +88,12 @@
  
                             <ul class=" nav navbar-nav">
                                 <li class="has-mega-menu"><a href="{% url 'home' %}">Home</a>
-                                    <ul class="mega-menu">
-                                        <li>
-                                            <ul>
-                                                <li><a href="index.html">Home-1</a></li>
-                                                <li><a href="index-2.html">Home-2</a></li>
-                                                <li><a href="index-3.html">Home-3</a></li>
-                                                <li><a href="index-4.html">Home-4</a></li>
-                                                <li><a href="index-5.html">Home-5</a></li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <ul>
-                                                <li><a href="index-6.html">Home-6</a></li>
-                                                <li><a href="index-7.html">Home-7</a></li>
-                                                <li><a href="index-8.html">Home-8</a></li>
-                                                <li><a href="index-9.html">Home-9</a></li>
-                                                <li><a href="index-10.html">Home-10</a></li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <ul>
-                                                <li><a href="index-11.html">Home-11</a></li>
-                                                <li><a href="index-12.html">Home-12</a></li>
-                                                <li><a href="index-13.html">Home-13</a></li>
-                                                <li><a href="index-14.html">Home-14</a></li>
-                                                <li><a href="index-15.html">Home-15</a></li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <ul>
-                                                <li><a href="index-16.html">Home-16</a></li>
-                                                <li><a href="index-17.html">Home-17</a></li>
-                                                <li><a href="index-18.html">Home-18</a></li>
-                                            </ul>
-                                        </li>
-                                   </ul>                                                                 
+                                                                                                    
                                 </li>
-                                <li class="has-child"><a href="javascript:;">Jobs</a>
-                                    <ul class="sub-menu">
+                                <li class="has-child"><a href="{% url 'job_list' %}">Jobs</a>
+                                    {% comment %} <ul class="sub-menu">
                                         <li><a href="{% url 'job_list' %}">Jobs Grid</a></li>
-                                        <li><a href="job-grid-with-map.html">Jobs Grid with Map</a></li>
-                                        <li><a href="job-list.html">Jobs List</a></li>
+
                                         <li class="has-child"><a href="javascript:;">Job Detail</a>
                                             <ul class="sub-menu">
                                                 <li><a href="job-detail.html">Detail 1</a>
@@ -137,8 +101,9 @@
                                             </ul> 
                                         </li>
                                         <li><a href="apply-job.html">Apply Jobs</a></li>
-                                    </ul>                                                                 
+                                    </ul>                                                                  {% endcomment %}
                                 </li>
+                                {% if user_role == "employer" %}
                                 <li class="has-child"><a href="javascript:;">Employers</a>
                                     <ul class="sub-menu">
                                         <li><a href="{% url 'employer_profile' %}">Employer Profile</a> </li>
@@ -155,9 +120,10 @@
                                         <li><a href="employer-account-professional.html">Register Professionals</a></li>
                                     </ul>                                                                 
                                 </li>
+                                {% endif %}
                                 <li class="has-child"><a href="javascript:;">Pages</a>
                                     <ul class="sub-menu">
-                                        <li><a href="about-1.html">About Us</a></li> 
+                                        
                                         <li><a href="pricing.html">Pricing</a></li> 
                                         <li><a href="error-404.html">Error-404</a></li>
                                         <li><a href="faq.html">FAQ's</a></li>
@@ -169,6 +135,9 @@
                                         <li><a href="icons.html">Icons</a></li> 
                                     </ul>                                                                
                                 </li>
+
+                                <li class="has-child"><a href="javascript:;">About Us</a></li>
+                                {% if user_role == "seeker" %}
                                 <li class="has-child"><a href="javascript:;">Candidates</a>
                                     <ul class="sub-menu">
                                         <li><a href="candidate-grid.html">Candidates Grid</a></li>
@@ -187,6 +156,7 @@
                                         <li><a href="candidate-chat.html">Chat</a></li>
                                     </ul>                                                                
                                 </li>
+                                {% endif %}
                                 <li class="has-child"><a href="javascript:;">Blog</a>
                                     <ul class="sub-menu">
                                         <li><a href="blog.html">Blog</a></li>                                        
@@ -202,11 +172,7 @@
                         
                         <!-- Header Right Section-->
                         <div class="extra-nav header-2-nav">
-                            <div class="extra-cell">
-                                <div class="header-search">
-                                    <a href="#search" class="header-search-icon"><i class="feather-search"></i></a>
-                                </div>                                
-                            </div>
+                            
                             <div class="extra-cell">
                                 <div class="header-nav-btn-section">
                                     <div class="twm-nav-btn-left">
@@ -222,10 +188,12 @@
                                                 <a href="{% url 'custom_logout' %}" class="btn btn-danger">Logout</a>
                                             </div>
                                         {% else %}
-                                            <a href="dash-post-job.html" class="twm-nav-post-a-job">
+                                            {% comment %} <a href="dash-post-job.html" class="twm-nav-post-a-job">
                                                 <i class="feather-briefcase"></i>
-                                                <span>Post a Job</span>
-                                            </a>
+                                                <button class="twm-backto-login" data-bs-target="#sign_up_popup2" data-bs-toggle="modal" data-bs-dismiss="modal">Log in here</button>
+                                                
+                                            </a> {% endcomment %}
+                                            <a href="#sign_up_popup2" class="twm-nav-post-a-job" data-bs-target="#sign_up_popup2" data-bs-toggle="modal" data-bs-dismiss="modal">Log in here</a>
                                         {% endif %}
                                     </div>
                                 </div>
