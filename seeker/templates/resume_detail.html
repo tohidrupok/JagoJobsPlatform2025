@@ -212,7 +212,7 @@
                                         <div class="panel-heading wt-panel-heading p-a20 panel-heading-with-btn ">
                                             <h4 class="panel-tittle m-a0">Work Experience</h4>
                                             <a data-bs-toggle="modal" href="#Employment" role="button" title="Edit" class="site-text-primary">
-                                                <span class="fa fa-edit"></span>
+                                                <span class="fa fa-plus"></span>
                                             </a>
                                         </div>
                                         <div class="panel-body wt-panel-body p-a20 ">
@@ -221,13 +221,23 @@
                                                 <ul>
                                                     {% for employment in employments %}
                                                         <li>
-                                                            <strong>{{ employment.role }}</strong> at {{ employment.company_name }}<br>
+                                                            <strong>{{ employment.role }}</strong> at {{ employment.company_name }}
+                                                            <a href="{% url 'edit_employment' employment.pk %}" style="margin-left: 10px;">
+                                                                <i class="fas fa-edit" title="Edit"></i>
+                                                            </a>
+                                                            <!-- Delete form -->
+                                                            <form action="{% url 'delete_employment' employment.pk %}" method="post" style="display: inline;">
+                                                                {% csrf_token %}
+                                                                <button type="submit" style="border: none; background: none; color: #dc3545;">
+                                                                    <i class="fas fa-trash" title="Delete"></i>
+                                                                </button>
+                                                            </form> 
+                                                            
+                                                            <br>
                                                             From {{ employment.start_date }} to {{ employment.end_date|default:"Present" }}<br>
                                                             Responsibilities: {{ employment.responsibilities }}
                                                        
-                                                        <a href="{% url 'edit_employment' employment.pk %}" style="margin-left: 10px;">
-                                                            <i class="fas fa-edit" title="Edit"></i>
-                                                        </a>
+                                                        
                                                     </li>
                                                     <br>
                                                     {% endfor %}
@@ -348,7 +358,7 @@
                                         <div class="panel-heading wt-panel-heading p-a20 panel-heading-with-btn ">
                                             <h4 class="panel-tittle m-a0">Education</h4>
                                             <a data-bs-toggle="modal" href="#Education" role="button" title="Edit" class="site-text-primary">
-                                                <span class="fa fa-edit"></span>
+                                                <span class="fa fa-plus"></span>
                                             </a>
                                         </div>
                                         <div class="panel-body wt-panel-body p-a20 ">
@@ -360,9 +370,7 @@
                                                     <ul>
                                                         {% for education in educations %}
                                                         <li style="margin-bottom: 15px; list-style: none;">
-                                                            <strong>{{ education.degree }}</strong> in {{ education.field_of_study }}<br>
-                                                            <span>{{ education.university }} - {{ education.graduation_year }}</span>
-                                                
+                                                            <strong>{{ education.degree }}</strong> in {{ education.field_of_study }}
                                                             <!-- Edit button -->
                                                             <a href="{% url 'edit_education' education.pk %}" style="margin-left: 10px; text-decoration: none; color: #007bff;">
                                                                 <i class="fas fa-edit" title="Edit"></i>
@@ -374,7 +382,11 @@
                                                                 <button type="submit" style="border: none; background: none; color: #dc3545;">
                                                                     <i class="fas fa-trash" title="Delete"></i>
                                                                 </button>
-                                                            </form>
+                                                            </form> 
+                                                            <br>
+                                                            <span>{{ education.university }} - {{ education.graduation_year }}</span>
+                                                
+                                                            
                                                         </li>
                                                         {% endfor %}
                                                     </ul>
@@ -487,7 +499,7 @@
                                         <div class="panel-heading wt-panel-heading p-a20 panel-heading-with-btn ">
                                             <h4 class="panel-tittle m-a0">IT Skills</h4>
                                             <a data-bs-toggle="modal" href="#IT_skills" role="button" title="Edit" class="site-text-primary">
-                                                <span class="fa fa-edit"></span>
+                                                <span class="fa fa-plus"></span>
                                             </a>
                                         </div>
                                         <div class="panel-body wt-panel-body p-a20 ">
@@ -517,6 +529,19 @@
                                                                 <a href="{% url 'edit_skill' skill.pk %}" style="margin-left: 10px;">
                                                                     <i class="fas fa-edit" title="Edit"></i>
                                                                 </a>
+                                                           
+                                                            </td>
+                                                            <td>
+                                                                <a href="{% url 'edit_skill' skill.pk %}" style="margin-left: 10px;">
+                                                                    <i class="fas fa-edit" title="Edit"></i>
+                                                                </a>
+                                                                <!-- Delete form -->
+                                                                <form action="{% url 'delete_skill' skill.pk %}" method="post" style="display: inline;">
+                                                                    {% csrf_token %}
+                                                                    <button type="submit" style="border: none; background: none; color: #dc3545;">
+                                                                        <i class="fas fa-trash" title="Delete"></i>
+                                                                    </button>
+                                                                </form> 
                                                            
                                                             </td>
                                                         </tr>
@@ -601,7 +626,7 @@
                                         <div class="panel-heading wt-panel-heading p-a20 panel-heading-with-btn ">
                                             <h4 class="panel-tittle m-a0">Project</h4>
                                             <a data-bs-toggle="modal" href="#Pro_ject" role="button" title="Edit" class="site-text-primary">
-                                                <span class="fa fa-edit"></span>
+                                                <span class="fa fa-plus"></span>
                                             </a>
                                         </div>
                                         <div class="panel-body wt-panel-body p-a20 ">
@@ -609,13 +634,22 @@
                                                 <ul>
                                                     {% for project in projects %}
                                                         <li>
-                                                            <strong>{{ project.project_name }}</strong><br>
-                                                            Role: {{ project.role_in_project }}<br>
-                                                            From {{ project.start_date }} to {{ project.end_date|default:"Present" }}<br>
-                                                            Description: {{ project.project_description }}
+                                                            <strong>{{ project.project_name }}</strong>
                                                             <a href="{% url 'edit_project' project.pk %}" style="margin-left: 10px;">
                                                                 <i class="fas fa-edit" title="Edit"></i>
                                                             </a>
+                                                            <!-- Delete form -->
+                                                            <form action="{% url 'delete_project' project.pk %}" method="post" style="display: inline;">
+                                                                {% csrf_token %}
+                                                                <button type="submit" style="border: none; background: none; color: #dc3545;">
+                                                                    <i class="fas fa-trash" title="Delete"></i>
+                                                                </button>
+                                                            </form> <br>
+
+                                                            Role: {{ project.role_in_project }}<br>
+                                                            From {{ project.start_date }} to {{ project.end_date|default:"Present" }}<br>
+                                                            Description: {{ project.project_description }}
+                                                            
                                                         </li> 
                                                         <br>
                                                     {% endfor %}
@@ -742,7 +776,7 @@
                                         <div class="twm-list-inner d-flex justify-content-between">
                                             <b>Certification</b>
                                             <a data-bs-toggle="modal" href="#Certification_modal" role="button" title="Edit" class="site-text-primary">
-                                                <span class="fa fa-edit"></span>
+                                                <span class="fa fa-plus"></span>
                                             </a>
                                         </div>
                                         <p>Add details of Certification you have filed.</p>
@@ -761,6 +795,15 @@
                                                 <a href="{% url 'edit_certification' certification.pk %}" style="margin-left: 10px;">
                                                     <i class="fas fa-edit" title="Edit"></i>
                                                 </a>
+
+                                                <!-- Delete form -->
+                                                <form action="{% url 'delete_certification' certification.pk %}" method="post" style="display: inline;">
+                                                    {% csrf_token %}
+                                                    <button type="submit" style="border: none; background: none; color: #dc3545;">
+                                                        <i class="fas fa-trash" title="Delete"></i>
+                                                    </button>
+                                                </form> 
+
                                 
                                             </li><br>
                                             {% endfor %} 

@@ -105,7 +105,7 @@ def edit_resume(request):
             return redirect('my_resume')
     else:
         form = ResumeForm(instance=resume)
-    return render(request, 'edit.html', {'form': form})
+    return render(request, 'edit.html', {'form': form,'resume': resume })
 
 @login_required
 def edit_education(request, pk):
@@ -117,7 +117,8 @@ def edit_education(request, pk):
             return redirect('my_resume')
     else:
         form = EducationForm(instance=education)
-    return render(request, 'edit.html', {'form': form})
+    resume = get_object_or_404(Resume, user=request.user)
+    return render(request, 'edit.html', {'form': form,'resume': resume })
 
 @login_required
 def delete_education(request, pk):
@@ -127,11 +128,53 @@ def delete_education(request, pk):
         education.delete()
         return redirect('my_resume')  
 
+    return redirect('my_resume') 
+
+@login_required
+def delete_employment(request, pk):
+    employment = get_object_or_404(Employment, pk=pk)
+
+    if request.method == 'POST':
+        employment.delete()
+        return redirect('my_resume')  
+
+    return redirect('my_resume')
+
+@login_required
+def delete_project(request, pk):
+    project = get_object_or_404(Project, pk=pk)
+
+    if request.method == 'POST':
+        project.delete()
+        return redirect('my_resume')  
+
+    return redirect('my_resume')
+
+@login_required
+def delete_certification(request, pk):
+    certification = get_object_or_404(Certification, pk=pk)
+
+    if request.method == 'POST':
+        certification.delete()
+        return redirect('my_resume')  
+
+    return redirect('my_resume')
+
+@login_required
+def delete_skill(request, pk):
+    skill = get_object_or_404(Skill, pk=pk)
+
+    if request.method == 'POST':
+        skill.delete()
+        return redirect('my_resume')  
+
     return redirect('my_resume')
 
 @login_required
 def edit_employment(request, pk):
     employment = get_object_or_404(Employment, pk=pk)
+    resume = get_object_or_404(Resume, user=request.user)
+    
     if request.method == 'POST':
         form = EmploymentForm(request.POST, instance=employment)
         if form.is_valid():
@@ -139,11 +182,13 @@ def edit_employment(request, pk):
             return redirect('my_resume')
     else:
         form = EmploymentForm(instance=employment)
-    return render(request, 'edit.html', {'form': form})
+        
+    return render(request, 'edit.html', {'form': form,'resume': resume })
 
 @login_required
 def edit_skill(request, pk):
     skill = get_object_or_404(Skill, pk=pk)
+    resume = get_object_or_404(Resume, user=request.user)
     if request.method == 'POST':
         form = SkillForm(request.POST, instance=skill)
         if form.is_valid():
@@ -151,11 +196,14 @@ def edit_skill(request, pk):
             return redirect('my_resume')
     else:
         form = SkillForm(instance=skill)
-    return render(request, 'edit.html', {'form': form})
+        
+    return render(request, 'edit.html', {'form': form,'resume': resume })
 
 @login_required
 def edit_project(request, pk):
     project = get_object_or_404(Project, pk=pk)
+    resume = get_object_or_404(Resume, user=request.user) 
+    
     if request.method == 'POST':
         form = ProjectForm(request.POST, instance=project)
         if form.is_valid():
@@ -163,11 +211,13 @@ def edit_project(request, pk):
             return redirect('my_resume')
     else:
         form = ProjectForm(instance=project)
-    return render(request, 'edit.html', {'form': form})
+    return render(request, 'edit.html', {'form': form,'resume': resume })
 
 @login_required
 def edit_certification(request, pk):
     certification = get_object_or_404(Certification, pk=pk)
+    resume = get_object_or_404(Resume, user=request.user)
+    
     if request.method == 'POST':
         form = CertificationForm(request.POST, instance=certification)
         if form.is_valid():
@@ -175,7 +225,7 @@ def edit_certification(request, pk):
             return redirect('my_resume')
     else:
         form = CertificationForm(instance=certification)
-    return render(request, 'edit.html', {'form': form})
+    return render(request, 'edit.html', {'form': form,'resume': resume })
 
 #ADD New Object
 @login_required

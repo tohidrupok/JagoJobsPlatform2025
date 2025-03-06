@@ -13,9 +13,13 @@ urlpatterns = [
     path('edit/education/<int:pk>/', views.edit_education, name='edit_education'),
     path('education/delete/<int:pk>/', views.delete_education, name='delete_education'),
     path('edit/employment/<int:pk>/', views.edit_employment, name='edit_employment'),
+    path('employment/delete/<int:pk>/', views.delete_employment, name='delete_employment'),
     path('edit/skill/<int:pk>/', views.edit_skill, name='edit_skill'),
+    path('skill/delete/<int:pk>/', views.delete_skill, name='delete_skill'),
     path('edit/project/<int:pk>/', views.edit_project, name='edit_project'),
+    path('project/delete/<int:pk>/', views.delete_project, name='delete_project'),
     path('edit/certification/<int:pk>/', views.edit_certification, name='edit_certification'), 
+    path('certification/delete/<int:pk>/', views.delete_certification, name='delete_certification'),
     
     
     path('add/education/', views.add_education, name='add_education'), 
