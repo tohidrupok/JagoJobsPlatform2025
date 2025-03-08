@@ -130,6 +130,30 @@ def job_detail(request, job_id):
         'has_applied': has_applied
     })
     
+# def job_detail(request, job_id):
+#     # Fetch the job along with its related category in one query
+#     job = get_object_or_404(JobPost.objects.select_related('job_category'), id=job_id)
+
+#     # Fetch seeker profile efficiently
+#     seeker = getattr(request.user, 'seeker_profile', None) if request.user.is_authenticated else None
+
+#     # Use prefetch_related to optimize related jobs query
+#     related_jobs = JobPost.objects.filter(job_category=job.job_category)\
+#         .exclude(id=job.id)\
+#         .select_related('job_category')\
+#         .only('id', 'title', 'created_at', 'job_category')\
+#         .order_by('-created_at')[:9]
+
+#     # Optimize has_applied check by using .only() to fetch minimal data
+#     has_applied = JobApplication.objects.filter(job=job, seeker=seeker).only('id').exists() if seeker else False
+
+#     return render(request, 'jobs/job_detail.html', {
+#         'job': job,
+#         'seeker': seeker,
+#         'related_jobs': related_jobs,
+#         'has_applied': has_applied
+#     })
+       
 
 @login_required
 def create_job(request):

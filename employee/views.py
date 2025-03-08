@@ -67,6 +67,8 @@ def view_employer_profile(request):
 def employer_profile(request):
     if not request.user.is_employer:
         return HttpResponseForbidden("Access restricted to employers.")
+    if not request.user.is_approved:
+        return render(request, 'registration/pending_approval.html')
     
     
     profile = get_object_or_404(EmployerProfile, user=request.user)
@@ -93,19 +95,21 @@ from django.contrib import messages
 def create_job(request):
     if not request.user.is_employer:
         return HttpResponseForbidden("Access restricted to employers.") 
+    if not request.user.is_approved:
+        return render(request, 'registration/pending_approval.html')
     
-    employer = get_object_or_404(EmployerProfile, user=request.user)  # Get the employer profile
+    employer = get_object_or_404(EmployerProfile, user=request.user)  
 
     if request.method == "POST":
         form = JobPostForm(request.POST)
         if form.is_valid():
-            job = form.save(commit=False)  # Do not save yet
-            job.employee = employer  # Assign the employer
-            job.save()  # Now save the job
+            job = form.save(commit=False)  
+            job.employee = employer  
+            job.save()  
             messages.success(request, "Job posted successfully!")
-            return redirect('job_list')  # Redirect after success
+            return redirect('job_list')  
         else:
-            messages.error(request, "Please correct the errors below.")  # Show error message
+            messages.error(request, "Please correct the errors below.")  
 
     else:
         form = JobPostForm()
