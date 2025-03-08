@@ -170,42 +170,40 @@
 
                         </div>
                         
-                        <!-- Header Right Section-->
+                       
+                        <!-- Header Right Section -->
                         <div class="extra-nav header-2-nav">
-                            
                             <div class="extra-cell">
                                 <div class="header-nav-btn-section">
-                                    <div class="twm-nav-btn-left">
-                                        <a class="twm-nav-sign-up" data-bs-toggle="modal" href="#sign_up_popup" role="button">
-                                            <i class="feather-log-in"></i> Sign Up
-                                        </a>
-                                    </div>
-                                    <div class="twm-nav-btn-right">
-                                        {% if user.is_authenticated %}
-                                            <div class="profile-section">
-                                                <i class="feather-user"></i>
-                                                <span>Welcome, {{ user.username }}</span> <br>
-                                                <a href="{% url 'custom_logout' %}" class="btn btn-danger">Logout</a>
-                                            </div>
-                                        {% else %}
-                                            {% comment %} <a href="dash-post-job.html" class="twm-nav-post-a-job">
-                                                <i class="feather-briefcase"></i>
-                                                <button class="twm-backto-login" data-bs-target="#sign_up_popup2" data-bs-toggle="modal" data-bs-dismiss="modal">Log in here</button>
-                                                
-                                            </a> {% endcomment %}
-                                            <a href="#sign_up_popup2" class="twm-nav-post-a-job" data-bs-target="#sign_up_popup2" data-bs-toggle="modal" data-bs-dismiss="modal">Log in here</a>
-                                        {% endif %}
-                                    </div>
+                                    {% if user.is_authenticated %}
+                                        <!-- User Logged In Section -->
+                                        <div class="profile-section">
+                                            <i class="feather-user"></i>
+                                            <span>Welcome, {{ user.username }}</span>
+                                            <br>
+                                            <a href="{% url 'custom_logout' %}" class="btn btn-danger btn-sm twm-logout-btn">
+                                                <i class="feather-log-out"></i> Logout
+                                            </a>
+                                        </div>
+                                    {% else %}
+                                        <!-- Sign Up & Login Buttons for Guests -->
+                                        <div class="twm-nav-btn-left">
+                                            <a class="twm-nav-sign-up btn btn-primary btn-sm" data-bs-toggle="modal" href="#sign_up_popup" role="button">
+                                                <i class="feather-user-plus"></i> Sign Up
+                                            </a>
+                                        </div>
+                                        <div class="twm-nav-btn-right">
+                                            <a href="#sign_up_popup2" class="twm-nav-post-a-job btn btn-success btn-sm" data-bs-target="#sign_up_popup2" data-bs-toggle="modal" data-bs-dismiss="modal">
+                                                <i class="feather-log-in"></i> Log in
+                                            </a>
+                                        </div>
+                                    {% endif %}
                                 </div>
-                            </div> 
-                                
-                        </div>                            
-                    
-                                                    
-                        
+                            </div>
+                        </div>
+                      
                     </div>    
-                
-                
+            
                 </div>
 
                 <!-- SITE Search -->

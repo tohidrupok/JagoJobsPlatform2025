@@ -8,6 +8,7 @@ urlpatterns = [
     path('dashboard/', views.employer_dashboard, name='employer_dashboard'),
     path('core/profile/edit/', views.employer_profile, name='employer_profile_edit'),
     path('create-job/', views.create_job, name='create_job'),
+    path('manage-job/', views.manage_job, name='manage-job'),
     
 ]
 
