@@ -134,7 +134,7 @@ def manage_job(request):
         return render(request, 'registration/pending_approval.html')
     
     profile = get_object_or_404(EmployerProfile, user=request.user)  
-    job_posts = profile.job_posts.all() 
+    job_posts = profile.job_posts.all()
     print(job_posts)
 
     return render(request, 'job/manage_job.html', {'job_posts':job_posts, 'profile': profile}) 
