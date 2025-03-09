@@ -13,32 +13,33 @@ class JobCategory(models.Model):
 class JobPost(models.Model):
     employee = models.ForeignKey(EmployerProfile, on_delete=models.CASCADE, related_name='job_posts')
     title = models.CharField(max_length=255)
-    job_category = models.ForeignKey(JobCategory, on_delete=models.SET_NULL, null=True, related_name='job_posts_category')
-    company_industry_type = models.CharField(max_length=255)
-    no_of_vacancy = models.PositiveIntegerField()
-    application_deadline = models.DateField()
-    age_range = models.CharField(max_length=255)
-    gender = models.CharField(max_length=50, choices=[('Male', 'Male'), ('Female', 'Female')])
-    contact_person = models.CharField(max_length=255)
-    experience_required = models.CharField(max_length=150 )
-    cv_receive_method = models.CharField(max_length=255, choices=[
+    job_category = models.ForeignKey(JobCategory, on_delete=models.SET_NULL, null= True, blank= True, related_name='job_posts_category')
+    company_industry_type = models.CharField(max_length=255, null= True, blank= True)
+    no_of_vacancy = models.PositiveIntegerField(null= True, blank= True)
+    application_deadline = models.DateField( null= True, blank= True)
+    age_range = models.CharField(max_length=255, null= True, blank= True)
+    gender = models.CharField(max_length=50, choices=[('Male', 'Male'), ('Female', 'Female'), ('Both', 'Both')], null= True, blank= True)
+    contact_person = models.CharField(max_length=255, null= True, blank= True)
+    experience_required = models.CharField(max_length=150, null= True, blank= True )
+    cv_receive_method = models.CharField(max_length=255, null= True, blank= True, choices=[
         ('Online CV/Resume', 'Online CV/Resume'),   
         ('Email Attachment', 'Email Attachment'),
         ('Walk-in Interview', 'Walk-in Interview'),
         ('Hard Copy CV', 'Hard Copy CV'),
     ])
-    job_type = models.CharField(max_length=50, choices=[('Full Time', 'Full Time'), ('Part Time', 'Part Time'), ('Contractual', 'Contractual'), ('Internship', 'Internship')])
-    job_level = models.CharField(max_length=50, choices=[('Entry Level', 'Entry Level'), ('Mid Level', 'Mid Level'), ('Top Level', 'Top Level')])
-    applicant_photo_required = models.BooleanField(default=False)
-    educational_qualification = models.TextField()
+    job_type = models.CharField(max_length=50, null= True, blank= True, choices=[('Full Time', 'Full Time'), ('Part Time', 'Part Time'), ('Contractual', 'Contractual'), ('Internship', 'Internship')])
+    job_level = models.CharField(max_length=50, null= True, blank= True, choices=[('Entry Level', 'Entry Level'), ('Mid Level', 'Mid Level'), ('Top Level', 'Top Level')])
+    applicant_photo_required = models.BooleanField(default=False, null= True, blank= True)
+    educational_qualification = models.TextField(null= True, blank= True)  #remove kore dibo
+    others_qualification = models.TextField(null= True, blank= True)
     
-    job_description = models.TextField()
-    job_responsibilities = models.TextField()
-    job_requirements = models.TextField()
+    job_description = models.TextField(null= True, blank= True)
+    job_responsibilities = models.TextField(null= True, blank= True)
+    job_requirements = models.TextField( null= True, blank= True)
     other_benefits = models.TextField(blank=True, null=True)
     
-    job_location = models.CharField(max_length=200)
-    exclusive_job = models.BooleanField(default=False)
+    job_location = models.CharField(max_length=200, null= True, blank= True)
+    exclusive_job = models.BooleanField(default=False, null= True, blank= True)
     created_at = models.DateTimeField(auto_now_add=True)
     salary_range = models.CharField(max_length=200, null= True, blank= True, default='Negotiable')
     

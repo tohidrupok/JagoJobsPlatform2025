@@ -31,6 +31,10 @@ class JobPostForm(forms.ModelForm):
     class Meta:
         model = JobPost
         exclude = ['employee']  
+        
+    widgets = {
+            'application_deadline': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+        }
 
     def __init__(self, *args, **kwargs):
         super(JobPostForm, self).__init__(*args, **kwargs)

@@ -117,7 +117,7 @@ def create_job(request):
             job.employee = employer  
             job.save()  
             messages.success(request, "Job posted successfully!")
-            return redirect('job_list')  
+            return redirect('manage-job')  
         else:
             messages.error(request, "Please correct the errors below.")  
 
