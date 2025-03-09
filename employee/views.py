@@ -9,24 +9,24 @@ from jobboard.models import JobApplication
 
 
 # Create your views here.    
-@login_required
-def employer_dashboard(request):
-    if not request.user.is_employer:  
-        return HttpResponseForbidden("Access restricted to employers.")
-    if not request.user.is_approved:
-        return render(request, 'registration/pending_approval.html')
+# @login_required
+# def employer_dashboard(request):
+#     if not request.user.is_employer:  
+#         return HttpResponseForbidden("Access restricted to employers.")
+#     if not request.user.is_approved:
+#         return render(request, 'registration/pending_approval.html')
     
-    profile = get_object_or_404(EmployerProfile, user=request.user) 
-    job_posts = profile.job_posts.all()  # Retrieve all job posts created by the employer
-    job_count = job_posts.count()  # Count the number of job posts
-    application_count = JobApplication.objects.filter(job__in=job_posts).count()
+#     profile = get_object_or_404(EmployerProfile, user=request.user) 
+#     job_posts = profile.job_posts.all()  
+#     job_count = job_posts.count()  
+#     application_count = JobApplication.objects.filter(job__in=job_posts).count()
 
-    return render(request, 'core/dashboard.html', {
-        'profile': profile,
-        'job_posts': job_posts,
-        'job_count': job_count,
-        'application_count': application_count
-    })
+#     return render(request, 'core/dashboard.html', {
+#         'profile': profile,
+#         'job_posts': job_posts,
+#         'job_count': job_count,
+#         'application_count': application_count
+#     })
 
 
 @login_required
