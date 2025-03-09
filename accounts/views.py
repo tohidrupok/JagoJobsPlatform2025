@@ -100,7 +100,7 @@ def custom_login(request):
                 if user.is_manager:
                     return redirect('manager_dashboard')
                 elif user.is_employer:
-                    return redirect('employer_dashboard')
+                    return redirect('manage-job')
                 elif user.is_seeker:
                     return redirect('seeker_dashboard')
     else:
