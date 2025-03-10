@@ -65,6 +65,7 @@ class SeekerProfile(models.Model):
 
     location = models.CharField(max_length=255, blank=True, verbose_name="Location")  
     image = models.ImageField(upload_to='media/seeker_logos/', blank=True, null=True, verbose_name="seeker image")
+    my_resume = models.OneToOneField('seeker.Resume', on_delete=models.CASCADE, blank=True, null=True, verbose_name="Resume")
     
     def __str__(self):
         return f"{self.user.username}'s Profile"

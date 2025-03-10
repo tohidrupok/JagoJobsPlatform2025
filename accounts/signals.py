@@ -7,8 +7,8 @@ from seeker.models import Resume
 def create_user_profile(sender, instance, created, **kwargs):
     if created:  # Only run this code when a new user is created
         if instance.role == 'seeker':
-            Resume.objects.create(user=instance)
-            SeekerProfile.objects.create(user=instance)
+            resume = Resume.objects.create(user=instance)
+            SeekerProfile.objects.create(user=instance , my_resume=resume)
             
         elif instance.role == 'employer':
             EmployerProfile.objects.create(user=instance)

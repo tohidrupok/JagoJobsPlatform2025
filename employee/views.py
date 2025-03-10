@@ -152,3 +152,75 @@ def delete_job(request, job_id):
     job.delete()
     messages.success(request, "Job deleted successfully.")
     return redirect('manage-job')  
+
+
+
+@login_required
+def job_applicants(request, job_id):
+    if not request.user.is_employer:
+        return HttpResponseForbidden("Access restricted to employers.") 
+    if not request.user.is_approved:
+        return render(request, 'registration/pending_approval.html')
+    
+    profile = get_object_or_404(EmployerProfile, user=request.user) 
+    job = get_object_or_404(JobPost, id=job_id)
+
+    employer_profile = get_object_or_404(EmployerProfile, user=request.user)
+    if job.employee != employer_profile:
+        return HttpResponseForbidden("You do not have permission to view applicants for this job.")
+
+    applications = JobApplication.objects.filter(job=job) 
+
+    return render(request, 'job/job_applicants.html', {'job': job, 'applications': applications, 'profile': profile}) 
+
+
+
+from django.shortcuts import get_object_or_404, render
+from django.http import Http404
+from datetime import date
+from accounts.models import SeekerProfile 
+
+def view_profile(request, user_id=None):
+    # If no user_id is provided, use the logged-in user (if available)
+    if user_id:
+        profile_user = get_object_or_404(SeekerProfile, user__id=user_id).user
+    else:
+        raise Http404("User not found.")
+
+    # Fetch user profile and resume
+    profile = get_object_or_404(SeekerProfile, user=profile_user)
+    
+    print(profile)
+
+    # Calculate age if date_of_birth exists
+    age = None
+    if profile.my_resume.date_of_birth:
+        today = date.today()
+        age = today.year - profile.my_resume.date_of_birth.year - (
+            (today.month, today.day) < (profile.my_resume.date_of_birth.month, profile.my_resume.date_of_birth.day)
+        )
+
+    # Fetch related data
+    educations = profile.my_resume.educations.all().order_by('-id')
+    employments = profile.my_resume.employments.all().order_by('-id')
+    skills = profile.my_resume.skills.all().order_by('-id')
+    projects = profile.my_resume.projects.all().order_by('-id')
+    certifications = profile.my_resume.certifications.all().order_by('-id')
+    total_years_of_experience = sum([employment.duration() for employment in employments])
+
+    # Template for rendering
+    template = 'job/seeker-profile.html'
+
+    context = {
+        'profile': profile,
+        'resume': profile.my_resume,
+        'educations': educations,
+        'employments': employments,
+        'skills': skills,
+        'projects': projects,
+        'certifications': certifications,
+        'age': age,
+        'total_years_of_experience': total_years_of_experience,
+    }
+
+    return render(request, template, context) 
