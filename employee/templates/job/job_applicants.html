@@ -122,26 +122,12 @@
                             {% if applications %}
                             <!--Filter Short By-->
                             <div class="product-filter-wrap d-flex justify-content-between align-items-center m-b30">
-                                <span class="woocommerce-result-count-left">Showing 2,150 Candidates</span>
+                                <span class="woocommerce-result-count-left">Who is Eligible to Apply for: </span>
                                
                                 <form class="woocommerce-ordering twm-filter-select" method="get">
-                                    <span class="woocommerce-result-count">Short By</span>
-                                    <select class="wt-select-bar-2 selectpicker"  data-live-search="true" data-bv-field="size">
-                                        <option>Most Recent</option>
-                                        <option>Freelance</option>
-                                        <option>Full Time</option>
-                                        <option>Internship</option>
-                                        <option>Part Time</option>
-                                        <option>Temporary</option>
-                                    </select>
-                                    <select class="wt-select-bar-2 selectpicker"  data-live-search="true" data-bv-field="size">
-                                        <option>Show 10</option>
-                                        <option>Show 20</option>
-                                        <option>Show 30</option>
-                                        <option>Show 40</option>
-                                        <option>Show 50</option>
-                                        <option>Show 60</option>
-                                    </select>
+                                    <span class="woocommerce-result-count">{{job}}</span>
+                                   
+                                    
                                 </form>
 
                             </div>
@@ -225,7 +211,7 @@
             </div>   
             <!-- OUR BLOG END -->
 
-            <div class="container">
+            {% comment %} <div class="container">
                 <h2>Applicants for {{ job.title }}</h2>
             
                 {% if applications %}
@@ -262,7 +248,7 @@
                 {% endif %}
             
                 <a href="{% url 'manage-job' %}" class="btn btn-primary">Back to Job List</a>
-            </div>
+            </div> {% endcomment %}
  
             
           
