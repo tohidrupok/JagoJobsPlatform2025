@@ -5,7 +5,8 @@ from accounts.models import EmployerProfile
 from .forms import EmployerProfileForm, JobPostForm
 from django.http import JsonResponse, HttpResponseForbidden
 from django.utils import timezone
-from jobboard.models import JobApplication
+from jobboard.models import JobApplication 
+from jobboard.models import JobPost
 
 
 # Create your views here.    
@@ -138,3 +139,16 @@ def manage_job(request):
     
 
     return render(request, 'job/manage_job.html', {'job_posts':job_posts, 'profile': profile}) 
+
+@login_required
+def delete_job(request, job_id):
+    job = get_object_or_404(JobPost, id=job_id)
+
+    employer_profile = get_object_or_404(EmployerProfile, user=request.user)
+
+    if job.employee != employer_profile:
+        return HttpResponseForbidden("You do not have permission to delete this job.")
+
+    job.delete()
+    messages.success(request, "Job deleted successfully.")
+    return redirect('manage-job')  
