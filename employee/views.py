@@ -38,6 +38,7 @@ def view_employer_profile(request):
         return render(request, 'registration/pending_approval.html') 
     
     profile = get_object_or_404(EmployerProfile, user=request.user)
+    jobs = JobPost.objects.filter(employee=profile).order_by('-created_at')
     
     total_experience = None
     if profile.founded_date:
@@ -46,6 +47,7 @@ def view_employer_profile(request):
     return render(request, 'employer-detail-v2.html', {
         'profile': profile,
         'total_experience': total_experience,
+        'jobs': jobs,  
     })   
  
 
