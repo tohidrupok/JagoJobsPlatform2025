@@ -484,3 +484,16 @@ def update_personal_details(request, resume_id):
             messages.error(request, "Error updating details. Please check your inputs.")  # Error message
 
     return redirect("my_resume") 
+
+
+@login_required
+def dashboard(request):
+    if not request.user.is_seeker:  
+        return HttpResponseForbidden("Access restricted.")
+    
+    resume = get_object_or_404(Resume, user=request.user)
+    profile = SeekerProfile.objects.get(user=request.user)
+    
+    
+
+    return render(request, 'dashboard.html', {'resume': resume ,'profile': profile})

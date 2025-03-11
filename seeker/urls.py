@@ -38,6 +38,8 @@ urlpatterns = [
     path('resume/edit/<int:resume_id>/', views.edit_personal_details, name='edit_personal_details'),
     path('resume/update/<int:resume_id>/', views.update_personal_details, name='update_personal_details'),
     
+    path('dashboard/', views.dashboard, name='dashboard'),
+    
 ]
 
 
