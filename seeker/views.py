@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required
 from accounts.models import SeekerProfile
 from datetime import date
 from django.http import JsonResponse, HttpResponseForbidden
+from jobboard.models import JobApplication, JobPost
+from django.utils import timezone
 
 
 @login_required
@@ -493,7 +495,22 @@ def dashboard(request):
     
     resume = get_object_or_404(Resume, user=request.user)
     profile = SeekerProfile.objects.get(user=request.user)
+    applications = JobApplication.objects.filter(seeker=profile).order_by('-applied_at')
+    total_applications = applications.count()
+    total_jobs = JobPost.objects.count()
+    
+    one_month_ago = timezone.now() - timezone.timedelta(days=30)
+    last_month_applications = applications.filter(applied_at__gte=one_month_ago).count()
+    last_month_jobs = JobPost.objects.filter(created_at__gte=one_month_ago).count()
     
     
 
-    return render(request, 'dashboard.html', {'resume': resume ,'profile': profile})
+    return render(request, 'dashboard.html', {
+        'resume': resume,
+        'profile': profile,
+        'applications': applications, 
+        'total_applications': total_applications,
+        'total_jobs': total_jobs,
+        'last_month_applications': last_month_applications,
+        'last_month_jobs': last_month_jobs
+    })
