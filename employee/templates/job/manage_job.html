@@ -144,7 +144,7 @@
                                                                 <th>Category</th>
                                                                 <th>Job Types</th>
                                                                 <th>Applications</th>
-                                                                <th>Created & Expired</th>
+                                                                <th>Status</th>
                                                                 <th>Action</th>
                                                             </tr>
                                                         </thead>
@@ -167,17 +167,37 @@
                                                                 <td>{{ job.job_category.name }}</td>
                                                                 <td>
                                                                     <div class="twm-jobs-category">
-                                                                        <span class="twm-bg-green">{{ job.job_type }}</span>
+                                                                        {% if job.job_type == 'Full Time' %}
+                                                                            <span class="twm-bg-green">{{ job.job_type }}</span>
+                                                                        {% elif job.job_type == 'Part Time' %}
+                                                                            <span class="twm-bg-sky">{{ job.job_type }}</span>
+                                                                        {% elif job.job_type == 'Contractual' %}
+                                                                            <span class="twm-bg-purple">{{ job.job_type }}</span>
+                                                                        {% elif job.job_type == 'Internship' %}
+                                                                            <span class="twm-bg-purple">{{ job.job_type }}</span>
+                                                                        {% else %}
+                                                                            <span class="twm-bg-gray">{{ job.job_type }}</span>  {# For null values or unexpected cases #}
+                                                                        {% endif %}
                                                                     </div>
                                                                 </td>
+                                                                
                                                                 <td>
                                                                     <a href="{% url 'job_applicants' job.id %}" class="site-text-primary">
                                                                         {{ job.applications.count }} Applied
                                                                     </a>
                                                                 </td>
                                                                 <td>
-                                                                    <div>{{ job.created_at|date:"d/m/Y" }}</div>
-                                                                    <div>{{ job.application_deadline|date:"d/m/Y" }}</div>
+                                                                    <div class="twm-jobs-category">
+                                                                        {% if job.status|lower == 'published' %}
+                                                                            <span class="twm-bg-green">{{ job.status }}</span>
+                                                                        {% elif job.status|lower == 'rejected' %}
+                                                                            <span class="twm-bg-red">{{ job.get_status_display }}</span>
+                                                                        {% elif job.status|lower == 'pending' %}
+                                                                            <span class="twm-bg-purple">{{ job.get_status_display }}</span>
+                                                                        {% else %}
+                                                                            <span class="twm-bg-gray">{{ job.get_status_display }}</span>
+                                                                        {% endif %}
+                                                                    </div>
                                                                 </td>
                                                                 <td>
                                                                     <div class="twm-table-controls">

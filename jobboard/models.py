@@ -42,6 +42,12 @@ class JobPost(models.Model):
     exclusive_job = models.BooleanField(default=False, null= True, blank= True)
     created_at = models.DateTimeField(auto_now_add=True)
     salary_range = models.CharField(max_length=200, null= True, blank= True, default='Negotiable')
+    STATUS_CHOICES = [
+           ('pending', 'Pending'),
+            ('published', 'Published'),  # Removed extra space
+            ('rejected', 'Rejected'),
+    ]
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
     
 
     def __str__(self):
