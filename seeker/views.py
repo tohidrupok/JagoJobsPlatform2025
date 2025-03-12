@@ -408,7 +408,7 @@ def view_profile(request):
         projects = resume.projects.all().order_by('-id')
         certifications = resume.certifications.all().order_by('-id')
         total_years_of_experience = sum([employment.duration() for employment in employments])
-        print("Total yearts of ",total_years_of_experience)
+
         
         
         template = 'seeker-detail.html'
