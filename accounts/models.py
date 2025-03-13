@@ -89,7 +89,7 @@ class EmployerProfile(models.Model):
     company_description = models.TextField(blank=True, verbose_name="Company Description")
     
     # Contact Information
-    phone = models.CharField(max_length=15, blank=True, verbose_name="Phone Number", help_text="Include country code (e.g., +1)")
+    phone = models.CharField(max_length=15, blank=True, verbose_name="Phone Number", help_text="Include country code (e.g., +880)")
     email = models.EmailField(blank=True, verbose_name="Company Email")
     
     # Social Media Links (still kept separate for clarity)
@@ -118,4 +118,4 @@ class EmployerProfile(models.Model):
                 return self.twitter_link.replace("watch?v=", "embed/")
             elif "youtu.be/" in self.twitter_link:
                 return self.twitter_link.replace("youtu.be/", "youtube.com/embed/")
-        return None  # If no video URL is provided
+        return None  
