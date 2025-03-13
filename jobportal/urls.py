@@ -20,11 +20,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('jagosecurepanel24/', admin.site.urls),
     path('', include('accounts.urls')),
     path('seeker/', include('seeker.urls')),
     path('employee/', include('employee.urls')),
     path('', include('jobboard.urls')),
+    path('jagohub-secure-panel24/root/', include('AdminPro.urls')),
 ] + static(settings.MEDIA_URL , document_root = settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) 
 
 

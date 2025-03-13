@@ -1,0 +1,55 @@
+{% if user.is_authenticated and user.is_staff and user.is_superuser %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Superuser Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+        h1 {
+            color: #333;
+        }
+        a {
+            display: block;
+            margin: 10px 0;
+            text-decoration: none;
+            background: #007BFF;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        a:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome, Superuser!</h1>
+        <p>Manage your application from here.</p>
+        
+        <a href="">Manage Superusers</a>
+        <a href="">Go to Django Admin</a>
+        <a href="">Logout</a>
+    </div>
+</body>
+</html>
+{% else %}
+<script>
+    alert("Access Denied! You are not authorized to view this page.");
+    window.location.href = "/";
+</script>
+{% endif %}
