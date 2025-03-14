@@ -1,4 +1,5 @@
 from django.urls import path
+from .views import CustomPasswordResetView, CustomPasswordResetDoneView, CustomPasswordResetConfirmView, CustomPasswordResetCompleteView, CustomPasswordChangeView, CustomPasswordChangeDoneView
 from . import views
 
 urlpatterns = [    
@@ -21,7 +22,24 @@ urlpatterns = [
     path('employee/approve-managers/', views.approve_manager_list, name='approve_manager_list'),
     path('employee/approve-managers/<int:user_id>/', views.approve_manager, name='approve_manager'),
        
-   
     path('register/', views.register, name='register'),
     
+    #after registation pass reset, change system 
+    
+    # Password Reset URLs
+    path('password_reset/', CustomPasswordResetView.as_view(), name='password_reset'),
+    path('password_reset/done/', CustomPasswordResetDoneView.as_view(), name='password_reset_done'),
+    path('reset/<uidb64>/<token>/', CustomPasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    path('reset/done/', CustomPasswordResetCompleteView.as_view(), name='password_reset_complete'),
+
+    # Custom Password Change URLs (For logged-in users)
+    path('password_change/', CustomPasswordChangeView.as_view(), name='password_change'),
+    path('password_change/done/', CustomPasswordChangeDoneView.as_view(), name='password_change_done'),
+    
+    
+    
+    
 ]
+
+# <a href="{% url 'password_reset' %}">Forgot Password?</a>
+# <a href="{% url 'password_change' %}">Change Password</a>
