@@ -26,7 +26,9 @@ def register(request):
                 login(request, user)
                 return redirect('seeker_dashboard')
             else:
-                print("Form is not valid") 
+                print("candidate Form is not valid so go raw candidate reg") 
+    
+                return render(request, 'registration/register_seeker.html', {'form': seeker_form})
                 
         elif 'employer_submit' in request.POST:   
             employer_form = EmployerRegistrationForm(request.POST)
@@ -37,12 +39,13 @@ def register(request):
                 user.is_approved = False
                 user.save()
                 return render(request, 'registration/pending_approval.html')
+            else:
+                print("employee Form is not valid so go raw employee reg") 
+                return render(request, 'registration/register_employer.html', {'form': employer_form})
+                         
 
-    return render(request, 'base.html', {
-        'seeker_form': seeker_form,
-        'employer_form': employer_form
-    }) 
-  
+    return redirect('home') 
+
    
 def register_seeker(request):
     
