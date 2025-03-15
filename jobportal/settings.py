@@ -146,11 +146,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'mail.pkgitbd.com'  # Your SMTP server
-EMAIL_PORT = 465  # Since cPanel SMTP supports SSL, use port 465
+EMAIL_HOST = 'mail.pkgitbd.com'  # SMTP server
+EMAIL_PORT = 465  # cPanel SMTP SSL port 465
 EMAIL_USE_TLS = False  # TLS OFF (because we're using SSL)
 EMAIL_USE_SSL = True  # SSL ON (since port 465 uses SSL)
 EMAIL_HOST_USER = 'tohidrupok@pkgitbd.com'
-EMAIL_HOST_PASSWORD = 'DiuPkg22##24'  # Use actual password
+EMAIL_HOST_PASSWORD = '###'  # Use actual password
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
