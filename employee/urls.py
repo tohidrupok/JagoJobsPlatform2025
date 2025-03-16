@@ -4,6 +4,7 @@ from . import views
 urlpatterns = [
     
     path('profile/', views.view_employer_profile, name='employer_profile'), 
+    path('employer/profile/<int:user_id>/', views.view_employer_profile, name='employer_profile_with_id'),
     
     # path('dashboard/', views.employer_dashboard, name='employer_dashboard'),
     path('core/profile/edit/', views.employer_profile, name='employer_profile_edit'),

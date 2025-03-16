@@ -5,6 +5,7 @@ from jobboard.models import JobPost
 from django.utils import timezone
 from accounts.models import CustomUser
 from django.contrib import messages
+from accounts.models import SeekerProfile, EmployerProfile
 
 # Function to check if user is superuser & staff
 def is_superuser(user):
@@ -38,15 +39,13 @@ def superuser_dashboard(request):
 def delete_profile(request, user_id):
     
     user = get_object_or_404(CustomUser, id=user_id) 
-    print(user)
     if user.is_superuser:
-        messages.error(request, "Superuser accounts cannot be deleted.")
-        return redirect('superuser_dashboard')
+        messages.error(request, "Admin accounts cannot be deleted.")
+        return redirect('all_seeker_profiles')
 
     user.delete()
-    print("Delet hoye gacha")
     messages.success(request, f"User {user.username} has been deleted successfully.")
-    return redirect('superuser_dashboard')  
+    return redirect('all_seeker_profiles')  
 
 
 @login_required
@@ -98,3 +97,26 @@ def delete_job_application(request, application_id):
     messages.success(request, "Job application deleted successfully.")
     return redirect('job_post_list')  
 
+@login_required
+@user_passes_test(is_superuser)
+def show_all_seeker_profiles(request):
+    # Get all seeker profiles
+    seeker_profiles = SeekerProfile.objects.all()
+
+    context = {
+        'resume': seeker_profiles
+    }
+    
+    return render(request, 'panel/all-seeker.html', context)  
+
+@login_required
+@user_passes_test(is_superuser)
+def show_all_employee_profiles(request):
+    # Get all seeker profiles
+    employer_profiles = EmployerProfile.objects.all()
+
+    context = {
+        'employee': employer_profiles
+    }
+    
+    return render(request, 'panel/all-employee.html', context) 

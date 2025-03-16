@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseForbidden
+from django.http import HttpResponseForbidden, JsonResponse
 from .forms import SeekerRegistrationForm, EmployerRegistrationForm, CustomLoginForm, ManagerRegistrationForm, EmployerProfileForm
 from .models import CustomUser, EmployerProfile, SeekerProfile
+
 
 def home(request):
     return render(request, 'index.html')  
@@ -156,18 +157,23 @@ def approve_manager_list(request):
     print(pending_managers)
     return render(request, 'manager/approve_manager_list.html', {'pending_managers': pending_managers})
 
-@login_required
-@employee_required
-def approve_manager(request, user_id):
-    """Approve a specific manager."""
-    manager = get_object_or_404(CustomUser, id=user_id, role='employer', is_approved=False)
-    
-    if request.method == 'POST':
-        manager.is_approved = True
-        manager.save()
-        return redirect('approve_manager_list')
 
-    return render(request, 'manager/approve_manager.html', {'manager': manager}) 
+from django.views.decorators.csrf import csrf_exempt
+@csrf_exempt  
+def approve_manager(request, user_id):
+    if request.method == "POST":
+        action = request.POST.get("action")
+        try:
+            user = CustomUser.objects.get(id=user_id)
+            if action == "approve":
+                user.is_approved = True
+            else:
+                user.is_approved = False
+            user.save()
+            return JsonResponse({"success": True})
+        except user.DoesNotExist:
+            return JsonResponse({"success": False, "error": "User not found"})
+    return JsonResponse({"success": False, "error": "Invalid request"}, status=400)
 
 @login_required
 def view_profile(request):

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import superuser_dashboard, delete_profile, job_post_list, publish_job, reject_job, superuser_job_applicants, delete_job_application
+from .views import superuser_dashboard, delete_profile, job_post_list, publish_job, reject_job, superuser_job_applicants, delete_job_application, show_all_seeker_profiles, show_all_employee_profiles
 
 urlpatterns = [
     path('dashboard/', superuser_dashboard, name='superuser_dashboard'),
@@ -9,5 +9,7 @@ urlpatterns = [
     path('reject_job/<int:job_id>/',  reject_job, name='reject_job'),
     path('job/<int:job_id>/applicants/superuser/', superuser_job_applicants, name='superuser_job_applicants'),
     path('delete_job_application/<int:application_id>/', delete_job_application, name='delete_job_application'),
+    path('all-seeker-profiles/', show_all_seeker_profiles, name='all_seeker_profiles'),
+    path('all-employee-profiles/', show_all_employee_profiles, name='all_employee_profiles'),
     
 ]

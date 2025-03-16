@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
-from accounts.models import EmployerProfile
+from accounts.models import EmployerProfile, CustomUser
 from .forms import EmployerProfileForm, JobPostForm
 from django.http import JsonResponse, HttpResponseForbidden
 from django.utils import timezone
@@ -31,25 +31,30 @@ from jobboard.models import JobPost
 
 
 @login_required
-def view_employer_profile(request):
-    if not request.user.is_employer:  
-        return HttpResponseForbidden("Access restricted to employers.")
-    if not request.user.is_approved:
-        return render(request, 'registration/pending_approval.html') 
-    
-    profile = get_object_or_404(EmployerProfile, user=request.user)
+def view_employer_profile(request, user_id=None):
+    # If user_id is provided in URL, fetch that user's profile
+    if user_id:
+        profile_user = get_object_or_404(CustomUser, id=user_id)
+        profile = get_object_or_404(EmployerProfile, user=profile_user)
+    else:
+        # Only employers can view their own profile
+        if not request.user.is_employer:
+            return HttpResponseForbidden("Access restricted to employers.")
+        if not request.user.is_approved:
+            return render(request, 'registration/pending_approval.html') 
+        profile = get_object_or_404(EmployerProfile, user=request.user)
+
     jobs = JobPost.objects.filter(employee=profile).order_by('-created_at')
-    
+
     total_experience = None
     if profile.founded_date:
         total_experience = timezone.now().year - profile.founded_date.year
-        
+
     return render(request, 'employer-detail-v2.html', {
         'profile': profile,
         'total_experience': total_experience,
-        'jobs': jobs,  
-    })   
- 
+        'jobs': jobs,
+    })
 
 
 # @login_required
