@@ -5,14 +5,21 @@
 {% if user.is_authenticated and user.is_staff and user.is_superuser %}
         <!-- Page Content Holder -->
         <div id="content">
-
+   
             <div class="content-admin-main">
 
                 <div class="wt-admin-right-page-header clearfix">
                     <h2>Hello, JagoJobs Admin</h2>
                     <div class="breadcrumbs"><a href="#">Home</a><span>Dasboard</span></div>
                 </div>
-
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
                 <div class="twm-dash-b-blocks mb-5">
                     <div class="row">
                         <div class="col-xl-3 col-lg-6 col-md-12 mb-3">
@@ -81,54 +88,73 @@
                                 <div class="panel-body wt-panel-body bg-white">
                                     <div class="twm-dashboard-candidates-wrap">
                                         <div class="row">
-                                        {% if recent_job_applications %}
-                                            {% for application in recent_job_applications %}
-                                            <div class="col-xl-6 col-lg-12 col-md-12">
-                                                 <div class="twm-dash-candidates-list">
-                                                     <div class="twm-media">
-                                                         <div class="twm-media-pic">
-                                                            <img src="{{ application.seeker.my_resume.image.url }}" alt="#">
-                                                         </div>
-                                                         
-                                                     </div>
-                                                     <div class="twm-mid-content">
-                                                         <a href="#" class="twm-job-title">
-                                                             <h4>{{ application.seeker.user.username }} </h4>
-                                                         </a>
-                                                         <p>{{ application.seeker.my_resume.title }}</p>
-                                                         
-                                                         <div class="twm-fot-content">
-                                                             <div class="twm-left-info">
-                                                                <p class="twm-candidate-address"><i class="feather-map-pin"></i>{{ application.seeker.my_resume.hometown }}</p>
-                                                                <div class="twm-jobs-vacancies">{{ application.expected_Salary }}<span>/ Month</span></div>
-                                                             </div>
-                                                             <div class="twm-right-btn">
-
-                                                                <ul class="twm-controls-icon list-unstyled">
-                                                                    <li>
-                                                                        <button title="View profile" data-bs-toggle="tooltip" data-bs-placement="top">
-                                                                            <span class="fa fa-eye"></span>
-                                                                        </button>
-                                                                    </li>
-
-                                                                    <li>
-                                                                        <button title="Delete" data-bs-toggle="tooltip" data-bs-placement="top">
-                                                                            <span class="far fa-trash-alt"></span>
-                                                                        </button>
-                                                                    </li>
-                                                                </ul>
-
-                                                             </div>
+                                            {% if recent_job_applications %}
+                                                {% for application in recent_job_applications %}
+                                                <div class="col-xl-6 col-lg-12 col-md-12">
+                                                    <div class="twm-dash-candidates-list">
+                                                        <div class="twm-media">
+                                                            <div class="twm-media-pic">
+                                                                <img src="{{ application.seeker.my_resume.image.url }}" alt="#">
+                                                            </div>
                                                         </div>
-                                                     </div>
-                                                     
-                                                 </div>
-                                            </div>
-                                            {% endfor %}
-                                        {% else %}
-                                        <p>No recent job applications.</p>
-                                        {% endif %}
+                                                        <div class="twm-mid-content">
+                                                            <a href="#" class="twm-job-title">
+                                                                <h4>{{ application.seeker.user.username }} </h4>
+                                                            </a>
+                                                            <p>{{ application.seeker.my_resume.title }}</p>
+                                        
+                                                            <div class="twm-fot-content">
+                                                                <div class="twm-left-info">
+                                                                    <p class="twm-candidate-address"><i class="feather-map-pin"></i>{{ application.seeker.my_resume.hometown }}</p>
+                                                                    <div class="twm-jobs-vacancies">{{ application.expected_Salary }} BDT<span>/ Month</span></div>
+                                                                </div>
+                                                                <div class="twm-right-btn">
+                                                                    <ul class="twm-controls-icon list-unstyled">
+                                                                        <li>
+                                                                            <a href="{% url 'view_profile_public' application.seeker.user.id %}" title="View profile" data-bs-toggle="tooltip" data-bs-placement="top">
+                                                                                <span class="fa fa-eye"></span>
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <button title="Delete" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal{{ application.seeker.user.id }}">
+                                                                                <span class="far fa-trash-alt"></span>
+                                                                            </button>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div> 
+                                        
+                                                            <!-- Delete Confirmation Modal (Fixed) -->
+                                                            <div class="modal fade" id="confirmDeleteModal{{ application.seeker.user.id }}" tabindex="-1" aria-labelledby="confirmDeleteLabel{{ application.seeker.user.id }}" aria-hidden="true">
+                                                                <div class="modal-dialog">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="confirmDeleteLabel{{ application.seeker.user.id }}">Confirm Deletion</h5>
+                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            Are you sure you want to delete <strong>{{ application.seeker.user.username }}</strong>? This action cannot be undone.
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                                            <form action="{% url 'delete_profile' application.seeker.user.id %}" method="POST">
+                                                                                {% csrf_token %}
+                                                                                <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                        
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {% endfor %}
+                                            {% else %}
+                                                <p>No recent job applications.</p>
+                                            {% endif %}
                                         </div>
+                                        
                                     </div>              
                                 </div>
                             </div>

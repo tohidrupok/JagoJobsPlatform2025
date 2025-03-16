@@ -150,12 +150,12 @@
                                                      <h4>{{ application.seeker.my_resume.name }} </h4>
                                                  </a>
                                                  <p>{{ application.seeker.my_resume.title }} </p>
-                                                 {% if application.expected_Salary %}
+                                                 
                                                  <h5 class="fw-bold text-primary text-center border rounded p-2 bg-light">
                                                     Expected Salary: {{ application.expected_Salary }} BDT
                                                 </h5>
                                                 
-                                                {% endif %}
+                                                
                                                  <a href="{% url 'view_profile_public' application.seeker.user.id %}" class="twm-view-prifile site-text-primary">View Profile</a>
                                                  
                                                  <div class="twm-fot-content">
