@@ -99,7 +99,7 @@
                                                         </div>
                                                         <div class="twm-mid-content">
                                                             <a href="#" class="twm-job-title">
-                                                                <h4>{{ application.seeker.user.username }} </h4>
+                                                                <h4>{{ application.seeker.user.username }} ------ {{ application.job }} </h4>
                                                             </a>
                                                             <p>{{ application.seeker.my_resume.title }}</p>
                                         
@@ -116,10 +116,18 @@
                                                                             </a>
                                                                         </li>
                                                                         <li>
-                                                                            <button title="Delete" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal{{ application.seeker.user.id }}">
+                                                                            <button title="Delete" data-bs-toggle="tooltip" data-bs-placement="top" 
+                                                                                onclick="if(confirm('Are you sure you want to delete this application?')) { window.location.href='{% url 'delete_job_application' application.id %}'; }">
                                                                                 <span class="far fa-trash-alt"></span>
                                                                             </button>
                                                                         </li>
+
+                                                                        
+                                                                        {% comment %} <li>
+                                                                            <button title="Delete" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal{{ application.seeker.user.id }}">
+                                                                                <span class="far fa-trash-alt"></span>
+                                                                            </button>
+                                                                        </li> {% endcomment %}
                                                                     </ul>
                                                                 </div>
                                                             </div> 

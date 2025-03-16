@@ -130,13 +130,24 @@
                                 </li>
 
                                 <li class="has-child"><a href="javascript:;">About Us</a></li>
-                                {% if user_role == "seeker" %}
+                                {% if user_role == "seeker" and not user.is_superuser %}
                                 <li class="has-child"><a href="javascript:;">Candidates</a>
                                     <ul class="sub-menu">
                                         <li><a href="{% url 'view_profile' %}">Candidate Profile</a></li>
                                         <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
                                         <li><a href="{% url 'my_resume' %}">My Resume</a></li>
                                         <li><a href="#">Job Alerts</a></li>
+                                        <li><a href="{% url 'password_change' %}">Change Password</a></li>  
+                                    </ul>                                                                
+                                </li>
+                                {% endif %}
+                                {% if  user.is_superuser %}
+                                <li class="has-child"><a href="javascript:;">Admin</a>
+                                    <ul class="sub-menu">
+                                        <li><a href="{% url 'superuser_dashboard' %}">Dashboard</a></li>
+                                        <li><a href="{% url 'job_post_list' %}">Manage Jobs</a></li>
+                                        <li><a href="{% url 'create_job' %}">Post a New Job</a></li>
+                                        <li><a href="{% url 'manage-job' %}">Employee Review</a></li>
                                         <li><a href="{% url 'password_change' %}">Change Password</a></li>  
                                     </ul>                                                                
                                 </li>
