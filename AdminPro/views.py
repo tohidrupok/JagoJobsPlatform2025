@@ -32,8 +32,9 @@ def superuser_dashboard(request):
         'recent_job_applications':recent_job_applications
     })
 
+
 @login_required
-@user_passes_test(is_superuser)  # Restrict to superusers only
+@user_passes_test(is_superuser)  
 def delete_profile(request, user_id):
     
     user = get_object_or_404(CustomUser, id=user_id) 
@@ -45,4 +46,55 @@ def delete_profile(request, user_id):
     user.delete()
     print("Delet hoye gacha")
     messages.success(request, f"User {user.username} has been deleted successfully.")
-    return redirect('superuser_dashboard')  # Redirect after deletion
+    return redirect('superuser_dashboard')  
+
+
+@login_required
+@user_passes_test(is_superuser)  
+def job_post_list(request):
+    job_posts = JobPost.objects.all().order_by('-created_at')
+    return render(request, 'panel/job_post_list.html', {'job_posts': job_posts})
+
+
+
+@login_required
+@user_passes_test(is_superuser) 
+def publish_job(request, job_id):
+    job = get_object_or_404(JobPost, id=job_id)
+    job.status = 'published'  
+    job.save()
+    return redirect('job_post_list') 
+
+@login_required
+@user_passes_test(is_superuser) 
+def reject_job(request, job_id):
+    job = get_object_or_404(JobPost, id=job_id)
+    job.status = 'rejected' 
+    job.save()
+    return redirect('job_post_list') 
+
+
+@login_required
+@user_passes_test(is_superuser) 
+def superuser_job_applicants(request, job_id):
+
+    job = get_object_or_404(JobPost, id=job_id)
+    applications = JobApplication.objects.filter(job=job)
+
+    return render(request, 'panel/job_applicants_superuser.html', {
+        'job': job,
+        'applications': applications,
+    }) 
+    
+    
+def delete_job_application(request, application_id):
+    application = get_object_or_404(JobApplication, id=application_id)
+    
+    if request.user != application.seeker.user and not request.user.is_superuser:
+        messages.error(request, "You do not have permission to delete this application.")
+        return redirect('home')  
+
+    application.delete()
+    messages.success(request, "Job application deleted successfully.")
+    return redirect('job_post_list')  
+

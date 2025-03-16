@@ -10,7 +10,7 @@
 
                 <div class="wt-admin-right-page-header clearfix">
                     <h2>Hello, JagoJobs Admin</h2>
-                    <div class="breadcrumbs"><a href="#">Home</a><span>Dasboard</span></div>
+                    <div class="breadcrumbs"><a href="{% url 'home' %}">Home</a><span>Dasboard</span></div>
                 </div>
                 {% if messages %}
                     {% for message in messages %}

@@ -145,15 +145,19 @@ def manage_job(request):
 @login_required
 def delete_job(request, job_id):
     job = get_object_or_404(JobPost, id=job_id)
-
-    employer_profile = get_object_or_404(EmployerProfile, user=request.user)
-
-    if job.employee != employer_profile:
-        return HttpResponseForbidden("You do not have permission to delete this job.")
+    
+    if not request.user.is_superuser:
+        employer_profile = get_object_or_404(EmployerProfile, user=request.user)
+        if job.employee != employer_profile:
+            return HttpResponseForbidden("You do not have permission to delete this job.")
+        else:
+            job.delete()
+            messages.success(request, "Job deleted successfully.")
+            return redirect('manage-job')
 
     job.delete()
     messages.success(request, "Job deleted successfully.")
-    return redirect('manage-job')  
+    return redirect('job_post_list')
 
 
 
