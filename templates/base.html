@@ -91,17 +91,6 @@
                                                                                                     
                                 </li>
                                 <li class="has-child"><a href="{% url 'job_list' %}">Jobs</a>
-                                    {% comment %} <ul class="sub-menu">
-                                        <li><a href="{% url 'job_list' %}">Jobs Grid</a></li>
-
-                                        <li class="has-child"><a href="javascript:;">Job Detail</a>
-                                            <ul class="sub-menu">
-                                                <li><a href="job-detail.html">Detail 1</a>
-                                                <li><a href="job-detail-v2.html">Detail 2 </a>
-                                            </ul> 
-                                        </li>
-                                        <li><a href="apply-job.html">Apply Jobs</a></li>
-                                    </ul>                                                                  {% endcomment %}
                                 </li>
                                 {% if user_role == "employer" %}
                                 <li class="has-child"><a href="javascript:;">Employers</a>
@@ -114,22 +103,9 @@
                                     </ul>                                                                 
                                 </li>
                                 {% endif %}
-                                <li class="has-child"><a href="javascript:;">Pages</a>
-                                    <ul class="sub-menu">
-                                        
-                                        <li><a href="pricing.html">Pricing</a></li> 
-                                        <li><a href="error-404.html">Error-404</a></li>
-                                        <li><a href="faq.html">FAQ's</a></li>
-                                        <li><a href="contact.html">Contact Us</a></li>
-                                        <li><a href="under-maintenance.html">Under Maintenance</a></li>
-                                        <li><a href="coming-soon.html">Coming soon</a></li>
-                                        <li><a href="login.html">Login</a></li>
-                                        <li><a href="after-login.html">After Login</a></li>
-                                        <li><a href="icons.html">Icons</a></li> 
-                                    </ul>                                                                
-                                </li>
 
-                                <li class="has-child"><a href="javascript:;">About Us</a></li>
+                                <li class="has-child"><a href="{% url 'about_us' %}">About Us</a></li>
+                                <li class="has-child"><a href="{% url 'contact_us' %}">Contact Us</a></li>
                                 {% if user_role == "seeker" and not user.is_superuser %}
                                 <li class="has-child"><a href="javascript:;">Candidates</a>
                                     <ul class="sub-menu">

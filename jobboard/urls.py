@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import (
-    job_list, job_detail, apply_job, employee_applications
+    job_list, job_detail, apply_job, employee_applications, about_us, contact_us
 )
 
 urlpatterns = [
@@ -10,4 +10,9 @@ urlpatterns = [
     path('jobs/<int:job_id>/apply/', apply_job, name='apply_job'),
     path('applications/', employee_applications, name='employee_applications'),
     path('jobs/<int:job_id>/apply/', apply_job, name='apply_job'),
+    
+    
+    path('about/',  about_us, name='about_us'),
+    path('contact/', contact_us, name='contact_us'),
+    
 ]

@@ -200,3 +200,8 @@ def employee_applications(request):
     return render(request, 'jobs/employee_applications.html', {'applications': applications})
 
 
+def about_us(request):
+    return render(request, 'about_us.html')
+
+def contact_us(request):
+    return render(request, 'contact_us.html')
