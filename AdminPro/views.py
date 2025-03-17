@@ -54,9 +54,14 @@ def delete_profile(request, user_id):
 @login_required
 @user_passes_test(is_superuser)  
 def job_post_list(request):
-    job_posts = JobPost.objects.all().order_by('-created_at')
+    job_posts = JobPost.objects.all()
     return render(request, 'panel/job_post_list.html', {'job_posts': job_posts})
 
+@login_required
+@user_passes_test(is_superuser)  
+def pending_job_post_list(request):
+    pending_job_posts = JobPost.objects.filter(status='pending')
+    return render(request, 'panel/approve_job.html', {'job_posts': pending_job_posts})
 
 
 @login_required
@@ -65,7 +70,7 @@ def publish_job(request, job_id):
     job = get_object_or_404(JobPost, id=job_id)
     job.status = 'published'  
     job.save()
-    return redirect('job_post_list') 
+    return redirect('approve_job_post_list') 
 
 @login_required
 @user_passes_test(is_superuser) 
@@ -204,4 +209,5 @@ def add_employer(request):
     else:
         form = EmployerRegistrationForm()
     return render(request, 'registration/register_employer.html', {'form': form}) 
+
 

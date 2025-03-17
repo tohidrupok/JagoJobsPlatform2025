@@ -18,7 +18,7 @@
                     <div class="col-lg-12 col-md-12 mb-4">
                         <div class="panel panel-default site-bg-white m-t30">
                             <div class="panel-heading wt-panel-heading p-a20">
-                                <h4 class="panel-tittle m-a0"><i class="far fa-bookmark"></i>Manage Jobs</h4>
+                                <h4 class="panel-tittle m-a0"><i class="far fa-bookmark"></i>Approve and Publish Job Posts</h4>
                             </div>
                             {% if messages %}
                                             <div class="alert-container">
@@ -35,7 +35,6 @@
                                         <thead>
                                             <tr>
                                                 <th>Job Title</th>
-                                                <th>Job Applied</th>
                                                 <th>Job Types</th>
                                                 <th>Post Timing</th>
                                                 <th>Applied Date</th>
@@ -67,11 +66,7 @@
                                                         
                                                     </div>
                                                 </td>
-                                                <td>
-                                                    <a href="{% url 'superuser_job_applicants' job.id %}" class="site-text-primary">
-                                                        {{ job.applications.count }} Applied
-                                                    </a>
-                                                </td> 
+                                        
 
                                                 <td><div class="twm-jobs-category"><span class="twm-bg-green">{{ job.job_type }}</span></div></td>
                                                 <td><div class="twm-job-post-duration">{{ job.created_at|timesince }}</div></td>
@@ -152,29 +147,3 @@
 {% endblock %} 
 
 
-
-<!-- templates/job_post_list.html -->
-{% comment %} <!DOCTYPE html>
-<html>
-<head>
-    <title>Job Posts</title>
-</head>
-<body>
-    <h1>All Job Posts</h1>
-
-    {% for job in job_posts %}
-        <div style="border: 1px solid #ccc; margin: 10px; padding: 10px;">
-            <h2>{{ job.title }}</h2>
-            <p><strong>Company Industry:</strong> {{ job.company_industry_type }}</p>
-            <p><strong>Vacancies:</strong> {{ job.no_of_vacancy }}</p>
-            <p><strong>Deadline:</strong> {{ job.application_deadline }}</p>
-            <p><strong>Location:</strong> {{ job.job_location }}</p>
-            <p><strong>Salary:</strong> {{ job.salary_range }}</p>
-            <p><strong>Status:</strong> {{ job.status }}</p>
-            <a href="{{ job.get_absolute_url }}">View Details</a>
-        </div>
-    {% empty %}
-        <p>No job posts available.</p>
-    {% endfor %}
-</body>
-</html> {% endcomment %}

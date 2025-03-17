@@ -74,8 +74,8 @@ def job_list(request):
     if sort_by in job_type_map:
         filters &= Q(job_type=job_type_map[sort_by])
 
-    jobs = JobPost.objects.filter(filters).order_by('-created_at').only(
-        "id", "title", "job_category_id", "job_type", "job_location", "created_at"
+    jobs = JobPost.objects.filter(filters, status='published').order_by('-created_at').only(
+    "id", "title", "job_category_id", "job_type", "job_location", "created_at"
     )
 
     total_jobs = jobs.count()
