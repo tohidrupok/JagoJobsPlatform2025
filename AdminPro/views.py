@@ -7,6 +7,7 @@ from accounts.models import CustomUser
 from django.contrib import messages
 from accounts.models import SeekerProfile, EmployerProfile
 from .forms import PostJobForm, JobCategoryForm
+from accounts.forms import EmployerRegistrationForm
 from jobboard.models import JobCategory
 
 # Function to check if user is superuser & staff
@@ -150,41 +151,57 @@ def post_job(request):
 def category_page(request):
     categories = JobCategory.objects.all()
     form = JobCategoryForm()
-    edit_category = None  # To keep track of the category being edited
+    edit_category = None  
 
-    # Handling Add or Update form submissions
     if request.method == 'POST':
         # Add New Category
         if 'add_category' in request.POST:
             form = JobCategoryForm(request.POST)
             if form.is_valid():
-                form.save()  # Save new category
+                form.save()  
                 return redirect('category_page')
 
         # Edit Existing Category
         elif 'edit_category' in request.POST:
             category_id = request.POST.get('category_id')
             category = get_object_or_404(JobCategory, id=category_id)
-            form = JobCategoryForm(request.POST, instance=category)  # Pass the category instance
+            form = JobCategoryForm(request.POST, instance=category)  
             if form.is_valid():
-                form.save()  # Save the updated category
+                form.save() 
                 return redirect('category_page')
 
         # Delete Category
         elif 'delete_category' in request.POST:
             category_id = request.POST.get('category_id')
             category = get_object_or_404(JobCategory, id=category_id)
-            category.delete()  # Delete the category
+            category.delete()  
             return redirect('category_page')
 
     # Check if there's an edit action for an existing category
     if 'category_id' in request.GET:
         category_id = request.GET.get('category_id')
         edit_category = get_object_or_404(JobCategory, id=category_id)
-        form = JobCategoryForm(instance=edit_category)  # Pass the existing category to the form
+        form = JobCategoryForm(instance=edit_category)  
 
     return render(request, 'panel/category_page.html', {
         'categories': categories,
         'form': form,
         'edit_category': edit_category
     })
+    
+    
+@login_required
+@user_passes_test(is_superuser)    
+def add_employer(request):
+    if request.method == 'POST':
+        form = EmployerRegistrationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.role = 'employer'
+            user.is_approved = True  
+            user.save()
+            return redirect('all_employee_profiles')
+    else:
+        form = EmployerRegistrationForm()
+    return render(request, 'registration/register_employer.html', {'form': form}) 
+

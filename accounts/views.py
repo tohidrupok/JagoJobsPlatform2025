@@ -102,11 +102,11 @@ def custom_login(request):
                 if user.is_manager and not user.is_approved:
                     return render(request, 'registration/pending_approval.html')
                 if user.is_manager:
-                    return redirect('manager_dashboard')
+                    return redirect('superuser_dashboard')
                 elif user.is_employer:
                     return redirect('manage-job')
                 elif user.is_seeker:
-                    return redirect('seeker_dashboard')
+                    return redirect('job_list')
     else:
         form = CustomLoginForm()
     return render(request, 'registration/login.html', {'form': form})
