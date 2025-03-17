@@ -6,6 +6,7 @@ from django.utils import timezone
 from accounts.models import CustomUser
 from django.contrib import messages
 from accounts.models import SeekerProfile, EmployerProfile
+from .forms import PostJobForm
 
 # Function to check if user is superuser & staff
 def is_superuser(user):
@@ -112,7 +113,7 @@ def show_all_seeker_profiles(request):
 @login_required
 @user_passes_test(is_superuser)
 def show_all_employee_profiles(request):
-    # Get all seeker profiles
+
     employer_profiles = EmployerProfile.objects.all()
 
     context = {
@@ -120,3 +121,24 @@ def show_all_employee_profiles(request):
     }
     
     return render(request, 'panel/all-employee.html', context) 
+
+
+@login_required
+@user_passes_test(is_superuser)
+def post_job(request):
+
+    if request.method == "POST":
+        form = PostJobForm(request.POST)
+        print(form.errors)
+        if form.is_valid():
+            job = form.save(commit=False)  
+            job.save()  
+            messages.success(request, "Job posted successfully!")
+            return redirect('job_post_list')  
+        else:
+            messages.error(request, "Please correct the errors below.")  
+
+    else:
+        form = PostJobForm()
+
+    return render(request, 'panel/post_job.html', {'form': form})  
