@@ -1,6 +1,6 @@
 from django import forms
 from accounts.models import EmployerProfile
-from jobboard.models import JobPost 
+from jobboard.models import JobPost , JobCategory
 
 
 class PostJobForm(forms.ModelForm):
@@ -20,4 +20,8 @@ class PostJobForm(forms.ModelForm):
                 'placeholder': f'Enter {field.label}'
             }) 
             
-            
+
+class JobCategoryForm(forms.ModelForm):
+    class Meta:
+        model = JobCategory
+        fields = ['name', 'description']
