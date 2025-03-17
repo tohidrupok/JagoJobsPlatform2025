@@ -30,7 +30,7 @@ class EmployerProfileForm(forms.ModelForm):
 class JobPostForm(forms.ModelForm):
     class Meta:
         model = JobPost
-        exclude = ['employee']  
+        exclude = ['employee', 'status']  
         
     widgets = {
             'application_deadline': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),

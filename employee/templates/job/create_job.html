@@ -35,9 +35,17 @@
 
             <!-- OUR BLOG START -->
             <div class="section-full p-t120  p-b90 site-bg-white">
-                
 
-                <div class="container">
+
+                <div class="container"> 
+                    {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
                     <div class="row">
                         
                         <div class="col-xl-3 col-lg-4 col-md-12 rightSidebar m-b30">
@@ -125,13 +133,16 @@
                                         <div class="col-xl-4 col-lg-6 col-md-12">
                                             <div class="form-group">
                                                 <label>Job Title</label>
-                                                <div class="ls-inputicon-box"> 
+                                                <div class="ls-inputicon-box">
                                                     {{ form.title }}
                                                     <i class="fs-input-icon fa fa-address-card"></i>
                                                 </div>
+                                                {% if form.title.errors %}
+                                                    <div class="text-danger">{{ form.title.errors }}</div>
+                                                {% endif %}
                                             </div>
                                         </div>
-                
+                            
                                         <!-- Job Category -->
                                         <div class="col-xl-4 col-lg-6 col-md-12">
                                             <div class="form-group">
@@ -140,9 +151,12 @@
                                                     {{ form.job_category }}
                                                     <i class="fs-input-icon fa fa-border-all"></i>
                                                 </div>
+                                                {% if form.job_category.errors %}
+                                                    <div class="text-danger">{{ form.job_category.errors }}</div>
+                                                {% endif %}
                                             </div>
                                         </div>
-                
+                            
                                         <!-- Company Industry Type -->
                                         <div class="col-xl-4 col-lg-6 col-md-12">
                                             <div class="form-group">
@@ -151,10 +165,13 @@
                                                     {{ form.company_industry_type }}
                                                     <i class="fs-input-icon fa fa-building"></i>
                                                 </div>
+                                                {% if form.company_industry_type.errors %}
+                                                    <div class="text-danger">{{ form.company_industry_type.errors }}</div>
+                                                {% endif %}
                                             </div>
                                         </div>
-                
-                                        <!-- Number of Vacancies -->
+                            
+                                        <!-- No. of Vacancies -->
                                         <div class="col-xl-4 col-lg-6 col-md-12">
                                             <div class="form-group">
                                                 <label>No. of Vacancies</label>
@@ -162,23 +179,23 @@
                                                     {{ form.no_of_vacancy }}
                                                     <i class="fs-input-icon fa fa-users"></i>
                                                 </div>
+                                                {% if form.no_of_vacancy.errors %}
+                                                    <div class="text-danger">{{ form.no_of_vacancy.errors }}</div>
+                                                {% endif %}
                                             </div>
                                         </div>
-                
                                         <!-- Application Deadline -->
                                         <div class="col-xl-4 col-lg-6 col-md-12">
                                             <div class="form-group">
                                                 <label>Application Deadline</label>
                                                 <input type="date" id="application_deadline" name="application_deadline" class="form-control" required>
                                             </div>
-                                        </div>
+                                            {% if form.application_deadline.errors %}
+                                                    <div class="text-danger">{{ form.application_deadline.errors }}</div>
+                                                {% endif %}
+                                        </div> 
 
-                                        {% comment %} <div class="mb-3">
-                                            <label for="application_deadline" class="form-label">Application Deadline</label>
-                                            <input type="date" id="application_deadline" name="application_deadline" class="form-control" required>
-                                        </div> {% endcomment %}
-
-                
+                            
                                         <!-- Age Range -->
                                         <div class="col-xl-4 col-lg-6 col-md-12">
                                             <div class="form-group">
@@ -187,9 +204,12 @@
                                                     {{ form.age_range }}
                                                     <i class="fs-input-icon fa fa-user"></i>
                                                 </div>
+                                                {% if form.age_range.errors %}
+                                                    <div class="text-danger">{{ form.age_range.errors }}</div>
+                                                {% endif %}
                                             </div>
                                         </div>
-                
+                            
                                         <!-- Gender -->
                                         <div class="col-xl-4 col-lg-6 col-md-12">
                                             <div class="form-group">
@@ -198,9 +218,12 @@
                                                     {{ form.gender }}
                                                     <i class="fs-input-icon fa fa-venus-mars"></i>
                                                 </div>
+                                                {% if form.gender.errors %}
+                                                    <div class="text-danger">{{ form.gender.errors }}</div>
+                                                {% endif %}
                                             </div>
                                         </div>
-                
+                            
                                         <!-- Contact Person -->
                                         <div class="col-xl-4 col-lg-6 col-md-12">
                                             <div class="form-group">
@@ -209,9 +232,12 @@
                                                     {{ form.contact_person }}
                                                     <i class="fs-input-icon fa fa-phone"></i>
                                                 </div>
+                                                {% if form.contact_person.errors %}
+                                                    <div class="text-danger">{{ form.contact_person.errors }}</div>
+                                                {% endif %}
                                             </div>
                                         </div>
-                
+                            
                                         <!-- Experience Required -->
                                         <div class="col-xl-4 col-lg-6 col-md-12">
                                             <div class="form-group">
@@ -220,9 +246,12 @@
                                                     {{ form.experience_required }}
                                                     <i class="fs-input-icon fa fa-briefcase"></i>
                                                 </div>
+                                                {% if form.experience_required.errors %}
+                                                    <div class="text-danger">{{ form.experience_required.errors }}</div>
+                                                {% endif %}
                                             </div>
                                         </div>
-                
+                            
                                         <!-- CV Receive Method -->
                                         <div class="col-xl-4 col-lg-6 col-md-12">
                                             <div class="form-group">
@@ -231,9 +260,12 @@
                                                     {{ form.cv_receive_method }}
                                                     <i class="fs-input-icon fa fa-file"></i>
                                                 </div>
+                                                {% if form.cv_receive_method.errors %}
+                                                    <div class="text-danger">{{ form.cv_receive_method.errors }}</div>
+                                                {% endif %}
                                             </div>
                                         </div>
-                
+                            
                                         <!-- Job Type -->
                                         <div class="col-xl-4 col-lg-6 col-md-12">
                                             <div class="form-group">
@@ -242,9 +274,12 @@
                                                     {{ form.job_type }}
                                                     <i class="fs-input-icon fa fa-briefcase"></i>
                                                 </div>
+                                                {% if form.job_type.errors %}
+                                                    <div class="text-danger">{{ form.job_type.errors }}</div>
+                                                {% endif %}
                                             </div>
                                         </div>
-                
+                            
                                         <!-- Job Level -->
                                         <div class="col-xl-4 col-lg-6 col-md-12">
                                             <div class="form-group">
@@ -253,58 +288,78 @@
                                                     {{ form.job_level }}
                                                     <i class="fs-input-icon fa fa-level-up-alt"></i>
                                                 </div>
+                                                {% if form.job_level.errors %}
+                                                    <div class="text-danger">{{ form.job_level.errors }}</div>
+                                                {% endif %}
                                             </div>
                                         </div>
-                
-                                        <!-- salary_range -->
+                            
+                                        <!-- Salary Range -->
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Salary Range</label>
                                                 {{ form.salary_range }}
+                                                {% if form.salary_range.errors %}
+                                                    <div class="text-danger">{{ form.salary_range.errors }}</div>
+                                                {% endif %}
                                             </div>
-                                        </div> 
-
+                                        </div>
+                            
                                         <!-- Job Description -->
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Job Description</label>
                                                 {{ form.job_description }}
+                                                {% if form.job_description.errors %}
+                                                    <div class="text-danger">{{ form.job_description.errors }}</div>
+                                                {% endif %}
                                             </div>
                                         </div>
-                
+                            
                                         <!-- Job Responsibilities -->
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Job Responsibilities</label>
                                                 {{ form.job_responsibilities }}
+                                                {% if form.job_responsibilities.errors %}
+                                                    <div class="text-danger">{{ form.job_responsibilities.errors }}</div>
+                                                {% endif %}
                                             </div>
                                         </div>
-                
+                            
                                         <!-- Job Requirements -->
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Job Requirements</label>
                                                 {{ form.job_requirements }}
+                                                {% if form.job_requirements.errors %}
+                                                    <div class="text-danger">{{ form.job_requirements.errors }}</div>
+                                                {% endif %}
                                             </div>
                                         </div>
-                                        
-
+                            
+                                        <!-- Benefits -->
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label>Benefits </label>
+                                                <label>Benefits</label>
                                                 {{ form.other_benefits }}
+                                                {% if form.other_benefits.errors %}
+                                                    <div class="text-danger">{{ form.other_benefits.errors }}</div>
+                                                {% endif %}
                                             </div>
                                         </div>
-
-                                        <!-- Job Requirements -->
+                            
+                                        <!-- Other Qualification -->
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label>Others </label>
+                                                <label>Others</label>
                                                 {{ form.others_qualification }}
+                                                {% if form.others_qualification.errors %}
+                                                    <div class="text-danger">{{ form.others_qualification.errors }}</div>
+                                                {% endif %}
                                             </div>
                                         </div>
-
-                
+                            
                                         <!-- Job Location -->
                                         <div class="col-xl-4 col-lg-6 col-md-12">
                                             <div class="form-group">
@@ -313,24 +368,34 @@
                                                     {{ form.job_location }}
                                                     <i class="fs-input-icon fa fa-map-marker-alt"></i>
                                                 </div>
+                                                {% if form.job_location.errors %}
+                                                    <div class="text-danger">{{ form.job_location.errors }}</div>
+                                                {% endif %}
                                             </div>
                                         </div>
-
+                            
+                                        <!-- Exclusive Job -->
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Exclusive Job</label>
                                                 {{ form.exclusive_job }}
+                                                {% if form.exclusive_job.errors %}
+                                                    <div class="text-danger">{{ form.exclusive_job.errors }}</div>
+                                                {% endif %}
                                             </div>
                                         </div>
-                                        
+                            
+                                        <!-- Applicant Photo Required -->
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Applicant Photo Required</label>
                                                 {{ form.applicant_photo_required }}
+                                                {% if form.applicant_photo_required.errors %}
+                                                    <div class="text-danger">{{ form.applicant_photo_required.errors }}</div>
+                                                {% endif %}
                                             </div>
-                                        </div> 
-                                        
-                
+                                        </div>
+                            
                                         <!-- Submit Buttons -->
                                         <div class="col-lg-12 col-md-12">
                                             <div class="text-left">
@@ -338,10 +403,10 @@
                                                 <button type="submit" class="site-button outline-primary">Save Draft</button>
                                             </div>
                                         </div>
-                
                                     </div>
                                 </form>
                             </div>
+                            
                         </div>
 
                     </div>

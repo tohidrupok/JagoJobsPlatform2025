@@ -120,6 +120,7 @@ def create_job(request):
 
     if request.method == "POST":
         form = JobPostForm(request.POST)
+        print(form.errors)
         if form.is_valid():
             job = form.save(commit=False)  
             job.employee = employer  
