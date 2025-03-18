@@ -8,7 +8,7 @@
               <div class="page-content">
 
                 <!-- INNER PAGE BANNER -->
-                <div class="wt-bnr-inr overlay-wraper bg-center" style="background-image:url(images/banner/1.jpg);">
+                <div class="wt-bnr-inr overlay-wraper bg-center" style="background-image:url('{% static 'images/banner/1.jpeg' %}');"> 
                     <div class="overlay-main site-bg-white opacity-01"></div>
                     <div class="container">
                         <div class="wt-bnr-inr-entry">
@@ -21,7 +21,7 @@
                             
                                 <div>
                                     <ul class="wt-breadcrumb breadcrumb-style-2">
-                                        <li><a href="index.html">Home</a></li>
+                                        <li><a href="{% url 'home' %}">Home</a></li>
                                         <li>About Us</li>
                                     </ul>
                                 </div>
@@ -210,25 +210,40 @@
                                                 <div class="twm-w-pro-top bg-clr-sky-light bg-sky-light-shadow">
                                                     <span class="twm-large-number text-clr-sky">01</span>
                                                     <div class="twm-media">
-                                                        <span><img src="images/work-process/icon1.png" alt="icon1"></span>
+                                                        <span><img src="{% static 'images/work-process/icon1.png' %}" alt="icon1"></span>
                                                     </div>
                                                     <h4 class="twm-title">Register<br>Your Account</h4>
-                                                    <p>You need to create an account to find the best and preferred job.</p>
+                                                    <p>Start by registering your account to unlock job opportunities.</p>
                                                 </div>
                                                 
                                             </div>
-                                        </div>
+                                        </div> 
+
+                                        <div class="col-xl-6 col-lg-6 col-md-6">
+                                            <div class="twm-w-process-steps-2">
+                                                <div class="twm-w-pro-top bg-clr-green-light bg-clr-light-shadow">
+                                                    <span class="twm-large-number text-clr-green">02</span>
+                                                    <div class="twm-media">
+                                                        <span><img src="{% static 'images/work-process/icon3.png' %}" alt="icon1"></span>
+                                                    </div>
+                                                    <h4 class="twm-title">Make or Upload <br>Your Resume</h4>
+                                                    <p>Create or upload your resume to showcase your skills.</p>
+                                                </div>
+                                                
+                                            </div>
+                                        </div> 
+
             
                                         <div class="col-xl-6 col-lg-6 col-md-6">
                                             <div class="twm-w-process-steps-2">
                                                 <div class="twm-w-pro-top bg-clr-yellow-light bg-yellow-light-shadow">
-                                                    <span class="twm-large-number text-clr-yellow">02</span>
+                                                    <span class="twm-large-number text-clr-yellow">03</span>
                                                     <div class="twm-media">
-                                                        <span><img src="images/work-process/icon4.png" alt="icon1"></span>
+                                                        <span><img src="{% static 'images/work-process/icon4.png' %}" alt="icon1"></span>
                                                     </div>
                                                     <h4 class="twm-title">Search <br>
                                                         Your Job</h4>                                                
-                                                    <p>You need to create an account to find the best and preferred job.</p>
+                                                    <p>Browse jobs that match your profile and interests.</p>
                                                 </div>
                                             
                                             </div>
@@ -237,30 +252,18 @@
                                         <div class="col-xl-6 col-lg-6 col-md-6">
                                             <div class="twm-w-process-steps-2">
                                                 <div class="twm-w-pro-top bg-clr-pink-light bg-pink-light-shadow">
-                                                    <span class="twm-large-number text-clr-pink">03</span>
+                                                    <span class="twm-large-number text-clr-pink">04</span>
                                                     <div class="twm-media">
-                                                        <span><img src="images/work-process/icon3.png" alt="icon1"></span>
+                                                        <span><img src="{% static 'images/work-process/icon2.png' %}" alt="icon1"></span>
                                                     </div>
                                                     <h4 class="twm-title">Apply <br>For Dream Job</h4>
-                                                    <p>You need to create an account to find the best and preferred job.</p>
+                                                    <p>Submit your application for your desired job role.</p>
                                                 </div>
                                                 
                                             </div>
                                         </div>
     
-                                        <div class="col-xl-6 col-lg-6 col-md-6">
-                                            <div class="twm-w-process-steps-2">
-                                                <div class="twm-w-pro-top bg-clr-green-light bg-clr-light-shadow">
-                                                    <span class="twm-large-number text-clr-green">04</span>
-                                                    <div class="twm-media">
-                                                        <span><img src="images/work-process/icon3.png" alt="icon1"></span>
-                                                    </div>
-                                                    <h4 class="twm-title">Upload <br>Your Resume</h4>
-                                                    <p>You need to create an account to find the best and preferred job.</p>
-                                                </div>
-                                                
-                                            </div>
-                                        </div>
+                                        
             
                                     </div>
                                 </div>
@@ -278,7 +281,7 @@
                 <!-- HOW IT WORK SECTION END -->
     
                 <!-- EXPLORE NEW LIFE START -->
-                <div class="section-full p-t120 p-b120 twm-explore-area bg-cover " style="background-image: url(images/background/bg-1.jpg);">
+                <div class="section-full p-t120 p-b120 twm-explore-area bg-cover " style="background-image: url({% static 'images/background/bg-1.jpeg' %});">
                     <div class="container">
     
                         <div class="section-content">
@@ -287,7 +290,7 @@
                                 <div class="col-lg-4 col-md-12">
                                     <div class="twm-explore-media-wrap">
                                         <div class="twm-media">
-                                            <img src="images/gir-large.png" alt="">
+                                            <img src="{% static 'images/gir-large.png' %}" alt="">
                                         </div>
                                     </div>
                                 </div>
@@ -327,99 +330,108 @@
                 </div>
                 <!-- EXPLORE NEW LIFE END -->
     
-                <!-- TOP COMPANIES START -->
-                <div class="section-full p-t120  site-bg-white twm-companies-wrap">
-                      
-                    <!-- TITLE START-->
-                    <div class="section-head center wt-small-separator-outer">
-                        <div class="wt-small-separator site-text-primary">
-                           <div>Top Companies</div>                                
-                        </div>
-                        <h2 class="wt-title">Get hired in top companies</h2>
-                    </div>                  
-                    <!-- TITLE END-->
-    
-                    <div class="container">
-                        <div class="section-content">
-                            <div class="owl-carousel home-client-carousel2 owl-btn-vertical-center">
-                            
-                                <div class="item">
-                                    <div class="ow-client-logo">
-                                        <div class="client-logo client-logo-media">
-                                        <a href="employer-list.html"><img src="images/client-logo/w1.png" alt=""></a></div>
+            <!-- TOP COMPANIES START -->
+            <div class="section-full p-t120  site-bg-white twm-companies-wrap">
+                  
+                <!-- TITLE START-->
+                <div class="section-head center wt-small-separator-outer">
+                    <div class="wt-small-separator site-text-primary">
+                       <div>Top Companies</div>                                
+                    </div>
+                    <h2 class="wt-title">Get hired in top companies</h2>
+                </div>                  
+                <!-- TITLE END-->
+
+                <div class="container">
+                    <div class="section-content">
+                        <div class="owl-carousel home-client-carousel2 owl-btn-vertical-center">
+                            <div class="item">
+                                <div class="ow-client-logo">
+                                    <div class="client-logo client-logo-media">
+                                        <a href="employer-list.html"><img src="{% static 'images/client-logo/w1.png' %}" alt=""></a>
                                     </div>
                                 </div>
-                                
-                                <div class="item">
-                                    <div class="ow-client-logo">
-                                        <div class="client-logo client-logo-media">
-                                        <a href="employer-list.html"><img src="images/client-logo/w2.png" alt=""></a></div>
+                            </div>
+                        
+                            <div class="item">
+                                <div class="ow-client-logo">
+                                    <div class="client-logo client-logo-media">
+                                        <a href="employer-list.html"><img src="{% static 'images/client-logo/w2.png' %}" alt=""></a>
                                     </div>
                                 </div>
-                                
-                                <div class="item">
-                                    <div class="ow-client-logo">
-                                        <div class="client-logo client-logo-media">
-                                        <a href="employer-list.html"><img src="images/client-logo/w3.png" alt=""></a></div>
+                            </div>
+                        
+                            <div class="item">
+                                <div class="ow-client-logo">
+                                    <div class="client-logo client-logo-media">
+                                        <a href="employer-list.html"><img src="{% static 'images/client-logo/w3.png' %}" alt=""></a>
                                     </div>
                                 </div>
-                                
-                                <div class="item">
-                                    <div class="ow-client-logo">
-                                        <div class="client-logo client-logo-media">
-                                        <a href="employer-list.html"><img src="images/client-logo/w4.png" alt=""></a></div>
+                            </div>
+                        
+                            <div class="item">
+                                <div class="ow-client-logo">
+                                    <div class="client-logo client-logo-media">
+                                        <a href="employer-list.html"><img src="{% static 'images/client-logo/w4.png' %}" alt=""></a>
                                     </div>
                                 </div>
-                                
-                                <div class="item">
-                                    <div class="ow-client-logo">
-                                        <div class="client-logo client-logo-media">
-                                        <a href="employer-list.html"><img src="images/client-logo/w5.png" alt=""></a></div>
+                            </div>
+                        
+                            <div class="item">
+                                <div class="ow-client-logo">
+                                    <div class="client-logo client-logo-media">
+                                        <a href="employer-list.html"><img src="{% static 'images/client-logo/w5.png' %}" alt=""></a>
                                     </div>
                                 </div>
-                                
-                                <div class="item">
-                                    <div class="ow-client-logo">
-                                        <div class="client-logo client-logo-media">
-                                        <a href="employer-list.html"><img src="images/client-logo/w6.png" alt=""></a></div>
+                            </div>
+                        
+                            <div class="item">
+                                <div class="ow-client-logo">
+                                    <div class="client-logo client-logo-media">
+                                        <a href="employer-list.html"><img src="{% static 'images/client-logo/w6.png' %}" alt=""></a>
                                     </div>
                                 </div>
-                                
-                                <div class="item">
-                                    <div class="ow-client-logo">
-                                        <div class="client-logo client-logo-media">
-                                        <a href="employer-list.html"><img src="images/client-logo/w1.png" alt=""></a></div>
+                            </div>
+                        
+                            <div class="item">
+                                <div class="ow-client-logo">
+                                    <div class="client-logo client-logo-media">
+                                        <a href="employer-list.html"><img src="{% static 'images/client-logo/w1.png' %}" alt=""></a>
                                     </div>
                                 </div>
-                                
-                                <div class="item">
-                                    <div class="ow-client-logo">
-                                        <div class="client-logo client-logo-media">
-                                        <a href="employer-list.html"><img src="images/client-logo/w2.png" alt=""></a></div>
+                            </div>
+                        
+                            <div class="item">
+                                <div class="ow-client-logo">
+                                    <div class="client-logo client-logo-media">
+                                        <a href="employer-list.html"><img src="{% static 'images/client-logo/w2.png' %}" alt=""></a>
                                     </div>
                                 </div>
-                                
-                                <div class="item">
-                                    <div class="ow-client-logo">
-                                        <div class="client-logo client-logo-media">
-                                        <a href="employer-list.html"><img src="images/client-logo/w3.png" alt=""></a></div>
+                            </div>
+                        
+                            <div class="item">
+                                <div class="ow-client-logo">
+                                    <div class="client-logo client-logo-media">
+                                        <a href="employer-list.html"><img src="{% static 'images/client-logo/w3.png' %}" alt=""></a>
                                     </div>
                                 </div>
-                                
-                                <div class="item">
-                                    <div class="ow-client-logo">
-                                        <div class="client-logo client-logo-media">
-                                        <a href="employer-list.html"><img src="images/client-logo/w5.png" alt=""></a></div>
+                            </div>
+                        
+                            <div class="item">
+                                <div class="ow-client-logo">
+                                    <div class="client-logo client-logo-media">
+                                        <a href="employer-list.html"><img src="{% static 'images/client-logo/w5.png' %}" alt=""></a>
                                     </div>
                                 </div>
-                                
                             </div>
                         </div>
+                        
                     </div>
-                  
-                
                 </div>
-                <!-- TOP COMPANIES END -->
+               
+            
+        </div>
+        <!-- TOP COMPANIES END -->
                          
          
             </div>
