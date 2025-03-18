@@ -61,8 +61,8 @@
 
       <!-- HEADER START -->
         <header  class="site-header header-style-3 mobile-sider-drawer-menu">
-
-            <div class="sticky-header main-bar-wraper  navbar-expand-lg">
+            
+            <div class="main-bar-wraper navbar-expand-lg" style="position: fixed; top: 0; left: 0; width: 100%; z-index: 9999; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
                 <div class="main-bar">  
                                     
                     <div class="container-fluid clearfix"> 
@@ -144,6 +144,11 @@
                        
                         <!-- Header Right Section -->
                         <div class="extra-nav header-2-nav">
+                            <div class="extra-cell">
+                                <div class="header-search">
+                                    <a href="#search" class="header-search-icon"><i class="feather-search"></i></a>
+                                </div>                                
+                            </div>
                             <div class="extra-cell">
                                 <div class="header-nav-btn-section">
                                     {% if user.is_authenticated %}

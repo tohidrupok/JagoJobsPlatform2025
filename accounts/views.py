@@ -7,7 +7,7 @@ from .models import CustomUser, EmployerProfile, SeekerProfile
 
 
 def home(request):
-    return render(request, 'index.html')  
+    return render(request, 'home.html')  
 
 
 def register(request):
