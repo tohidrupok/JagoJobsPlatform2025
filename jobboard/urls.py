@@ -1,9 +1,10 @@
 from django.urls import path
 from .views import (
-    job_list, job_detail, apply_job, employee_applications, about_us, contact_us
+    job_list, job_detail, apply_job, employee_applications, about_us, contact_us, home
 )
 
 urlpatterns = [
+    path('', home, name='home'),
     path('all-jobs/', job_list, name='job_list'),
     path('jobs/<int:job_id>/', job_detail, name='job_detail'),
     

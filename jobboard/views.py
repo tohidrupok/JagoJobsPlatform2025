@@ -6,6 +6,18 @@ from django.core.paginator import Paginator
 from django.core.cache import cache
 from django.db.models import Q
 from django.utils.timezone import now, timedelta
+from django.db.models import Count
+
+
+
+def home(request):
+    top_categories = JobCategory.objects.annotate(
+        job_count=Count('job_posts_category', filter=Q(job_posts_category__status='published'))
+    ).order_by('-job_count')[:10]
+    context = {
+        'top_categories': top_categories
+    }
+    return render(request, 'home.html', context)   
 
 
 def job_list(request):
@@ -101,7 +113,12 @@ def job_list(request):
         "last_30_days": "Last 30 days",
         "all jobs": "All"
     }
-
+    selected_category_name = ''
+    if category_id:
+        selected_cat_obj = JobCategory.objects.filter(id=category_id).first()
+        if selected_cat_obj:
+            selected_category_name = selected_cat_obj.name 
+        
     return render(request, 'jobs/job_list.html', {
         'jobs': page_jobs,
         'total_jobs': total_jobs,
@@ -113,7 +130,8 @@ def job_list(request):
         'location': location,
         'date_filter_options': date_filter_options,  
         'selected_date_filter': date_filter ,
-        'query_params': query_params
+        'query_params': query_params,
+        'selected_category_name': selected_category_name,
     })
 
 

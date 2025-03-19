@@ -6,9 +6,6 @@ from .forms import SeekerRegistrationForm, EmployerRegistrationForm, CustomLogin
 from .models import CustomUser, EmployerProfile, SeekerProfile
 
 
-def home(request):
-    return render(request, 'home.html')  
-
 
 def register(request):
     seeker_form = SeekerRegistrationForm()
