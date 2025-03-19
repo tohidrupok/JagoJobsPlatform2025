@@ -8,6 +8,7 @@ from django.core.cache import cache
 from django.db.models import Q
 from django.utils.timezone import now, timedelta
 from django.db.models import Count, Sum
+from django.utils import timezone
 
 
 
@@ -28,14 +29,21 @@ def home(request):
             'published_jobs': published_jobs
         })
     total_users = CustomUser.objects.count()
-    total_job_posts = JobPost.objects.count()
-    total_vacancies = JobPost.objects.aggregate(total_vacancies=Sum('no_of_vacancy'))['total_vacancies'] or 0
+    total_job_posts = JobPost.objects.count() 
+    total_vacancies = JobPost.objects.aggregate(total_vacancies=Sum('no_of_vacancy'))['total_vacancies'] or 0 
+    
+    today = timezone.now().date()
+    expired_jobs = JobPost.objects.filter(application_deadline=today)
+    jobs_today_deadline_count= expired_jobs.count()
+   
     context = {
         'top_categories': top_categories,
         'company_data': company_data,
         'total_job_posts': total_job_posts,
         'total_vacancies': total_vacancies,
         'total_users': total_users,
+        'job': expired_jobs,
+        'jobs_today_deadline_count': jobs_today_deadline_count
     }
     return render(request, 'home.html', context)   
 

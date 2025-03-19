@@ -9,51 +9,47 @@
                 <div class="container">
                     <div class="twm-home7-inner-section">
                         <div class="twm-bnr-mid-section">
-                            <div class="twm-bnr-title-large">Find Top IT <span class="text-clr-pink">Jobs</span></div>
-                            <div class="twm-bnr-title-light">For talent Developers</div>
+                            <div class="twm-bnr-title-large">Find Top <span class="text-clr-pink">Jobs</span></div>
+                            <div class="twm-bnr-title-light">For talent People's</div>
                             <div class="twm-bnr-search-bar">
-                                <form>
+                                <form method="GET" action="{% url 'job_list' %}">
                                     <div class="row">
-                                        <!--Title-->
+                                        <!--Keyword-->
                                         <div class="form-group col-xl-3 col-lg-6 col-md-6">
-                                            <label>What</label>
-                                            <select class="wt-search-bar-select selectpicker"  data-live-search="true" title="" id="j-Job_Title" data-bv-field="size">
-                                                <option disabled selected value="">Select Category</option>
-                                                <option selected>Job Title</option>
-                                                <option>Web Designer</option>
-                                                <option>Developer</option>
-                                                <option>Acountant</option>
-                                            </select>
+                                            <label>Keyword</label>
+                                            <div class="twm-inputicon-box">
+                                                <input name="keyword" type="text" class="form-control" placeholder="Keyword" value="{{ keyword|default:'' }}">
+                                            </div>
                                         </div>
-
-                                        <!--All Category-->
+                                
+                                        <!--Category-->
                                         <div class="form-group col-xl-3 col-lg-6 col-md-6">
                                             <label>Type</label>
-                                            <select class="wt-search-bar-select selectpicker"  data-live-search="true" title="" id="j-All_Category" data-bv-field="size">
+                                            <select name="category" class="wt-search-bar-select selectpicker" data-live-search="true" title="">
                                                 <option disabled selected value="">Select Category</option>
-                                                <option selected>All Category</option>
-                                                <option>Web Designer</option>
-                                                <option>Developer</option>
-                                                <option>Acountant</option>
+                                                <option value="">All Category</option>
+                                                {% for category in top_categories %}
+                                                <option value="{{ category.id }}" {% if category.id|stringformat:"s" == selected_category|stringformat:"s" %}selected{% endif %}>{{ category.name }}</option>
+                                                {% endfor %}
                                             </select>
                                         </div>
-
+                                
                                         <!--Location-->
                                         <div class="form-group col-xl-3 col-lg-6 col-md-6">
                                             <label>Location</label>
                                             <div class="twm-inputicon-box">
-                                                <input name="username" type="text" required class="form-control" placeholder="Location">
+                                                <input name="location" type="text" class="form-control" placeholder="Location" value="{{ location|default:'' }}">
                                                 <i class="twm-input-icon fas fa-map-marker-alt"></i>
                                             </div>
                                         </div>
-
+                                
                                         <!--Find job btn-->
                                         <div class="form-group col-xl-3 col-lg-6 col-md-6">
-                                            <button type="button" class="site-button">Find Job</button>
+                                            <button type="submit" class="site-button">Find Job</button>
                                         </div>
-
                                     </div>
                                 </form>
+                                
                             </div>
                             <div class="twm-bnr-discription">Type your keyword, then click search to find your perfect job.</div>
                         </div>
@@ -232,25 +228,50 @@
             <!-- Recommended Jobs SECTION START -->
             <div class="section-full p-t120 p-b90 site-bg-white twm-recommended-Jobs-wrap7">
                 <div class="container">
-
                     <div class="wt-separator-two-part">
                         <div class="row wt-separator-two-part-row">
                             <div class="col-xl-6 col-lg-6 col-md-12 wt-separator-two-part-left">
                                 <!-- TITLE START-->
                                 <div class="section-head left wt-small-separator-outer">
-                                    <div class="wt-small-separator site-text-primary">
-                                    <div>Jobs Category</div>                                
+                                    <div class="wt-small-separator text-danger">
+                                        <div>Jobs Deadline ({{ jobs_today_deadline_count }})</div>                                
                                     </div>
-                                    <h2 class="wt-title">Recommended Jobs</h2>
-                                </div>                  
+                                    <h3 class="wt-title">Apply Today – {{ jobs_today_deadline_count }} Job{% if jobs_today_deadline_count != 1 %}s{% endif %} Closing!</h3>
+                                    
+                                </div>                 
                                 <!-- TITLE END-->
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-12 wt-separator-two-part-right text-right">
-                                <a href="job-list.html" class=" site-button">All Jobs</a>
+                                <a href="{% url 'job_list' %}" class="site-button">All Jobs</a>
                             </div>
                         </div>
                     </div>
                 </div>
+                <script>
+                    function updateCountdown() {
+                        const now = new Date();
+                        const endOfDay = new Date();
+                        endOfDay.setHours(23, 59, 59, 999);
+                
+                        const diff = endOfDay - now;
+                
+                        if (diff > 0) {
+                            const hours = Math.floor(diff / (1000 * 60 * 60));
+                            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                
+                            document.getElementById("countdown-today").innerHTML =
+                                `${hours}h ${minutes}m ${seconds}s remaining`;
+                        } else {
+                            document.getElementById("countdown-today").innerHTML = "Time's up!";
+                        }
+                    }
+                
+                    // Update every second
+                    setInterval(updateCountdown, 1000);
+                    updateCountdown(); // Initial call
+                </script>
+                         
                 <div class="twm-recommended-Jobs-mid-wrap">
                     <div class="twm-recommended-Jobs-mid">
                         <div class="container">
@@ -258,225 +279,57 @@
                                 <!-- Filter Menu -->
                                 <div class="twm-jobs-filter">
                                     <ul class="btn-filter-wrap">
-                                        <li class="btn-filter btn-active" data-filter="*">All</li>
-                                        <li class="btn-filter" data-filter=".col-one">Full-time</li>
-                                        <li class="btn-filter" data-filter=".col-two">Part time</li>
-                                        <li class="btn-filter" data-filter=".col-three">Monthly</li>
+                                        <h4>Countdown to End of Today:</h4>
+                                        <li id="countdown-today"></li>
                                     </ul>
                                 </div>
                                 <!-- Filter Menu -->
-                            
+            
                                 <!-- IMAGE CAROUSEL START -->
                                 <div class="section-content ">
                                     <div class="owl-carousel owl-carousel-filter mfp-gallery owl-btn-vertical-center">
-                                    <!-- COLUMNS 1 --> 
-                                    <div class="item  col-one">										
-                                        <div class="hpage-7-featured-block">
-                                            <div class="inner-content">
-                                                <div class="top-content-wrap">
-                                                    <div class="top-content">
-                                                        <span class="job-time">Full Time</span>
-                                                        <span class="job-post-time">1 Day ago</span>
-                                                    </div>
-                                                    <div class="mid-content">
-                                                        <div class="company-logo">
-                                                            <img src="images/home-6/featured-jobs/instagram.png" alt="#">
+                                        {% for job in job %}
+                                        <div class="item">
+                                            <div class="hpage-7-featured-block">
+                                                <div class="inner-content">
+                                                    <div class="top-content-wrap">
+                                                        <div class="top-content">
+                                                            <span class="job-time">{{ job.job_type }}</span>
+                                                            <span class="job-post-time">{{ job.created_at|timesince }} ago</span>
                                                         </div>
-                                                        <div class="company-info">
-                                                            <a href="job-detail.html" class="company-name">Instagram</a>
-                                                            <p class="company-address">Washington U.S.A.</p>
+                                                        <div class="mid-content">
+                                                            <div class="company-logo">
+                                                                <img src="{{ job.employee.logo.url }}" alt="#">
+                                                            </div>
+                                                            <div class="company-info">
+                                                                <a href="{% url 'job_detail' job.id %}" class="company-name">{{ job.employee.company_name }}</a>
+                                                                <p class="company-address">{{ job.job_location }}</p>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="bottom-content">
-                                                    <h4 class="job-name-title">Backend Developer</h4>
-                                                    <div class="job-payment">
-                                                        <span>$130</span>/ Month
+                                                    <div class="bottom-content">
+                                                        <h4 class="job-name-title">{{ job.title|truncatechars:26 }}</h4>
+                                                        <div class="job-payment">
+                                                            <span>Vacancies: {{ job.no_of_vacancy }}</span> available
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="aply-btn-area">
-                                                    <a href="job-detail-v2.html" class="aplybtn">
-                                                        <i class="fa fa-check"></i>
-                                                    </a>
+                                                    <div class="aply-btn-area">
+                                                        <a href="{% url 'job_detail' job.id %}" class="aplybtn">
+                                                            <i class="fa fa-paper-plane"></i>
+                                                        </a>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>   
-                                    </div>
-
-                                    <!-- COLUMNS 2 --> 
-                                    <div class="item  col-two">										
-                                        <div class="hpage-7-featured-block">
-                                            <div class="inner-content">
-                                                <div class="top-content-wrap">
-                                                    <div class="top-content">
-                                                        <span class="job-time">Fudfgsdfg</span>
-                                                        <span class="job-post-time">1 Day ago</span>
-                                                    </div>
-                                                    <div class="mid-content">
-                                                        <div class="company-logo">
-                                                            <img src="images/home-6/featured-jobs/facebook.png" alt="#">
-                                                        </div>
-                                                        <div class="company-info">
-                                                            <a href="job-detail.html" class="company-name">Facebook</a>
-                                                            <p class="company-address">Washington U.S.A.</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="bottom-content">
-                                                    <h4 class="job-name-title">Web Developer</h4>
-                                                    <div class="job-payment">
-                                                        <span>$130</span>/ Month
-                                                    </div>
-                                                </div>
-                                                <div class="aply-btn-area">
-                                                    <a href="job-detail-v2.html" class="aplybtn">
-                                                        <i class="fa fa-check"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>    
-                                    </div>
-                                    <!-- COLUMNS 3 --> 
-                                    <div class="item  col-three">										
-                                        <div class="hpage-7-featured-block">
-                                            <div class="inner-content">
-                                                <div class="top-content-wrap">
-                                                    <div class="top-content">
-                                                        <span class="job-time">Full Time</span>
-                                                        <span class="job-post-time">1 Day ago</span>
-                                                    </div>
-                                                    <div class="mid-content">
-                                                        <div class="company-logo">
-                                                            <img src="images/home-6/featured-jobs/google.png" alt="#">
-                                                        </div>
-                                                        <div class="company-info">
-                                                            <a href="job-detail.html" class="company-name">Google</a>
-                                                            <p class="company-address">Washington U.S.A.</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="bottom-content">
-                                                    <h4 class="job-name-title">SEO & QA</h4>
-                                                    <div class="job-payment">
-                                                        <span>$130</span>/ Month
-                                                    </div>
-                                                </div>
-                                                <div class="aply-btn-area">
-                                                    <a href="job-detail-v2.html" class="aplybtn">
-                                                        <i class="fa fa-check"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>    
-                                    </div>                                   
-                                    <!-- COLUMNS 4 --> 
-                                    <div class="item  col-three">										
-                                        <div class="hpage-7-featured-block">
-                                            <div class="inner-content">
-                                                <div class="top-content-wrap">
-                                                    <div class="top-content">
-                                                        <span class="job-time">Full Time</span>
-                                                        <span class="job-post-time">1 Day ago</span>
-                                                    </div>
-                                                    <div class="mid-content">
-                                                        <div class="company-logo">
-                                                            <img src="images/home-6/featured-jobs/behance.png" alt="#">
-                                                        </div>
-                                                        <div class="company-info">
-                                                            <a href="job-detail.html" class="company-name">Behance</a>
-                                                            <p class="company-address">Washington U.S.A.</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="bottom-content">
-                                                    <h4 class="job-name-title">UI/UX Designer</h4>
-                                                    <div class="job-payment">
-                                                        <span>$130</span>/ Month
-                                                    </div>
-                                                </div>
-                                                <div class="aply-btn-area">
-                                                    <a href="job-detail-v2.html" class="aplybtn">
-                                                        <i class="fa fa-check"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>   
-                                    </div>                                     
-                                    <!-- COLUMNS 5 --> 
-                                    <div class="item  col-four col-two">										
-                                        <div class="hpage-7-featured-block">
-                                            <div class="inner-content">
-                                                <div class="top-content-wrap">
-                                                    <div class="top-content">
-                                                        <span class="job-time">Full Time</span>
-                                                        <span class="job-post-time">1 Day ago</span>
-                                                    </div>
-                                                    <div class="mid-content">
-                                                        <div class="company-logo">
-                                                            <img src="images/home-6/featured-jobs/pinterest.png" alt="#">
-                                                        </div>
-                                                        <div class="company-info">
-                                                            <a href="job-detail.html" class="company-name">Pinterest</a>
-                                                            <p class="company-address">Washington U.S.A.</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="bottom-content">
-                                                    <h4 class="job-name-title">Content Writer</h4>
-                                                    <div class="job-payment">
-                                                        <span>$130</span>/ Month
-                                                    </div>
-                                                </div>
-                                                <div class="aply-btn-area">
-                                                    <a href="job-detail-v2.html" class="aplybtn">
-                                                        <i class="fa fa-check"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>   
-                                    </div>                                    
-                                    <!-- COLUMNS 6 --> 
-                                    <div class="item  col-five">										
-                                        <div class="hpage-7-featured-block">
-                                            <div class="inner-content">
-                                                <div class="top-content-wrap">
-                                                    <div class="top-content">
-                                                        <span class="job-time">Full Time</span>
-                                                        <span class="job-post-time">1 Day ago</span>
-                                                    </div>
-                                                    <div class="mid-content">
-                                                        <div class="company-logo">
-                                                            <img src="images/home-6/featured-jobs/yahoo.png" alt="#">
-                                                        </div>
-                                                        <div class="company-info">
-                                                            <a href="job-detail.html" class="company-name">Yahoo!</a>
-                                                            <p class="company-address">Washington U.S.A.</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="bottom-content">
-                                                    <h4 class="job-name-title">Team Leader</h4>
-                                                    <div class="job-payment">
-                                                        <span>$130</span>/ Month
-                                                    </div>
-                                                </div>
-                                                <div class="aply-btn-area">
-                                                    <a href="job-detail-v2.html" class="aplybtn">
-                                                        <i class="fa fa-check"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>    
-                                    </div>                                     
-                                        
-                                    
+                                        </div>
+                                        {% endfor %}
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>   
+            </div> 
+            
             <!-- Recommended Jobs SECTION END --> 
             
 
@@ -486,9 +339,9 @@
                 <!-- TITLE START-->
                 <div class="section-head center wt-small-separator-outer">
                     <div class="wt-small-separator site-text-primary">
-                       <div>Jobs by Categories</div>                                
+                       <div>Explore Jobs by Category</div>                                
                     </div>
-                    <h2 class="wt-title">Choose Your Desire Category</h2>
+                    <h2 class="wt-title">Browse Categories That Interest You</h2>
                 </div>                  
                 <!-- TITLE END--> 
                 
@@ -543,8 +396,7 @@
                         <div class="wt-small-separator site-text-primary">
                             <div>Top Recruiters</div>                                
                         </div>
-                        <h2 class="wt-title">Discover your next 
-                            career move</h2>
+                        <h2 class="wt-title">Discover Jobs by Top Companies</h2>
                         
                     </div>                  
                     <!-- TITLE END-->
