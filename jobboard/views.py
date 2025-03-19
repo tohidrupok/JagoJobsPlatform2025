@@ -1,13 +1,14 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import JobPost, JobApplication, JobCategory
-from accounts.models import EmployerProfile
+from accounts.models import EmployerProfile, CustomUser
 from .forms import JobApplicationForm, JobPostForm
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.core.cache import cache
 from django.db.models import Q
 from django.utils.timezone import now, timedelta
-from django.db.models import Count
+from django.db.models import Count, Sum
+
 
 
 
@@ -26,10 +27,15 @@ def home(request):
             'company': company,
             'published_jobs': published_jobs
         })
-    print(company_data)
+    total_users = CustomUser.objects.count()
+    total_job_posts = JobPost.objects.count()
+    total_vacancies = JobPost.objects.aggregate(total_vacancies=Sum('no_of_vacancy'))['total_vacancies'] or 0
     context = {
         'top_categories': top_categories,
-        'company_data': company_data
+        'company_data': company_data,
+        'total_job_posts': total_job_posts,
+        'total_vacancies': total_vacancies,
+        'total_users': total_users,
     }
     return render(request, 'home.html', context)   
 

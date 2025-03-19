@@ -570,8 +570,9 @@
                                                         {% for job in company_info.published_jobs %}
                                                             <div class="job-item">
                                                                 <p class="job-title">
+                                                                    <span class="job-counter">{{ forloop.counter }}.</span>
                                                                     <a href="{% url 'job_detail' job.id %}">
-                                                                        {{ job.title|truncatechars:30 }}
+                                                                        {{ job.title|truncatechars:26 }}
                                                                     </a>
                                                                 </p>
                                                             </div>
@@ -686,8 +687,8 @@
                                 <div class="counter-outer-two">
                                     <div class="icon-content">
                                         <div class="tw-count-number text-clr-sky">
-                                            <span class="counter">5</span>M+</div>
-                                        <p class="icon-content-info">Million daily active users</p>
+                                            <span class="counter">{{ total_users }}</span></div>
+                                        <p class="icon-content-info">Daily active users</p>
                                     </div>
                                 </div>
                             </div>
@@ -697,7 +698,7 @@
                                 <div class="counter-outer-two">
                                     <div class="icon-content">
                                         <div class="tw-count-number text-clr-pink">
-                                            <span class="counter">9</span>K+</div>
+                                            <span class="counter">{{ total_job_posts }}</span></div>
                                         <p class="icon-content-info">Open job positions</p>
                                     </div>
                                 </div>
@@ -708,8 +709,8 @@
                                 <div class="counter-outer-two">
                                     <div class="icon-content">
                                         <div class="tw-count-number text-clr-green">
-                                            <span class="counter">2</span>M+</div>
-                                        <p class="icon-content-info">Million stories shared</p>
+                                            <span class="counter">{{ total_vacancies }}</span></div>
+                                        <p class="icon-content-info">Total Vacancies Now</p>
                                     </div>
                                 </div>
                             </div>
@@ -717,8 +718,7 @@
                         </div>
                     </div>
                 </div>
-               
-            
+                           
         </div>
         <!-- TOP COMPANIES END -->
             <!-- HOW IT WORK SECTION START -->

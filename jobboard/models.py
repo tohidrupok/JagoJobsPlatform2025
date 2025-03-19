@@ -44,7 +44,7 @@ class JobPost(models.Model):
     salary_range = models.CharField(max_length=200, null= True, blank= True, default='Negotiable')
     STATUS_CHOICES = [
            ('pending', 'Pending'),
-            ('published', 'Published'),  # Removed extra space
+            ('published', 'Published'),  
             ('rejected', 'Rejected'),
     ]
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
@@ -55,6 +55,8 @@ class JobPost(models.Model):
     
     def get_absolute_url(self):
         return reverse('job_detail', args=[str(self.id)]) 
+    
+    
     
 #job Apply 
 
