@@ -240,9 +240,9 @@
                                                 <h4>{{ job.title }}</h4>
                                             </a>
                                             <p class="twm-job-address">{{ job.job_location }} <br>{{ job.employee.company_name}}</p>   
-                                           <p>{{ job.job_category }}  </p>     
+                                           {% comment %} <p>{{ job.job_category }}  </p>     
                                             <p>{{ job.job_type }}  </p>  
-                                            <p>{{ job.status }}  </p>  
+                                            <p>{{ job.status }}  </p>   {% endcomment %}
                                         </div>
                                         <div class="twm-right-content">
                                             <a href="{% url 'job_detail' job.id %}" class="twm-jobs-browse site-text-primary">Browse Job</a>
