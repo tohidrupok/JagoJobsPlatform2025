@@ -553,390 +553,96 @@
                     <div class="section-content">
                         <div class="twm-recruiters5-wrap">
                             <div class="twm-column-5 m-b30">
-                                <ul>
-                                    <!--1-->
-                                    <li>
-                                        <div class="twm-recruiters5-box">
-                                            <div class="twm-rec-top">
-                                                <div class="twm-rec-media">
-                                                    <img src="images/home-5/recruiters/1.jpg" alt="#">
-                                                </div>
-                                                <div class="twm-rec-jobs">25 Jobs</div>
-                                            </div>
-                                            <div class="twm-rec-content">
-                                                <h4 class="twm-title"><a href="job-list.html">LinkedIn</a></h4>
-                                                <div class="twm-rec-rating-wrap">
-                                                    <div class="twm-rec-rating">
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
+                                <ul class="company-list">
+                                    {% for company_info in company_data %}
+                                        <li class="company-item">
+                                            <div class="twm-recruiters5-box">
+                                                <div class="twm-rec-top">
+                                                    <div class="twm-rec-media">
+                                                        <!-- Display a default image for the job or create a custom image field in the model -->
+                                                        <img src="{% if company_info.company.logo %}{{ company_info.company.logo.url }}{% else %}images/jobs-company/default.jpg{% endif %}" alt="Company Logo">
                                                     </div>
-                                                    <div class="twm-rec-rating-count">(68)</div>
+                                                    <div class="twm-rec-jobs">{{ company_info.published_jobs.count }}</div> <!-- Job category name -->
                                                 </div>
-                                                <div class="twm-job-address"><i class="feather-map-pin"></i>New York, US</div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <!--2-->
-                                    <li>
-                                        <div class="twm-recruiters5-box">
-                                            <div class="twm-rec-top">
-                                                <div class="twm-rec-media">
-                                                    <img src="images/home-5/recruiters/2.jpg" alt="#">
-                                                </div>
-                                                <div class="twm-rec-jobs">25 Jobs</div>
-                                            </div>
-                                            <div class="twm-rec-content">
-                                                <h4 class="twm-title"><a href="job-list.html">Apple Inc.</a></h4>
-                                                <div class="twm-rec-rating-wrap">
-                                                    <div class="twm-rec-rating">
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
+                                                <p style="color: blue;">{{ company_info.company.company_name }}</p>
+                                                <div class="twm-rec-content">
+                                                    <div class="job-list">
+                                                        {% for job in company_info.published_jobs %}
+                                                            <div class="job-item">
+                                                                <p class="job-title">
+                                                                    <a href="{% url 'job_detail' job.id %}">
+                                                                        {{ job.title|truncatechars:30 }}
+                                                                    </a>
+                                                                </p>
+                                                            </div>
+                                                        {% endfor %}
                                                     </div>
-                                                    <div class="twm-rec-rating-count">(68)</div>
                                                 </div>
-                                                <div class="twm-job-address"><i class="feather-map-pin"></i>New York, US</div>
                                             </div>
-                                        </div>
-                                    </li>
-                                    <!--3-->
-                                    <li>
-                                        <div class="twm-recruiters5-box">
-                                            <div class="twm-rec-top">
-                                                <div class="twm-rec-media">
-                                                    <img src="images/home-5/recruiters/3.jpg" alt="#">
-                                                </div>
-                                                <div class="twm-rec-jobs">25 Jobs</div>
-                                            </div>
-                                            <div class="twm-rec-content">
-                                                <h4 class="twm-title"><a href="job-list.html">Saudi Aramco</a></h4>
-                                                <div class="twm-rec-rating-wrap">
-                                                    <div class="twm-rec-rating">
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                    </div>
-                                                    <div class="twm-rec-rating-count">(68)</div>
-                                                </div>
-                                                <div class="twm-job-address"><i class="feather-map-pin"></i>New York, US</div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <!--4-->
-                                    <li>
-                                        <div class="twm-recruiters5-box">
-                                            <div class="twm-rec-top">
-                                                <div class="twm-rec-media">
-                                                    <img src="images/home-5/recruiters/4.jpg" alt="#">
-                                                </div>
-                                                <div class="twm-rec-jobs">25 Jobs</div>
-                                            </div>
-                                            <div class="twm-rec-content">
-                                                <h4 class="twm-title"><a href="job-list.html">Alphabet Inc.</a></h4>
-                                                <div class="twm-rec-rating-wrap">
-                                                    <div class="twm-rec-rating">
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                    </div>
-                                                    <div class="twm-rec-rating-count">(68)</div>
-                                                </div>
-                                                <div class="twm-job-address"><i class="feather-map-pin"></i>New York, US</div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <!--5-->
-                                    <li>
-                                        <div class="twm-recruiters5-box">
-                                            <div class="twm-rec-top">
-                                                <div class="twm-rec-media">
-                                                    <img src="images/home-5/recruiters/5.jpg" alt="#">
-                                                </div>
-                                                <div class="twm-rec-jobs">25 Jobs</div>
-                                            </div>
-                                            <div class="twm-rec-content">
-                                                <h4 class="twm-title"><a href="job-list.html">Amazon.com Inc.</a></h4>
-                                                <div class="twm-rec-rating-wrap">
-                                                    <div class="twm-rec-rating">
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                    </div>
-                                                    <div class="twm-rec-rating-count">(68)</div>
-                                                </div>
-                                                <div class="twm-job-address"><i class="feather-map-pin"></i>New York, US</div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <!--6-->
-                                    <li>
-                                        <div class="twm-recruiters5-box">
-                                            <div class="twm-rec-top">
-                                                <div class="twm-rec-media">
-                                                    <img src="images/home-5/recruiters/6.jpg" alt="#">
-                                                </div>
-                                                <div class="twm-rec-jobs">25 Jobs</div>
-                                            </div>
-                                            <div class="twm-rec-content">
-                                                <h4 class="twm-title"><a href="job-list.html">Tesla Inc.</a></h4>
-                                                <div class="twm-rec-rating-wrap">
-                                                    <div class="twm-rec-rating">
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                    </div>
-                                                    <div class="twm-rec-rating-count">(68)</div>
-                                                </div>
-                                                <div class="twm-job-address"><i class="feather-map-pin"></i>New York, US</div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <!--7-->
-                                    <li>
-                                        <div class="twm-recruiters5-box">
-                                            <div class="twm-rec-top">
-                                                <div class="twm-rec-media">
-                                                    <img src="images/home-5/recruiters/7.jpg" alt="#">
-                                                </div>
-                                                <div class="twm-rec-jobs">25 Jobs</div>
-                                            </div>
-                                            <div class="twm-rec-content">
-                                                <h4 class="twm-title"><a href="job-list.html">NVIDIA Corp.</a></h4>
-                                                <div class="twm-rec-rating-wrap">
-                                                    <div class="twm-rec-rating">
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                    </div>
-                                                    <div class="twm-rec-rating-count">(68)</div>
-                                                </div>
-                                                <div class="twm-job-address"><i class="feather-map-pin"></i>New York, US</div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <!--8-->
-                                    <li>
-                                        <div class="twm-recruiters5-box">
-                                            <div class="twm-rec-top">
-                                                <div class="twm-rec-media">
-                                                    <img src="images/home-5/recruiters/8.jpg" alt="#">
-                                                </div>
-                                                <div class="twm-rec-jobs">25 Jobs</div>
-                                            </div>
-                                            <div class="twm-rec-content">
-                                                <h4 class="twm-title"><a href="job-list.html">Hathaway Inc.</a></h4>
-                                                <div class="twm-rec-rating-wrap">
-                                                    <div class="twm-rec-rating">
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                    </div>
-                                                    <div class="twm-rec-rating-count">(68)</div>
-                                                </div>
-                                                <div class="twm-job-address"><i class="feather-map-pin"></i>New York, US</div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <!--9-->
-                                    <li>
-                                        <div class="twm-recruiters5-box">
-                                            <div class="twm-rec-top">
-                                                <div class="twm-rec-media">
-                                                    <img src="images/home-5/recruiters/9.jpg" alt="#">
-                                                </div>
-                                                <div class="twm-rec-jobs">25 Jobs</div>
-                                            </div>
-                                            <div class="twm-rec-content">
-                                                <h4 class="twm-title"><a href="job-list.html">NVIDIA  Corp</a></h4>
-                                                <div class="twm-rec-rating-wrap">
-                                                    <div class="twm-rec-rating">
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                    </div>
-                                                    <div class="twm-rec-rating-count">(68)</div>
-                                                </div>
-                                                <div class="twm-job-address"><i class="feather-map-pin"></i>New York, US</div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <!--10-->
-                                    <li>
-                                        <div class="twm-recruiters5-box">
-                                            <div class="twm-rec-top">
-                                                <div class="twm-rec-media">
-                                                    <img src="images/home-5/recruiters/10.jpg" alt="#">
-                                                </div>
-                                                <div class="twm-rec-jobs">25 Jobs</div>
-                                            </div>
-                                            <div class="twm-rec-content">
-                                                <h4 class="twm-title"><a href="job-list.html">Meta Platforms</a></h4>
-                                                <div class="twm-rec-rating-wrap">
-                                                    <div class="twm-rec-rating">
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                    </div>
-                                                    <div class="twm-rec-rating-count">(68)</div>
-                                                </div>
-                                                <div class="twm-job-address"><i class="feather-map-pin"></i>New York, US</div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <!--11-->
-                                    <li>
-                                        <div class="twm-recruiters5-box">
-                                            <div class="twm-rec-top">
-                                                <div class="twm-rec-media">
-                                                    <img src="images/home-5/recruiters/11.jpg" alt="#">
-                                                </div>
-                                                <div class="twm-rec-jobs">25 Jobs</div>
-                                            </div>
-                                            <div class="twm-rec-content">
-                                                <h4 class="twm-title"><a href="job-list.html">Youtube</a></h4>
-                                                <div class="twm-rec-rating-wrap">
-                                                    <div class="twm-rec-rating">
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                    </div>
-                                                    <div class="twm-rec-rating-count">(68)</div>
-                                                </div>
-                                                <div class="twm-job-address"><i class="feather-map-pin"></i>New York, US</div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <!--12-->
-                                    <li>
-                                        <div class="twm-recruiters5-box">
-                                            <div class="twm-rec-top">
-                                                <div class="twm-rec-media">
-                                                    <img src="images/home-5/recruiters/12.jpg" alt="#">
-                                                </div>
-                                                <div class="twm-rec-jobs">25 Jobs</div>
-                                            </div>
-                                            <div class="twm-rec-content">
-                                                <h4 class="twm-title"><a href="job-list.html">Instagram</a></h4>
-                                                <div class="twm-rec-rating-wrap">
-                                                    <div class="twm-rec-rating">
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                    </div>
-                                                    <div class="twm-rec-rating-count">(68)</div>
-                                                </div>
-                                                <div class="twm-job-address"><i class="feather-map-pin"></i>New York, US</div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <!--13-->
-                                    <li>
-                                        <div class="twm-recruiters5-box">
-                                            <div class="twm-rec-top">
-                                                <div class="twm-rec-media">
-                                                    <img src="images/home-5/recruiters/13.jpg" alt="#">
-                                                </div>
-                                                <div class="twm-rec-jobs">25 Jobs</div>
-                                            </div>
-                                            <div class="twm-rec-content">
-                                                <h4 class="twm-title"><a href="job-list.html">McKesson</a></h4>
-                                                <div class="twm-rec-rating-wrap">
-                                                    <div class="twm-rec-rating">
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                    </div>
-                                                    <div class="twm-rec-rating-count">(68)</div>
-                                                </div>
-                                                <div class="twm-job-address"><i class="feather-map-pin"></i>New York, US</div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <!--14-->
-                                    <li>
-                                        <div class="twm-recruiters5-box">
-                                            <div class="twm-rec-top">
-                                                <div class="twm-rec-media">
-                                                    <img src="images/home-5/recruiters/14.jpg" alt="#">
-                                                </div>
-                                                <div class="twm-rec-jobs">25 Jobs</div>
-                                            </div>
-                                            <div class="twm-rec-content">
-                                                <h4 class="twm-title"><a href="job-list.html">Foxconn</a></h4>
-                                                <div class="twm-rec-rating-wrap">
-                                                    <div class="twm-rec-rating">
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                    </div>
-                                                    <div class="twm-rec-rating-count">(68)</div>
-                                                </div>
-                                                <div class="twm-job-address"><i class="feather-map-pin"></i>New York, US</div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <!--15-->
-                                    <li>
-                                        <div class="twm-recruiters5-box">
-                                            <div class="twm-rec-top">
-                                                <div class="twm-rec-media">
-                                                    <img src="images/home-5/recruiters/15.jpg" alt="#">
-                                                </div>
-                                                <div class="twm-rec-jobs">25 Jobs</div>
-                                            </div>
-                                            <div class="twm-rec-content">
-                                                <h4 class="twm-title"><a href="job-list.html">Microsoft</a></h4>
-                                                <div class="twm-rec-rating-wrap">
-                                                    <div class="twm-rec-rating">
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                        <span><i class="fa fa-star"></i></span>
-                                                    </div>
-                                                    <div class="twm-rec-rating-count">(68)</div>
-                                                </div>
-                                                <div class="twm-job-address"><i class="feather-map-pin"></i>New York, US</div>
-                                            </div>
-                                        </div>
-                                    </li>
-
+                                        </li>
+                                    {% empty %}
+                                        <li>No jobs found.</li>
+                                    {% endfor %}
                                 </ul>
                             </div>
+                    
                             <div class="text-center m-b30">
-                                <a href="job-list.html" class=" site-button">View All</a>
+                                <a href="{% url 'job_list' %}" class="site-button">View All</a>
                             </div>
                         </div>
                     </div>
+
+                    <style>
+                        /* Initially hide all job items except the first 4 */
+                        .job-item {
+                            display: none;
+                        }
+
+                        .job-item:nth-child(-n+4) {
+                            display: block;
+                        }
+
+                        /* Show all job items when hovering over the company item */
+                        .company-item:hover .job-item {
+                            display: block;
+                        } 
+
+                        .company-list {
+                            display: flex;
+                            flex-wrap: wrap;
+                            gap: 20px; /* Adjust the gap between items as needed */
+                        }
+                        
+                        /* Each company item */
+                        .company-item {
+                            flex: 1 1 calc(25% - 20px); /* 4 items per row (25% width) with gap adjustment */
+                            box-sizing: border-box; /* Ensure padding and border are included in the width */
+                            max-width: calc(25% - 20px); /* Ensure it doesn't exceed 25% width */
+                        }
+                        
+                        /* Responsive adjustments for smaller screens */
+                        @media (max-width: 1200px) {
+                            .company-item {
+                                flex: 1 1 calc(33.33% - 20px); /* 3 items per row on smaller screens */
+                                max-width: calc(33.33% - 20px);
+                            }
+                        }
+                        
+                        @media (max-width: 768px) {
+                            .company-item {
+                                flex: 1 1 calc(50% - 20px); /* 2 items per row on mobile */
+                                max-width: calc(50% - 20px);
+                            }
+                        }
+                        
+                        @media (max-width: 480px) {
+                            .company-item {
+                                flex: 1 1 100%; /* 1 item per row on very small screens */
+                                max-width: 100%;
+                            }
+                        }
+                    </style>
+                                   
                     
                 </div>
             </div>
@@ -956,85 +662,17 @@
                 <div class="container">
                     <div class="section-content">
                         <div class="owl-carousel home-client-carousel2 owl-btn-vertical-center">
+                            {% for company_info in company_data %}
                             <div class="item">
                                 <div class="ow-client-logo">
                                     <div class="client-logo client-logo-media">
-                                        <a href="employer-list.html"><img src="{% static 'images/client-logo/w1.png' %}" alt=""></a>
+                                        <a href="employer-list.html"><img src="{% if company_info.company.logo %}{{ company_info.company.logo.url }}{% else %}images/jobs-company/default.jpg{% endif %}" alt="Company Logo"></a>
                                     </div>
                                 </div>
                             </div>
+                            {%endfor%}
                         
-                            <div class="item">
-                                <div class="ow-client-logo">
-                                    <div class="client-logo client-logo-media">
-                                        <a href="employer-list.html"><img src="{% static 'images/client-logo/w2.png' %}" alt=""></a>
-                                    </div>
-                                </div>
-                            </div>
-                        
-                            <div class="item">
-                                <div class="ow-client-logo">
-                                    <div class="client-logo client-logo-media">
-                                        <a href="employer-list.html"><img src="{% static 'images/client-logo/w3.png' %}" alt=""></a>
-                                    </div>
-                                </div>
-                            </div>
-                        
-                            <div class="item">
-                                <div class="ow-client-logo">
-                                    <div class="client-logo client-logo-media">
-                                        <a href="employer-list.html"><img src="{% static 'images/client-logo/w4.png' %}" alt=""></a>
-                                    </div>
-                                </div>
-                            </div>
-                        
-                            <div class="item">
-                                <div class="ow-client-logo">
-                                    <div class="client-logo client-logo-media">
-                                        <a href="employer-list.html"><img src="{% static 'images/client-logo/w5.png' %}" alt=""></a>
-                                    </div>
-                                </div>
-                            </div>
-                        
-                            <div class="item">
-                                <div class="ow-client-logo">
-                                    <div class="client-logo client-logo-media">
-                                        <a href="employer-list.html"><img src="{% static 'images/client-logo/w6.png' %}" alt=""></a>
-                                    </div>
-                                </div>
-                            </div>
-                        
-                            <div class="item">
-                                <div class="ow-client-logo">
-                                    <div class="client-logo client-logo-media">
-                                        <a href="employer-list.html"><img src="{% static 'images/client-logo/w1.png' %}" alt=""></a>
-                                    </div>
-                                </div>
-                            </div>
-                        
-                            <div class="item">
-                                <div class="ow-client-logo">
-                                    <div class="client-logo client-logo-media">
-                                        <a href="employer-list.html"><img src="{% static 'images/client-logo/w2.png' %}" alt=""></a>
-                                    </div>
-                                </div>
-                            </div>
-                        
-                            <div class="item">
-                                <div class="ow-client-logo">
-                                    <div class="client-logo client-logo-media">
-                                        <a href="employer-list.html"><img src="{% static 'images/client-logo/w3.png' %}" alt=""></a>
-                                    </div>
-                                </div>
-                            </div>
-                        
-                            <div class="item">
-                                <div class="ow-client-logo">
-                                    <div class="client-logo client-logo-media">
-                                        <a href="employer-list.html"><img src="{% static 'images/client-logo/w5.png' %}" alt=""></a>
-                                    </div>
-                                </div>
-                            </div>
+                            
                         </div>
                         
                     </div>

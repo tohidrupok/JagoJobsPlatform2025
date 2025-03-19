@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import JobPost, JobApplication, JobCategory
+from accounts.models import EmployerProfile
 from .forms import JobApplicationForm, JobPostForm
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
@@ -13,9 +14,22 @@ from django.db.models import Count
 def home(request):
     top_categories = JobCategory.objects.annotate(
         job_count=Count('job_posts_category', filter=Q(job_posts_category__status='published'))
-    ).order_by('-job_count')[:10]
+    ).order_by('-job_count')[:10] 
+    
+    companies = EmployerProfile.objects.all()
+
+    company_data = []
+
+    for company in companies:
+        published_jobs = JobPost.objects.filter(employee=company, status='published')
+        company_data.append({
+            'company': company,
+            'published_jobs': published_jobs
+        })
+    print(company_data)
     context = {
-        'top_categories': top_categories
+        'top_categories': top_categories,
+        'company_data': company_data
     }
     return render(request, 'home.html', context)   
 
