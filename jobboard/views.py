@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import JobPost, JobApplication, JobCategory
+from .models import JobPost, JobApplication, JobCategory, BlogPost, BlogCategory
 from accounts.models import EmployerProfile, CustomUser
 from .forms import JobApplicationForm, JobPostForm
 from django.contrib.auth.decorators import login_required
@@ -31,6 +31,7 @@ def home(request):
     total_users = CustomUser.objects.count()
     total_job_posts = JobPost.objects.count() 
     total_vacancies = JobPost.objects.aggregate(total_vacancies=Sum('no_of_vacancy'))['total_vacancies'] or 0 
+    recentblog = BlogPost.objects.filter(published=True).order_by('-created_at')[:3]
     
     today = timezone.now().date()
     expired_jobs = JobPost.objects.filter(application_deadline=today)
@@ -43,7 +44,8 @@ def home(request):
         'total_vacancies': total_vacancies,
         'total_users': total_users,
         'job': expired_jobs,
-        'jobs_today_deadline_count': jobs_today_deadline_count
+        'jobs_today_deadline_count': jobs_today_deadline_count,
+        'recentblog': recentblog,
     }
     return render(request, 'home.html', context)   
 
@@ -250,4 +252,24 @@ def about_us(request):
     return render(request, 'about_us.html')
 
 def contact_us(request):
-    return render(request, 'contact_us.html')
+    return render(request, 'contact_us.html') 
+
+
+
+def blog_list(request):
+    posts = BlogPost.objects.filter(published=True).order_by('-created_at')
+    recentjob = BlogPost.get_recent() 
+    
+    blogCategory = BlogCategory.objects.annotate(post_count=Count('blogpost'))
+    paginator = Paginator(posts, 10)  
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'blog/blog_list.html', {'page_obj': page_obj, 'blogCategory': blogCategory, 'recentjob': recentjob})
+
+
+def blog_detail(request, post_id):
+    post = get_object_or_404(BlogPost, id=post_id, published=True)
+    print(post)
+    return render(request, 'blog/blog_detail.html', {'post': post})
+ 
+ 

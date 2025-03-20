@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import (
-    job_list, job_detail, apply_job, employee_applications, about_us, contact_us, home
+    job_list, job_detail, apply_job, employee_applications, about_us, contact_us, home, blog_list, blog_detail
 )
 
 urlpatterns = [
@@ -14,6 +14,10 @@ urlpatterns = [
     
     
     path('about/',  about_us, name='about_us'),
-    path('contact/', contact_us, name='contact_us'),
+    path('contact/', contact_us, name='contact_us'), 
+    
+    path('blogs/', blog_list, name='blog_list'),
+    path('blogs/<int:post_id>/', blog_detail, name='blog_detail'),
+
     
 ]

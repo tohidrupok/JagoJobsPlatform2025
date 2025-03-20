@@ -91,3 +91,27 @@ class JobApplication(models.Model):
 #     job_requirements = models.TextField()
 #     job_category = models.ForeignKey(JobCategory, on_delete=models.SET_NULL, null=True, db_index=True)
 #     created_at = models.DateTimeField(auto_now_add=True, db_index=True)  # Index for sorting
+
+
+
+class BlogCategory(models.Model): 
+    name = models.CharField(max_length=30, unique=True)
+
+    def __str__(self):
+        return self.name
+
+class BlogPost(models.Model): 
+    title = models.CharField(max_length=200)
+    writer_name = models.CharField(max_length=200)
+    content = models.TextField()
+    created_at = models.DateField(auto_now_add=True)
+    published = models.BooleanField(default=False)
+    categories = models.ManyToManyField(BlogCategory, blank=True)
+    image = models.ImageField(upload_to='media/blog_images/', blank=True, null=True , default='media/default/blog.jpg')
+
+    def __str__(self): 
+        return self.title   
+    
+    @classmethod
+    def get_recent(cls, count=5):
+        return cls.objects.filter(published=True).order_by('-created_at')[:count]

@@ -656,73 +656,31 @@
 
                     <div class="section-content">
                         <div class="twm-blog-post-3-outer-wrap">
-                            <div class="row d-flex justify-content-center">
+                            <div class="row d-flex justify-content-center"> 
+                                {% for post in recentblog %}
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <!--Block one-->
                                     <div class="blog-post twm-blog-post-3-outer">
                                         <div class="wt-post-media">
-                                            <a href="blog-single.html"><img src="images/blog/latest/bg10.jpg" alt=""></a>
+                                            <a href="{% url 'blog_detail' post.id %}"><img src="{{ post.image.url }}" alt=""></a>
                                         </div>                                    
                                         <div class="wt-post-info">
                                             <div class="wt-post-meta ">
                                                 <ul>
-                                                    <li class="post-date">March 05, 2023</li>
-                                                    <li class="post-author">By <a href="candidate-detail.html">Mark Petter</a></li>
+                                                    <li class="post-date">{{ post.created_at }}</li>
+                                                    <li class="post-author"><a href="{% url 'blog_detail' post.id %}">{{ post.writer_name }}</a></li>
                                                 </ul>
                                             </div>
                                             <div class="wt-post-title ">
                                                 <h4 class="post-title">
-                                                    <a href="blog-single.html">How to convince recruiters.</a>
+                                                    <a href="{% url 'blog_detail' post.id %}">{{ post.title|truncatechars:60 }}</a>
                                                 </h4>
                                             </div>
                                                                                   
                                         </div>                                
                                     </div>
                                 </div>
-                                
-                                <div class="col-lg-4 col-md-6 col-sm-12">
-                                    <!--Block two-->
-                                    <div class="blog-post twm-blog-post-3-outer">
-                                        <div class="wt-post-media">
-                                            <a href="blog-single.html"><img src="images/blog/latest/bg11.jpg" alt=""></a>
-                                        </div>                                    
-                                        <div class="wt-post-info">
-                                            <div class="wt-post-meta ">
-                                                <ul>
-                                                    <li class="post-date">March 05, 2023</li>
-                                                    <li class="post-author">By <a href="candidate-detail.html">David Wish</a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="wt-post-title ">
-                                                <h4 class="post-title">
-                                                    <a href="blog-single.html">5 things to know about the March.</a>
-                                                </h4>
-                                            </div>
-                                        </div>                                
-                                    </div>
-                                </div>
-                                
-                                <div class="col-lg-4 col-md-6 col-sm-12">
-                                    <!--Block three-->
-                                    <div class="blog-post twm-blog-post-3-outer">
-                                        <div class="wt-post-media">
-                                            <a href="blog-single.html"><img src="images/blog/latest/bg12.jpg" alt=""></a>
-                                        </div>                                    
-                                        <div class="wt-post-info">
-                                            <div class="wt-post-meta ">
-                                                <ul>
-                                                    <li class="post-date">March 05, 2023</li>
-                                                    <li class="post-author">By <a href="candidate-detail.html">Mike Doe</a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="wt-post-title ">
-                                                <h4 class="post-title">
-                                                    <a href="blog-single.html">Job Board is the most important</a>
-                                                </h4>
-                                            </div>
-                                        </div>                                
-                                    </div>
-                                </div>                                                        
+                                {% endfor %}                                                       
                             </div>
                         </div>
                     </div>
