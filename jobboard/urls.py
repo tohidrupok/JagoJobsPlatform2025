@@ -16,8 +16,8 @@ urlpatterns = [
     path('about/',  about_us, name='about_us'),
     path('contact/', contact_us, name='contact_us'), 
     
-    path('blogs/', blog_list, name='blog_list'),
-    path('blogs/<int:post_id>/', blog_detail, name='blog_detail'),
+    path('blogs/', blog_list, name='home_blog_list'),
+    path('blogs/<int:post_id>/', blog_detail, name='home_blog_detail'),
 
     
 ]
