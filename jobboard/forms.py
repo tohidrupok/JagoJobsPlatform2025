@@ -1,5 +1,5 @@
 from django import forms
-from .models import JobApplication, JobPost
+from .models import JobApplication, JobPost, BlogPost
 
 class JobPostForm(forms.ModelForm):
     class Meta:
@@ -22,4 +22,10 @@ class JobApplicationForm(forms.ModelForm):
         if expected_Salary is not None and expected_Salary < 1001:
             raise forms.ValidationError("If provided, expected salary must be greater than 1000.")
 
-        return expected_Salary
+        return expected_Salary 
+    
+    
+class BlogPostForm(forms.ModelForm):
+    class Meta:
+        model = BlogPost
+        fields = ['title', 'writer_name', 'content', 'published', 'categories', 'image']

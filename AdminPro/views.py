@@ -8,7 +8,9 @@ from django.contrib import messages
 from accounts.models import SeekerProfile, EmployerProfile
 from .forms import PostJobForm, JobCategoryForm
 from accounts.forms import EmployerRegistrationForm
-from jobboard.models import JobCategory
+from jobboard.models import JobCategory 
+from jobboard.models import BlogPost
+from jobboard.forms import BlogPostForm 
 
 # Function to check if user is superuser & staff
 def is_superuser(user):
@@ -211,3 +213,57 @@ def add_employer(request):
     return render(request, 'registration/register_employer.html', {'form': form}) 
 
 
+@login_required
+@user_passes_test(is_superuser)   
+def blog_create(request):
+    if request.method == 'POST':
+        form = BlogPostForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('blog_list')
+    else:
+        form = BlogPostForm()
+    return render(request, 'panel/blog_form.html', {'form': form})
+
+@login_required
+@user_passes_test(is_superuser)   
+def blog_update(request, post_id):
+    post = get_object_or_404(BlogPost, id=post_id)
+    if request.method == 'POST':
+        form = BlogPostForm(request.POST, request.FILES, instance=post)
+        if form.is_valid():
+            updated_post = form.save(commit=False)
+
+            # Ei check ta just safety er jonno, normal case e lagbe na
+            if not updated_post.created_at:
+                updated_post.created_at = post.created_at  # Preserve the original
+
+            updated_post.save()
+            form.save_m2m()  # for categories
+            return redirect('blog_detail', post_id=post.id)
+    else:
+        form = BlogPostForm(instance=post)
+    return render(request, 'panel/blog_form.html', {'form': form})
+
+@login_required
+@user_passes_test(is_superuser)   
+def blog_delete(request, post_id):
+    post = get_object_or_404(BlogPost, id=post_id)
+    if request.method == 'POST':
+        post.delete()
+        return redirect('blog_list')
+    return render(request, 'panel/blog_confirm_delete.html', {'post': post}) 
+
+
+@login_required
+@user_passes_test(is_superuser)  
+def blog_list(request):
+    posts = BlogPost.objects.filter(published=True).order_by('-created_at')
+    return render(request, 'panel/blog_list.html', {'posts': posts})
+
+
+@login_required
+@user_passes_test(is_superuser)  
+def blog_detail(request, post_id):
+    post = get_object_or_404(BlogPost, id=post_id, published=True)
+    return render(request, 'panel/blog_detail.html', {'post': post})

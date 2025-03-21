@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import superuser_dashboard, delete_profile, job_post_list, publish_job, reject_job, superuser_job_applicants, delete_job_application, show_all_seeker_profiles, show_all_employee_profiles, post_job ,category_page , add_employer, pending_job_post_list
+from .views import superuser_dashboard, delete_profile, job_post_list, publish_job, reject_job, superuser_job_applicants, delete_job_application, show_all_seeker_profiles, show_all_employee_profiles, post_job ,category_page , add_employer, pending_job_post_list, blog_create, blog_update, blog_delete, blog_detail, blog_list
 
 
 urlpatterns = [
@@ -17,6 +17,12 @@ urlpatterns = [
     path('post-job/', post_job, name='post_job'),
     
     path('categories/', category_page, name='category_page'),
-    path('add/employer/', add_employer, name='add_employer'),
+    path('add/employer/', add_employer, name='add_employer'), 
+    
+    path('admin-blogs/', blog_list, name='blog_list'),
+    path('admin-blogs/<int:post_id>/', blog_detail, name='blog_detail'),
+    path('admin-blogs/create/', blog_create, name='blog_create'),
+    path('admin-blogs/<int:post_id>/edit/', blog_update, name='blog_update'),
+    path('admin-blogs/<int:post_id>/delete/', blog_delete, name='blog_delete')
     
 ]
