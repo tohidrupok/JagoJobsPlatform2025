@@ -1,0 +1,17 @@
+
+<h2>Recommended Jobs for You</h2>
+
+{% if jobs %}
+    <ul>
+    {% for job in jobs %}
+        <li>
+            <a href="{{ job.get_absolute_url }}">{{ job.title }}</a> - {{ job.company_industry_type }}
+            <p>{{ job.job_description|truncatewords:20 }}</p>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No job recommendations found. Try updating your resume.</p>
+{% endif %}
+
+

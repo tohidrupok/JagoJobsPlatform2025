@@ -36,10 +36,9 @@ class Resume(models.Model):
     functional_area = models.CharField(max_length=255, blank=True, null=True)
     
     JOB_TYPE_CHOICES = [
-        ('Permanent', 'Permanent'),
-        ('Contract', 'Contract'),
+        ('Full Time', 'Full Time'), ('Part Time', 'Part Time'), ('Contractual', 'Contractual'), ('Internship', 'Internship')
     ]
-    job_type = models.CharField(max_length=10, blank=True, choices=JOB_TYPE_CHOICES)
+    job_type = models.CharField(max_length=100, blank=True, choices=JOB_TYPE_CHOICES)
     
     expected_salary = models.DecimalField(max_digits=10, blank=True, decimal_places=2, default=0.0)
     availability_to_join = models.DateField( blank=True, null=True)

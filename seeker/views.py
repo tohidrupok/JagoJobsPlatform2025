@@ -513,4 +513,68 @@ def dashboard(request):
         'total_jobs': total_jobs,
         'last_month_applications': last_month_applications,
         'last_month_jobs': last_month_jobs
-    })
+    }) 
+    
+    
+    
+    
+import openai  # For ChatGPT API (if available)
+from django.shortcuts import render
+from .models import Resume, Skill
+from jobboard.models import JobPost
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def job_recommendations(request):
+    user_resume = Resume.objects.filter(user=request.user).prefetch_related('skills', 'educations', 'employments').first()
+
+    if not user_resume:
+        return render(request, 'jobs/recommendations.html', {'message': 'Please complete your resume first.'})
+
+    # Extracting user skills
+    user_skills = set(user_resume.skills.values_list('skill_name', flat=True))
+    # Extracting user's experience in years
+    total_experience = sum(emp.duration() for emp in user_resume.employments.all()) 
+    print("user experienc: ",total_experience)
+    # Fetching all jobs
+    all_jobs = JobPost.objects.filter(status='published').prefetch_related('job_category')
+    
+    # Scoring jobs based on skills, experience, and job type match
+    job_scores = []
+    for job in all_jobs:
+        print(job)
+        # Handle job requirements gracefully
+        job_requirements = set(job.job_requirements.split(',')) if job.job_requirements else set()
+        skill_match_score = len(user_skills.intersection(job_requirements))
+
+        # Handle experience parsing gracefully
+        experience_match = 0
+        if job.experience_required:  # Check if experience_required is not None or empty
+            try:
+                required_experience = int(job.experience_required.split()[0])  # Extract the first number if present
+                experience_match = 1 if required_experience <= total_experience else 0
+                print(experience_match)
+            except (ValueError, IndexError):
+                experience_match = 0  # If parsing fails, consider it a match
+        else:
+            experience_match = 0  # Match if no experience is specified
+
+        # Handling NoneType for job_type and user_resume.job_type
+        user_job_type = user_resume.job_type.lower() if user_resume.job_type else "education and training"
+        print("user job tpye:",user_job_type)
+        print("job tpye:",job.job_category)
+        
+        job_type_match = 1 if user_job_type and user_job_type in (job.job_category.name.lower() if job.job_category and job.job_category.name else "") else 0
+
+        print("job_category:",job_type_match)
+        
+        # Calculating final score
+        total_score = skill_match_score * 3 + experience_match * 2 + job_type_match * 2
+        print("Total scor",total_score )
+        job_scores.append((job, total_score))
+
+    # Sorting jobs by highest score
+    sorted_jobs = sorted(job_scores, key=lambda x: x[1], reverse=True)
+
+    # Sending data to template with top 5 job recommendations
+    return render(request, 'recommendations.html', {'jobs': [job[0] for job in sorted_jobs[:5]]})
