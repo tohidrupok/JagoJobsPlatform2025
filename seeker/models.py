@@ -2,6 +2,7 @@ from django.db import models
 from django.core.validators import EmailValidator
 from accounts.models import CustomUser
 from datetime import date
+from jobboard.models import JobCategory
 
 
 class Resume(models.Model):
@@ -31,7 +32,7 @@ class Resume(models.Model):
     phone_number = models.CharField(max_length=15, blank=True)
 
     # Career Details
-    desired_industry = models.CharField(max_length=255, blank=True, null=True)
+    desired_industry = models.ForeignKey(JobCategory, on_delete=models.CASCADE, related_name='job_posts', blank=True, null=True)
     desired_location = models.CharField(max_length=255, blank=True, null=True)
     functional_area = models.CharField(max_length=255, blank=True, null=True)
     

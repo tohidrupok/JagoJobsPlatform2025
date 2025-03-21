@@ -13,11 +13,11 @@
     <meta name="description" content="" />
     
     <!-- FAVICONS ICON -->
-    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon" />
+    <link rel="icon" href="{% static 'images/fav1.ico' %}" type="image/x-icon" />
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/favicon.png' %}" />
     
     <!-- PAGE TITLE HERE -->
-    <title>JagoJobs - AI-Powered Career Solutions | Find Your Dream Job with AI</title>
+    <title>JagoJobs - Career Solutions | Find Your Dream Job.</title>
     
     <!-- MOBILE SPECIFIC -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -112,10 +112,11 @@
                                         <li><a href="{% url 'view_profile' %}">Candidate Profile</a></li>
                                         <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
                                         <li><a href="{% url 'my_resume' %}">My Resume</a></li>
-                                        <li><a href="#">Job Alerts</a></li>
+                                        <li><a href="{% url 'recommendations' %}">Job Recommended</a></li>
                                         <li><a href="{% url 'password_change' %}">Change Password</a></li>  
                                     </ul>                                                                
                                 </li>
+                                
                                 {% endif %}
                                 {% if  user.is_superuser %}
                                 <li class="has-child"><a href="javascript:;">Admin</a>
